@@ -1,0 +1,159 @@
+
+<!doctype html>
+<!-- START OF _layouts/default.html test -->
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" >
+		<meta content="width=device-width,initial-scale=1" name="viewport">
+		<meta content="" name="description">
+		<meta content="Gorille Gris" name="author">
+		
+		<title>Créer un blog avec Octopress 100% gratuit, pour les nuls &mdash; Gorille Gris</title>
+		
+		<!-- Styles -->
+		<link href="/stylesheets/main.css" rel="stylesheet">
+		<!-- Google web fonts -->
+		<link href='http://fonts.googleapis.com/css?family=Lobster|Goudy+Bookletter+1911|Oswald:300' rel='stylesheet' type='text/css'>
+		<link href="/stylesheets/prettify-hemisu.css" type="text/css" rel="stylesheet" />
+		
+		<!--<link href="http://feeds.feedburner.com/turkeltaub" rel="alternate" title="Gorille Gris" type="application/rss+xml" />-->
+		
+	</head>
+	<body onload="prettyPrint()">
+	
+		<div class="wrap">
+	
+			<header>
+				<div class="title"><a href="">Gorille Gris</a></div>
+				<div class="navi">
+					<ul>
+						<li><a href="/blog/categories/dev">Dév</a></li>
+						<li><a href="/blog/categories/theologie">Théologie</a></li>
+						<li><a href="/blog/categories/lectures">Lectures</a></li>
+						<li><a href="/a-propos.html">&Agrave; propos</a></li>
+					<ul>
+				</div> <!-- // .navi -->
+			</header>
+		
+				<!-- START OF _layouts/post.html -->
+
+
+  
+  	<header>
+  		<h1>Créer un blog avec Octopress 100% gratuit, pour les nuls</h1>
+  
+	<time>07 August 2013</time>
+  </header>
+
+
+<div class="entry-content"><h2 id="introduction">Introduction</h2>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">$ git clone git@github.com:imathis/octopress.git # fork octopress</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Octopress est un moteur de blog statique. Qui dit statique, dit plusieurs avantages :</p>
+
+<ol>
+  <li>Léger</li>
+  <li>Pas d’appels à une base de donnée</li>
+  <li>Pas de script côté serveur</li>
+  <li>Du coup c’est super rapide !!</li>
+</ol>
+
+<p>Si vous êtes débutant, cette page est pour vous. Dans 15 étapes, vous aurez votre blog statique prêt à l’emploi.</p>
+
+<h2 id="installation-doctopress-sous-mac-osx-lion">Installation d’Octopress sous Mac OSX Lion</h2>
+
+<ol>
+  <li>Ouvrir le terminal, puis saisir Terminal : Ctrl+espace, puis Terminal dans l’invite de recherche.</li>
+  <li>Installer Xcode. Dans l’appStore, chercher xcode. Cliquer sur le bouton “gratuit” (oui c’est gratuit :).</li>
+  <li>Une fois installé, lancer Xcode</li>
+  <li>Dans le menu, Xcode &gt; Préférences &gt; Downloads, puis cliquer sur le bouton “install” en face de la ligne “Command Line Tool”</li>
+  <li>
+    <p>Installer RVM. Dans le Terminal, lancer la commande suivante :</p>
+
+    <p><code>curl -L https://get.rvm.io | bash -s stable --ruby</code></p>
+  </li>
+  <li>Suivre les instructions proposées</li>
+  <li>
+    <p>Installer Ruby 1.9.3</p>
+
+    <p><code>rvm install 1.9.3
+ rvm use 1.9.3
+ rvm rubygems latest</code></p>
+  </li>
+  <li>
+    <p>Dans le terminal, verifier que 1.9.3 est bien la dernière version, saisissez</p>
+
+    <p><code>ruby --version</code></p>
+  </li>
+  <li>
+    <p>Installer Octopress, dans le Terminal, saisissez les lignes suivantes dans le Terminal:</p>
+
+    <p><code>git clone git://github.com/imathis/octopress.git octopress
+ cd octopress    # Vous utilisez RVM, On vous demandera de faire confiance au fichier .rvmrc (dites oui en tappant y).
+ ruby --version  # Ruby 1.9.3 devrait s'afficher</code></p>
+  </li>
+  <li>
+    <p>Installer les dépendances: saisir les commandes suivantes dans le Terminal</p>
+
+    <p><code>gem install bundler
+rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
+bundle install</code></p>
+  </li>
+  <li>
+    <p>Installer le thème d’Octopress par défaut</p>
+
+    <p><code>rake install</code></p>
+  </li>
+  <li>Installer Octopress avec les pages utilisateurs GitHub.<br />
+Se rendre sur <a href="http://www.github.com/">le site de GitHub</a> et créer un compte gratuitement. </li>
+</ol>
+
+</div>
+
+
+
+
+<!-- END OF _/layouts/post.html -->
+
+
+			<footer>
+				Copyright &copy; 2015
+
+	Grégory Pelletey
+
+
+			</footer>
+			
+		</div> <!-- // .wrap -->
+	</body>
+	<!-- jQuery and plugins -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  	<script>!window.jQuery && document.write(unescape('%3Cscript src="/js/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  	<script src="/js/octopress.js" type="text/javascript"></script>
+	<script src="/js/jquery.zclip.min.js"></script>
+	<!-- Syntax highlighter -->
+	<script type="text/javascript" src="/js/prettify.js"></script>
+	<script>
+		$(document).ready(function() {
+			// Prettify code
+			$('code').addClass('prettyprint');
+			$('pre code').addClass('linenums');
+			
+			// Copy to clipboard with button
+			$('pre:has(code)').prepend(function(){
+				return '<div class="clip-btn">copy to clipboard</div>';
+			});
+			$('.clip-btn').zclip({
+				path:'/js/ZeroClipboard.swf',
+				copy: $(this).next('code').text(),
+				afterCopy: function(){
+					$(this).replaceWith('<div class="clip-btn">copied!');
+					}
+			});
+		});
+	</script>
+</html>
+<!-- END OF _layouts/default.html -->

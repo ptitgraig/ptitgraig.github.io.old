@@ -1,0 +1,492 @@
+@import "bourbon/bourbon";
+@import "variables";
+@import "responsive";
+@import "coderay";
+
+*::selection {
+	background: $main-color;
+	color: $white;
+	}
+
+*::-moz-selection {
+	background: $main-color;
+	color: $white;
+	}
+
+*::-webkit-selection {
+	background: $main-color;
+	color: $white;
+	}
+	
+body {
+	margin: 0;
+	padding: $body-padding-top 0 0 0;
+	//background: $body-bg;
+	border-top: $top-line-weight solid $third-color;
+	font-family: $body-font;
+	font-size: $body-font-size;
+	color: $main-color;
+	
+	@media only screen and (max-width: 1000px) {
+		font-size: 0.9em;
+		}
+	}
+	
+em {
+	font-style: italic;
+	}
+
+h1, h2 {
+	font-family: $heading-font-family;
+	color:$main-color;
+}
+
+h1 {
+	margin-top: $heading-top-spacing;
+	font-size: $heading-font-size;
+	font-weight: $heading-font-weight;
+	font-style: $heading-font-style;
+	text-align: $page-title-align;
+	}
+	
+h2 {
+	margin-top: $subheading-top-spacing;
+	font-size: $subheading-font-size;
+	font-weight: $subheading-font-weight;
+	font-style: $subheading-font-style;
+	}
+		
+.wrap {
+	margin: 0 auto;
+	width: $content-width;
+	
+	@media only screen and (min-width: 0px) and (max-width: 1200px) {
+		width: 90%;
+		}
+	
+	/* blog footer */
+	& > footer {
+		margin-top: 2em;
+		padding: 2em 0;
+		border-top: 1px solid $light-gray;
+		text-align: center;
+		font-size: 0.8em;
+		}
+	}
+
+header.index{
+	margin-bottom: 0;
+	padding: 0;
+	}
+
+.index {
+
+	margin-bottom: $post-space-idx;
+	
+	h1 {
+		margin:0;
+		text-align: left;
+		}
+
+	time {
+		float:right;
+		position:relative;
+		top:-$post-title-line-height;
+		}
+
+	footer {
+		border-top: 0;
+		border-bottom: 3px solid $light-gray;
+		text-align: right;
+		font-size: 1em;
+		}
+}
+
+
+/* The main blog header */
+header {
+	margin-bottom: $space-between-posts/2*1em;
+	padding: $header-spacing 0;
+	border-bottom: 1px solid $light-gray;
+	text-align: center;
+
+	.title {
+		font-family: $blog-title-font;
+		font-size: $blog-title-font-size;
+		text-transform: $blog-title-text-transform;
+		font-weight: 700;
+		letter-spacing: -3px;
+
+		a {
+			color:$main-color;
+			@include transition (all .1s cubic-bezier(.08,.91,.94,.5));
+			}
+
+		a:hover, a:focus{
+			color:$white;
+			text-shadow:0px 1px 3px $main-color;
+			text-decoration:none;
+			}
+	}
+	
+	.navi {
+		font-family: $navi-font;
+		font-size: $navi-font-size;
+		
+		ul {
+			margin: $navi-top-spacing 0 0 0;
+			padding: 0;
+			list-style: none;
+			
+			li {
+				@include inline-block;
+				margin: 0;
+				padding: 0 ($navi-link-spacing/2 * 1em);
+				
+				a {
+					color: $main-color;
+					text-decoration: none;
+					
+					&:hover,
+					&:active {
+						border-bottom:2px solid $fourth-color;
+						} 
+					} /* // a */
+				} /* // li */
+			} /* // ul */
+		} /* // .navi */
+	} /* // header */
+	
+a {
+	color: $main-color;
+	text-decoration: none;
+	
+	&:hover {
+		text-decoration: underline;
+		}
+	}
+		
+blockquote {
+	font-family: $blockquote-font-family;
+	font-size: $blockquote-font-size;
+	font-style:italic;
+	}
+	
+article {
+	margin-bottom: $space-between-posts*1em;
+	padding: 0;
+	font-size: $post-font-size;
+	line-height: $post-font-line-height;
+	text-align: $post-align;
+	
+	.content {
+		padding-bottom: $post-content-bottom-space;
+		}
+		
+	footer {
+		padding: $tags-spacing 0;
+		border-bottom: 1px solid $light-gray;
+		border-top: 1px solid $light-gray;
+		}
+		
+	h1, h2, h3 {
+		text-align: $subheadings-align;
+		
+		a {
+			color: $main-color;
+			
+			&:hover {
+				color: $main-color;
+				}
+			}
+		}
+		
+	header {
+		margin: 0 0 $post-content-top-space 0;
+		padding: 0;
+		border: 0px;
+		text-align: center;
+		
+		h1 {
+			font-size: $post-title-font-size;		
+			font-weight: $post-title-font-weight;
+			font-style: $post-title-font-style;
+			line-height: $post-title-line-height;
+			text-align: $post-title-align;
+			}
+				
+		time {
+			font-size: $date-font-size;
+			font-style: $date-font-style;
+			}
+		}
+		
+	hr {
+		margin: $hr-spacing !important;
+		height: 1px;
+		border: none;
+		//color: $light-gray;
+		color:$fourth-color;
+		background-color: $light-gray;
+		}
+		
+	p {
+		.caption {
+			font-family: $caption-font-family;
+			font-size: $caption-font-size;
+			}
+			
+		img {
+			max-width: 100%;
+			padding: 4px;
+			@include box-shadow(0 0 0px 1px $gray);
+			}
+			
+		.word1,
+		.word2,
+		.word3 {
+			font-size: $post-first-words-font-size;
+			font-variant: $post-first-words-font-variant;
+			}
+		}
+	}
+	
+
+.pagination {
+	position: relative;
+	margin: 5em 0;
+	
+	a {
+		font-family: $paginator-font-family;
+		font-size: $paginator-font-size;
+		color: $black;
+		text-decoration: none;
+		
+		&:hover {
+			color: $main-color;
+			}
+		}
+		
+	.newer {
+		position: absolute;
+		top: 0;
+		right: 0;
+		}
+		
+	.older {
+		position: absolute;
+		top: 0;
+		left: 0;
+		}
+	
+	span {
+		display: block;
+		width: 100%;
+		text-align: center;
+		}
+	}
+
+/* utilities */
+.left {
+	float:left;
+	margin-right:20px;
+}
+.photo {
+	padding:0;
+	border:0;
+	@include border-radius(8px);
+	@include box-shadow(0);
+}
+.bordered {
+	border-bottom:2px solid $fourth-color;
+	padding-bottom:.5em;
+}
+.foreword {
+	padding:5px 20px;
+	@include border-radius(8px);
+	background-color:$light-light-gray;
+}
+.disclaimer {
+	font-size:.8em;
+	padding:5px 20px;
+	@include border-radius(5px);
+	border:3px solid $third-color;
+}
+.disclaimer:before {
+	content:"Démenti";
+	display:block;
+	font-size:1.2em;
+}
+	
+/* Archive and tags listings */
+.cat-year {
+	padding-top: $year-spacing-bottom;
+	line-height: $year-line-height;
+	font-family: $year-font-family;
+	font-size: $year-font-size;
+	}
+	
+.cat-month {
+	margin: $month-indent 0 $month-spacing-bottom $month-indent;
+	font-family: $month-font-family;
+	font-size: $month-font-size;
+	font-weight: 700;
+	}
+	
+.title-listing {
+	display:inline-block;
+	margin-left: $month-indent*3;
+	font-size: 1.2em;
+	line-height: 2em;
+	border-bottom: 2px solid $white;
+
+	&:hover, &:focus {
+		border-bottom: 2px solid $fourth-color;
+		text-decoration: none;
+		}
+	}
+
+/* Pull-quotes */
+.pullquote-right:before, .pullquote-left:before {
+	padding: 0;
+	border: none;
+	content: attr(data-pullquote);
+	float: right;
+	width: 45%;
+	margin: 0.5em 0 1em 1.5em;
+	position: relative;
+	top: 7px;
+	line-height: 1.45em;
+	font-family:$pullquote-font-family;
+	font-size: $pullquote-font-size;
+	color: $pullquote-font-color;
+	}
+
+/* Tables */
+
+/*  Removes default browser settings
+ *  and evens out inconsistencies. */
+table {
+    max-width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    @extend %table;
+    @extend %table-bordered;
+}
+
+/*  Sets table width to 100%.
+ *  Adds bottom-margin. */
+.table,
+%table {
+    width: 100%;
+    margin-bottom: $table-margin-bottom;
+    font-size: $table-font-size;
+    font-family: $table-font-family;
+}
+
+/*  Adds table cell padding,
+ *  aligns text to the left,
+ *  and adds a top border to each cell. */
+.table th,
+%table th,
+.table td,
+%table td {
+    padding: $table-cell-padding;
+    text-align: $table-cell-text-align;
+    border-top: $table-cell-border-top;
+}
+
+/*  Sets table header font-weight to bold.
+ *  Aligns table header text to the bottom of each cell. */
+.table th,
+%table th {
+    font-weight: $table-header-font-weight;
+    vertical-align: bottom;
+    background-color: $table-header-background-color;
+    font-family: $table-header-font-family;
+}
+
+/*  Aligns cell text to the top of each cell. */
+.table td,
+%table td {
+   vertical-align: top;
+}
+
+/*  Removes the border-top from the first row. */
+.table thead:first-child tr th,
+%table thead:first-child tr th,
+.table thead:first-child tr td,
+%table thead:first-child tr td {
+    border-top: 0;
+}
+
+/*  Adds border-top between two table-body sections. */
+.table tbody + tbody,
+%table tbody + tbody {
+    border-top: $table-body-border-top;
+}
+
+/*  Reduces cell padding */
+.table-condensed th,
+%table-condensed th,
+.table-condensed td,
+%table-condensed td {
+    padding: $table-condensed-padding;
+}
+
+/* Adds borders and border-radius. */
+.table-bordered,
+%table-bordered {
+    border: $table-bordered-border;
+    border-collapse: separate;
+    *border-collapse: collapsed;
+    border-radius: $table-bordered-border-radius;
+}
+
+.table-bordered th + th,
+%table-bordered th + th,
+.table-bordered td + td,
+%table-bordered td + td,
+.table-bordered th + td,
+%table-bordered th + td,
+.table-bordered td + th,
+%table-bordered td + th {
+    border-left: $table-border-left;
+}
+
+.table-bordered thead:first-child tr:first-child th,
+%table-bordered thead:first-child tr:first-child th,
+.table-bordered tbody:first-child tr:first-child th,
+%table-bordered tbody:first-child tr:first-child th,
+.table-bordered tbody:first-child tr:first-child td,
+%table-bordered tbody:first-child tr:first-child td {
+    border-top: 0;
+}
+
+.table-bordered thead:first-child tr:first-child th:first-child,
+%table-bordered thead:first-child tr:first-child th:first-child,
+.table-bordered tbody:first-child tr:first-child td:first-child,
+%table-bordered tbody:first-child tr:first-child td:first-child {
+    border-radius: $table-bordered-child-radius 0 0 0;
+}
+
+.table-bordered thead:first-child tr:first-child th:last-child,
+%table-bordered thead:first-child tr:first-child th:last-child,
+.table-bordered tbody:first-child tr:first-child td:last-child,
+%table-bordered tbody:first-child tr:first-child td:last-child {
+    border-radius: 0 $table-bordered-child-radius 0 0;
+}
+
+.table-bordered thead:last-child tr:last-child th:first-child,
+%table-bordered thead:last-child tr:last-child th:first-child,
+.table-bordered tbody:last-child tr:last-child td:first-child,
+%table-bordered tbody:last-child tr:last-child td:first-child {
+    border-radius: 0 0 0 $table-bordered-child-radius;
+}
+
+.table-bordered thead:last-child tr:last-child th:last-child,
+%table-bordered thead:last-child tr:last-child th:last-child,
+.table-bordered tbody:last-child tr:last-child td:last-child,
+%table-bordered tbody:last-child tr:last-child td:last-child {
+    border-radius: 0 0 $table-bordered-child-radius 0;
+}

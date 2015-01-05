@@ -1,16 +1,965 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
-  <link href="http://yoursite.com/atom.xml" rel="self"/>
-  <link href="http://yoursite.com/"/>
-  <updated>2013-09-17T09:36:37+02:00</updated>
-  <id>http://yoursite.com/</id>
-  <author>
-    <name><![CDATA[Your Name]]></name>
-    
-  </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
+	<title><![CDATA[Gorille Gris]]></title>
+	<link href="http://ptitgraig.github.io/atom.xml" rel="self"/>
+	<link href="http://ptitgraig.github.io/"/>
+	<updated>2015-01-05T13:01:28+01:00</updated>
+	<id>http://ptitgraig.github.io/</id>
+	<author>
+		<name><![CDATA[Grégory Pelletey]]></name>
+		
+	</author>
+	<generator uri="http://octopress.org/">Octopress</generator>
 
-  
+	
+	<entry>
+		
+			<title type="html"><![CDATA[La base de Spring MVC]]></title>
+		
+		<link href="http://ptitgraig.github.io/blog/2015/01/05/la-base-de-spring-mvc/"/>
+		<updated>2015-01-05T12:49:00+01:00</updated>
+		<id>http://ptitgraig.github.io/blog/2015/01/05/la-base-de-spring-mvc</id>
+		<content type="html">
+			<![CDATA[
+				
+					<p></p>
+				
+			]]>
+			<![CDATA[
+]]>
+		</content>
+	</entry>
+	
+	<entry>
+		
+			<title type="html"><![CDATA[Comment bien calculer le poids d'un selecteur CSS]]></title>
+		
+		<link href="http://ptitgraig.github.io/blog/2014/06/18/comment-bien-calculer-le-poids-dun-selecteur-css/"/>
+		<updated>2014-06-18T10:13:00+02:00</updated>
+		<id>http://ptitgraig.github.io/blog/2014/06/18/comment-bien-calculer-le-poids-dun-selecteur-css</id>
+		<content type="html">
+			<![CDATA[
+				
+					<p></p>
+				
+			]]>
+			<![CDATA[<p class="foreword">
+Voici un article qui vous expliquera le poids des CSS. Cela est utile quand vous voulez surcharger un style, comprendre quel style s&#8217;applique à quel élément et pourquoi un style s&#8217;applique plutôt qu&#8217;un autre.
+</p>
+<!-- more -->
+<hr />
+
+<p>Quand vous reprenez un projet existant, qui date déjà un peu, vous vous retrouvez souvent avec des déclarations CSS à rallonge et ne savait plus quoi s’applique à quoi.</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="class">.container</span> <span class="class">.info</span><span class="class">.test</span> <span class="class">.spanner</span> <span class="class">.wrapper</span> <span class="class">.block</span> <span class="tag">div</span><span class="class">.pictos</span> <span class="id">#jailanausee</span> { <span class="key">color</span> : <span class="color">#000</span>; }
+</pre></div>
+</div>
+</div>
+
+<p>Pour éviter je genre de massacre, il est d’une extrème importance de comprendre quel style va s’appliquer à quel élement, et dans quel ordre.
+Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le combat et s’appliquer au span. Quelle va être la couleur du texte du span : rouge, bleu, vert ou jaune ?</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="id">#idSpan</span> { <span class="key">color</span>: <span class="value">red</span>; }
+<span class="tag">span</span><span class="class">.class-span</span> { <span class="key">color</span>: <span class="value">orange</span>; }
+<span class="class">.bloc</span><span class="class">.info</span> <span class="tag">span</span> { <span class="key">color</span>: <span class="value">yellow</span>; }
+<span class="class">.container</span> <span class="class">.bloc</span><span class="class">.info</span> <span class="class">.class-txt</span> <span class="tag">span</span><span class="class">.class-span</span> { <span class="key">color</span>: <span class="value">green</span>; }
+<span class="tag">span</span> { <span class="key">color</span>: <span class="value">blue</span> <span class="important">!important</span> }
+</pre></div>
+</div>
+</div>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">container</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">block info</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">class-span</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">idSpan</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">style</span>=<span class="string"><span class="delimiter">&quot;</span><span class="key">color</span>:<span class="value">purple</span>;<span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            je suis d'une certaine couleur
+        <span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+</pre></div>
+</div>
+</div>
+
+<p>La réponse est bleu ! <a href="http://jsfiddle.net/ptitgraig/L8CUS/2/">La preuve ici</a>.</p>
+
+<p>Voici un court explicatif de l’ordre d’application des styles sur le span.</p>
+
+<table>
+	
+		<td>
+			!important
+		</td>
+		<td>
+			attribut style (style=&#8221;&#8220;)
+		</td>
+		<td>
+			nombre d&#8217;id (#)
+		</td>
+		<td>
+			nombre de classes (.)
+		</td>
+		<td>
+			nombre de balises
+		</td>
+	
+	<tr>
+		<td>
+			gagne sur tous les autres style, même seul
+		</td>
+		<td>
+			0 .. n
+		</td>
+		<td>
+			0 .. n
+		</td>
+		<td>
+			0 .. n
+		</td>
+		<td>
+			0 .. n
+		</td>
+	</tr>
+</table>
+
+<p>Au final, vous vous trouvez avec un chiffre entre 0 et 19999. Reprenons notre exemple de départ. Sachant que l’attribut style s’applique toujours et annule les autres, nous allons nous en affranchir pour l’exemple.</p>
+
+<table>
+	<tr>
+		<th>Déclaration CSS</th>
+		<th>!important</th>
+		<th>nombre d&#8217;id (#)</th>
+		<th>nombre de classes (.)</th>
+		<th>nombre de balises</th>
+		<th>poids</th>
+	</tr>
+	<tr>
+		<td>#idSpan</td>
+		<td>0</td>
+		<td>1</td>
+		<td>0</td>
+		<td>0</td>
+		<td>0100</td>
+	</tr>
+	<tr>
+		<td>span.class-span</td>
+		<td>0</td>
+		<td>0</td>
+		<td>1</td>
+		<td>1</td>
+		<td>0011</td>
+	</tr>
+	<tr>
+		<td>.bloc.info span</td>
+		<td>0</td>
+		<td>0</td>
+		<td>2</td>
+		<td>1</td>
+		<td>0021</td>
+	</tr>
+	<tr>
+		<td>.container .bloc.info .class-txt span.class-span</td>
+		<td>0</td>
+		<td>0</td>
+		<td>5</td>
+		<td>1</td>
+		<td>0051</td>
+	</tr>
+	<tr>
+		<td>span (avec !important)</td>
+		<td>1</td>
+		<td>0</td>
+		<td>0</td>
+		<td>1</td>
+		<td>1001</td>
+	</tr>
+</table>
+
+<p>Au final vous voyez l’ordre d’importance se déssiner :</p>
+
+<ol>
+  <li>span (avec !important) /* 1001 */</li>
+  <li>#idSpan /* 0100 */</li>
+  <li>.container .bloc.info .class-txt span.class-span /* 0051 */</li>
+  <li>.bloc.info span /* 0021 */</li>
+  <li>span.class-span /* 0011 */</li>
+</ol>
+
+]]>
+		</content>
+	</entry>
+	
+	<entry>
+		
+			<title type="html"><![CDATA[Memento Backbone.js]]></title>
+		
+		<link href="http://ptitgraig.github.io/blog/2014/02/05/memento-backbone-dot-js/"/>
+		<updated>2014-02-05T17:26:00+01:00</updated>
+		<id>http://ptitgraig.github.io/blog/2014/02/05/memento-backbone-dot-js</id>
+		<content type="html">
+			<![CDATA[
+				
+					<p></p>
+				
+			]]>
+			<![CDATA[<p>Backbone est un framework javascript MVC qui permet de construire des applications de type Single-Page-Webapp.</p>
+
+<p>En vérité il s’agit plutôt d’un framework MV* car le Controller n’existe pas vraiment dans Backbone.</p>
+
+<p>Faisons un parrallèle entre un MVC classique et un MVC Backbone.</p>
+
+<h2 id="models">Models</h2>
+
+<ul>
+  <li>C’est là ou se fait la validation des données.</li>
+  <li>Sont persistés soit par du localStorage ou bien par synchronisation avec une base de données.</li>
+  <li>Plusieurs Views peuvent observer des changements sur un Model. Une View, en effet, regarde un Model et peut ainsi savoir quand un Model a changé et afficher les infos à jour du Model.</li>
+  <li>Un ensemble de Models est appelé une Collection. Dès qu’un Model dans cette Collection change, la View attachée à ce Model est notifiée.</li>
+</ul>
+
+<h2 id="controllers">Controllers</h2>
+
+<ul>
+  <li>N’existe pas. La View joue le rôle de Controller.</li>
+  <li>Gérer les changements effectués dans la vue par l’utilisateur</li>
+  <li>Mettre à jour le Model quand un utilisateur a terminé ses actions</li>
+</ul>
+
+<h2 id="views">Views</h2>
+
+<ul>
+  <li>C’est là que les utilisateurs cliquent et font mumuse.</li>
+  <li>Donc c’est là qu’on lit / edite / supprime les données d’un Model.</li>
+  <li>Il y a une fonction <code>render()</code> qui doit s’occuper d’afficher le contenu du Model (ça utilise le moteur de template de Underscore.js). On l’utilise en callback afin de notifier la View de potentiels changements sur le Model.</li>
+  <li>Dans le code, on fait référence à la vue avec <code>this.el</code></li>
+  <li>Quand un utilisateur clique dans la View, c’est normalement le Controller qui s’occupe du traitement a effectuer, mais comme on l’a vu, il n’y a pas de Controller dans Backbone. Les évenements sont gérés dans la View grâce à un objet <code>event : {}</code></li>
+</ul>
+
+<h2 id="pense-bte-pour-le-model">pense-bête pour le Model</h2>
+
+<h3 id="mthodes-native--backbone">Méthodes native à Backbone</h3>
+
+<ul>
+  <li>set : pour changer ou initialiser un attribut du Model <code>myModel.set('toto', 'un valeur');</code></li>
+  <li>get : pour obtenir la valeur d’un attribut du Model <code>myModel.get('toto');</code></li>
+  <li>validate : permet de valider le model ex :
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span></figure></notextile></li>
+</ul>
+<p>&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">validate: function(attributes){
+</span><span class="line">	if(attributes.title === undefined){
+</span><span class="line">	    return "Remember to set a title for your todo.";
+</span><span class="line">	}
+</span><span class="line">},</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;
+### ecouter si le modèle change : 
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">this.on('change', function(){ 
+</span><span class="line">	//faire quelquechose
+</span><span class="line">});</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;
+### ecouter si l’attribut toto du model change : <code>this.on('change:toto')</code></p>
+
+<h2 id="pense-bte-pour-la-view">pense-bête pour la View</h2>
+
+<p>La méthode <code>render()</code> de la View peut être liée à la méthode <code>change()</code> du Model. Ainsi dès qu’il y a un changement dans le Model, la View refléte immédiatement ces changements.</p>
+
+<h3 id="setelement">setElement()</h3>
+
+<p>Colle un template HTML a une vue.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">var view = new Backbone.View;
+</span><span class="line">view.setElement('&lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;');
+</span><span class="line">view.el // &lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="render">render()</h3>
+
+<p>A la fin de render() il est bien de faire <code>return this</code> car :</p>
+
+<ul>
+  <li>la View peut être réutiliser par des View parent</li>
+  <li>Créer une liste d’éléments sans repeindre chacun individuellement, l’élément est déssiné une fois par le navigateur et la liste entière est remplie en données (sens peu claire)</li>
+</ul>
+
+<h2 id="pense-bte-collection">pense-bête Collection</h2>
+
+<h3 id="syntaxe">Syntaxe</h3>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">var Todo = Backbone.Model.extend({});
+</span><span class="line">
+</span><span class="line">var TodosCollection = Backbone.Collection.extend({
+</span><span class="line">  model: Todo
+</span><span class="line">});</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="ajout-suppression-de-models">Ajout suppression de Models</h3>
+
+<p>Une fois la Collection créée, on peut supprimer ou ajouter des Models à la Collection avec : <code>add()</code> et <code>remove()</code>. Ces 2 méthodes acceptent un ou plusieurs model en paramètre (sous forme de tableau [])</p>
+
+<h3 id="retrouver-un-model">Retrouver un Model</h3>
+
+<p><code>Collection.get(id)</code> avec id l’id du Model</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">var myTodo = new Todo({title:'Read the whole book', id: 2});
+</span><span class="line">var todos = new TodosCollection([myTodo]);
+</span><span class="line">var todo2 = todos.get(2);</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Afin d’intentifier le Model récupéré on peut utiliser : <code>id</code> <code>cid</code> <code>idAttribute</code></p>
+
+<p>Chaque Model a un <code>id</code> qui est unique (type Integer ou String)
+<code>idAttribute</code> est l’attribut qui identifie le Model dans la database (<code>id</code> dans la base de donnée). Ca dit a Backbone quel champ de la base de donnée doit être remplir avec la propriété <code>id</code>. Exemple <code>userId</code> dans la base donnera un <code>userId</code> dans la définition du Model dans Backbone.</p>
+
+<h3 id="ecouter-des-vnements">Ecouter des événements</h3>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">var TodosCollection = new Backbone.Collection();
+</span><span class="line">TodosCollection.on("change:title", function(model) {
+</span><span class="line">    console.log("J'ai changer d'avis, je devrais " + model.get('title'));
+</span><span class="line">});
+</span><span class="line">TodosCollection.add([
+</span><span class="line">  { title: 'go to Jamaica.', completed: false, id: 3 },
+</span><span class="line">]);
+</span><span class="line">var myTodo = TodosCollection.get(3);
+</span><span class="line">myTodo.set('title', 'aller nager');</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Va afficher : J’ai changer d’avis, je devrais aller nager</p>
+
+<p>On peut écouter si il y a du changement dans une collection (ajout suppression modification) :</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">TodosCollection.on("add", function(model) {
+</span><span class="line">  console.log("Ajouté " + model.get('title'));
+</span><span class="line">});
+</span><span class="line">TodosCollection.on("remove", function(model) {
+</span><span class="line">  console.log("Supprimé " + model.get('title'));
+</span><span class="line">});
+</span><span class="line">
+</span><span class="line">TodosCollection.on("change:completed", function(model) {
+</span><span class="line">  console.log("Changement de l'attribute completed " + model.get('title'));
+</span><span class="line">});
+</span><span class="line">TodosCollection.set([
+</span><span class="line">    { id: 1, title: 'go to Jamaica.', completed: true },
+</span><span class="line">    { id: 2, title: 'go to China.', completed: false },
+</span><span class="line">    { id: 4, title: 'go to Disney World.', completed: false }
+</span><span class="line">]);</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Vider une Collection : <code>myCollection.reset()</code></p>
+
+<p>Ecouter le vidage d’une Collection : myCollection.on(“reset”, function)</p>
+
+<p>Faire un <code>set()</code> d’une Collection peut provoquer des <code>remove()</code> ou <code>add()</code> en fonction de ce qui est setté</p>
+
+<p>Fonctionnalités hérité d’Underscore :
+- <code>forEach</code>
+- <code>sortBy</code>
+- <code>map</code>
+- <code>min/max</code> :
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">Todos.max(function(model){
+</span><span class="line">  return model.id;
+</span><span class="line">}).id;</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;
+- <code>pluck</code></p>
+
+<p><code>chain()</code> permet de chainer l’appel de fonction sur une Collection</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">var collection = new Backbone.Collection([
+</span><span class="line">  { name: 'Tim', age: 5 },
+</span><span class="line">  { name: 'Ida', age: 26 },
+</span><span class="line">  { name: 'Rob', age: 55 }
+</span><span class="line">]);
+</span><span class="line">
+</span><span class="line">var filteredNames = collection.chain() // start chain, returns wrapper around collection's models
+</span><span class="line">  .filter(function(item) { return item.get('age') &gt; 10; }) // returns wrapped array excluding Tim
+</span><span class="line">  .map(function(item) { return item.get('name'); }) // returns wrapped array containing remaining names
+</span><span class="line">  .value(); // terminates the chain and returns the resulting array
+</span><span class="line">
+</span><span class="line">console.log(filteredNames); // logs: ['Ida', 'Rob']</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="persistence-restful">Persistence RESTful</h2>
+
+<h3 id="rcuprr-un-model-du-serveur">Récupérér un Model du serveur</h3>
+
+<p><code>Collection.fetch()</code> retrouve un ensemble de Models du server sous la form d’un tableau JSON en envoyant une requête HTTP GET vers l’URL spécifié par la propriété <code>url</code> de la Collection. Quand les données sont récupérées, la fonction <code>set()</code> va être exécuté pour mettre à jour la Collection.</p>
+
+<h3 id="sauvegarder-un-model-sur-le-serveur">Sauvegarder un Model sur le serveur</h3>
+
+<p>On utilise la méthode <code>save()</code> du Model que l’on veut sauvegarder.
+- Quand <code>save()</code> est appelé sur un Model qui a été récupérer du serveur avec la méthode <code>fetch()</code>, un requête HTTP PUT est envoyée.
+- Si le Model est une nouvelle instance, une requête HTTP POST est envoyé à l’URL de la Collection.</p>
+
+<h3 id="supprimer-un-model-du-serveur">Supprimer un Model du serveur</h3>
+
+<p>Avec <code>destroy()</code> : envoie une requête HTTP DELETE</p>
+
+<h3 id="options">Options</h3>
+
+<p>Il est possible de passer seulement les choses que l’on veut mettre à jour dans un Model et pas forcememnt tout le Model (requête HTTP PATCH). Par exemple :
+&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">// Sauvegarde partielle avec PATCH
+</span><span class="line">model.clear().set({id: 1, a: 1, b: 2, c: 3, d: 4});
+</span><span class="line">model.save();
+</span><span class="line">model.save({b: 2, d: 4}, {patch: true});
+</span><span class="line">console.log(this.syncArgs.method);
+</span><span class="line">// 'patch'</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
+
+<h2 id="events">Events</h2>
+
+<h3 id="on-off-trigger">on() off() trigger()</h3>
+
+<p><code>Backbone.Events</code> peut donner à un objet la capacité de lié et déclencher des événements personnalisés.</p>
+
+<p><code>on()</code> lie une fonction callback à un objet. Le callback est appelé à chaque fois que l’événement est déclenché.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">var myObject = {};
+</span><span class="line">
+</span><span class="line">// Mixin
+</span><span class="line">_.extend(myObject, Backbone.Events);
+</span><span class="line">
+</span><span class="line">// Ajouter un événement personnalisé
+</span><span class="line">myObject.on('dance', function(msg){
+</span><span class="line">  console.log('Déclenchement de ' + msg);
+</span><span class="line">});
+</span><span class="line">
+</span><span class="line">// Trigger the custom event
+</span><span class="line">myObject.trigger('dance', 'our event');</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p><code>off()</code> supprime toutes les fonctions de callback sur un objet</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">// Removes event bound to the object
+</span><span class="line">myObject.off("dance:tap");</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Pour supprimer une callback en particulier :</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">var ourObject = {};
+</span><span class="line">
+</span><span class="line">// Mixin
+</span><span class="line">_.extend(ourObject, Backbone.Events);
+</span><span class="line">
+</span><span class="line">function dancing (msg) { console.log("We are dancing. " + msg); }
+</span><span class="line">function jumping (msg) { console.log("We are jumping. " + msg); }
+</span><span class="line">
+</span><span class="line">// Add two listeners to the same event
+</span><span class="line">ourObject.on("move", dancing);
+</span><span class="line">ourObject.on("move", jumping);
+</span><span class="line">
+</span><span class="line">// Trigger the events. Both listeners are called.
+</span><span class="line">ourObject.trigger("move", "Yeah!");
+</span><span class="line">
+</span><span class="line">// Removes specified listener
+</span><span class="line">ourObject.off("move", dancing);
+</span><span class="line">
+</span><span class="line">// Trigger the events again. One listener left.
+</span><span class="line">ourObject.trigger("move", "Yeah, jump, jump!");</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p><code>trigger()</code> peut passer plusieurs arguments à une fonction callback</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">var ourObject = {};
+</span><span class="line">
+</span><span class="line">// Mixin
+</span><span class="line">_.extend(ourObject, Backbone.Events);
+</span><span class="line">
+</span><span class="line">function doAction (action, duration) {
+</span><span class="line">  console.log("We are " + action + ' for ' + duration ); 
+</span><span class="line">}
+</span><span class="line">
+</span><span class="line">// Add event listeners
+</span><span class="line">ourObject.on("dance", doAction);
+</span><span class="line">ourObject.on("jump", doAction);
+</span><span class="line">ourObject.on("skip", doAction);
+</span><span class="line">
+</span><span class="line">// Passing multiple arguments to single event
+</span><span class="line">ourObject.trigger("dance", 'dancing', "5 minutes");
+</span><span class="line">
+</span><span class="line">// Passing multiple arguments to multiple events
+</span><span class="line">ourObject.trigger("dance jump skip", 'on fire', "15 minutes");</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p><code>listenTo()</code> et <code>stopListening()</code> permet à un objet {d’écouter/ arrêter d’écouter} les événements sur un autre objet.</p>
+
+<p><em>Chaque fois qu’on fait <code>on()</code> sur un objet on doit faire aussi <code>off()</code></em>, sinon quand on supprimer un Model il va rester en mémoire. <code>View.remove()</code> fait un appel à <code>stopListening()</code> afin de s’assurer que tous les écouteurs sont déliées.</p>
+
+<h3 id="events-et-views">Events et Views</h3>
+
+<p>2 types d’événements peuvent être lié à une View :
+- événements DOM (via jQuery.on() this va faire référence à l’objet DOM)
+- événements déclenché via une API Event (via la propriété events{} this fait référence à la View)</p>
+
+<h2 id="routers">Routers</h2>
+
+<p>Connecte des URLs à des parties de l’application. Nécessaire si tu veux que certaines parties de ton application soient : mise dans les favoris, partageable, si tu veux pouvoir faire un Back avec le bouton back du navigateur.</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">var TodoRouter = Backbone.Router.extend({
+</span><span class="line">	routes: {
+</span><span class="line">		"search/:query/p:page" : "searchTodos"
+</span><span class="line">		// http://example.com/#search/job/p1
+</span><span class="line">	}
+</span><span class="line">});
+</span><span class="line">var myTodoRouter = new TodoRouter();</span></code></pre></td></tr></table></div></figure></notextile></div>
+<p><code>Backbone.history.start();</code> dit à Backbone qu’il fait observer tout changement de hash dans l’URL (d’où le /# hyper vitale)</p>
+
+]]>
+		</content>
+	</entry>
+	
+	<entry>
+		
+			<title type="html"><![CDATA[4 questions à se poser avant de commencer un projet Backbone]]></title>
+		
+		<link href="http://ptitgraig.github.io/blog/2014/01/30/4-questions-a-se-poser-avant-de-commencer-un-projet-backbone/"/>
+		<updated>2014-01-30T10:45:00+01:00</updated>
+		<id>http://ptitgraig.github.io/blog/2014/01/30/4-questions-a-se-poser-avant-de-commencer-un-projet-backbone</id>
+		<content type="html">
+			<![CDATA[
+				
+					<p></p>
+				
+			]]>
+			<![CDATA[<p class="foreword">
+Vous avez choisi de développer votre dernière super application web avec Backbone. Avant de vous lancer tête baissée dans le développement, réfléchissez à ces 4 questions afin de savoir si Backbone est ce qu&#8217;il vous faut.
+</p>
+<!-- more -->
+<hr />
+
+<p>Question 1 : Comment vais-je structurer les vues et les controlleurs imbriquées ?</p>
+
+<p>Malheureusement il ne semble pas y avoir de bonne pratique dans ce domaine et cela semble bien dépendre des cas d’utilisation.</p>
+
+<p>Question 2 : Comment vais-je tester les vues ?</p>
+
+<p>Backbone ne vient pas avec des outils de tests, il vous faudra les fabriquer vous même. Pour les vues, c’est difficile; si difficile que de nombreuses personnes ne se fatiguent pas avec ça.</p>
+
+<p>Question 3 : Pourquoi mon application a t-elle des fuites de mémoires ?</p>
+
+<p>Dans les Single-Page-Webapp , les objets peuvent demeurer en mémoire un bon moment, plutôt que d’être recréer quand la page est rafraichie. C’est très utile mais vous devez vous assurez que ces objets sont bien utilisez et ne consomme pas inutilement de la mémoire.</p>
+
+<p>Question 4 : Pourquoi est-ce que le rendu de mon application est si lent ?</p>
+
+<p>Avec Backbone, il est vraiment facile de faire de petites mise à jour du DOM pour chaque interaction de l’utilisateur. Dès que vous traitez un large ensemble de données, l’expérience utilisateur est altérée.</p>
+]]>
+		</content>
+	</entry>
+	
+	<entry>
+		
+			<title type="html"><![CDATA[Une juste image de Dieu]]></title>
+		
+		<link href="http://ptitgraig.github.io/blog/2013/10/10/une-juste-image-de-dieu/"/>
+		<updated>2013-10-10T09:37:00+02:00</updated>
+		<id>http://ptitgraig.github.io/blog/2013/10/10/une-juste-image-de-dieu</id>
+		<content type="html">
+			<![CDATA[
+				
+					<p></p>
+				
+			]]>
+			<![CDATA[<p class="foreword">
+Premier chapitre du livre <em>Knowledge of the Holy</em> de A. W. Tozer. L&#8217;auteur argumente en faveur de l&#8217;importance cruciale d&#8217;une juste connaissance de Dieu.
+</p>
+<!-- more -->
+<hr />
+
+<h3 id="chaptre-1">Chapître 1</h3>
+
+<blockquote>
+  <p>O Seigneur Dieu Tout Puissant, pas le Dieu des philosophes et des sages mais le Dieu des prophètes et des apôtres; et par dessus tout, le Dieu et Père de notre Seigneur Jésus-Christ, pourrais-je exprimer l’Ineffable ?</p>
+
+  <p>Ceux qui ne Te connaissent pas peuvent faire appel à Toi comme si Tu étais autre, et ainsi donc ne pas T’adorer Toi mais une créature de leur propre imagination; ainsi donc, illumine notre intelligence afin que nous Te connaissions Tel que Tu Es, afin que nous puissions parfaitement aimer Celui qui Es et L’adorer comme il se doit.</p>
+</blockquote>
+
+<blockquote>
+  <p>Dans le nom de Jésus-Christ notre Seigneur</p>
+</blockquote>
+
+<blockquote>
+  <p>Amen</p>
+</blockquote>
+
+<p>Ce qui nous viens à l’esprit quand nous pensons à Dieu est en fait la chose la plus important qui nous concerne.</p>
+
+<p>L’histoire de l’humanité va probablement montré qu’aucun peuple ne s’est jamais hissé au dessus de sa propre religion, et l’histoire spirituelle de l’Homme démontrera certainement qu’aucune religion n’a été plus grande que l’idée de Dieu qu’elle. La louange est pure ou basique selon les pensées que ce fait l’adorateur de Dieu.</p>
+
+<p>Pour cette raison, la question la plus importante qui se pose à l’Eglise est la question de Dieu Lui-Même, et le fait le plus portentous au sujet d’un homme n’est pas ce qu’il dit ou fait à un moment donné mais l’image qu’il se fait de Dieu au plus profond de son coeur. Par une loi secrète de notre âme, nous avons tendance à nous rapprocher de l’image mentale que l’on se fait de Dieu. Cela est vrai non seulement pour le chrétien à l’échelle individuelle mais aussi pour les divers groupes de chrétiens qui composent l’Eglise.</p>
+
+<p>La chose la plus révélatrice au sujet d’un église est l’idée qu’elle se fait de Dieu, tout comme son message le plus significatif est ce qu’elle dit à Son sujet..ou ne dit pas, car son silence est parfois plus éloquent que son discours. Elle ne pourra jamais échappé à une révélation d’elle même lors de son témoignage concernant Dieu.</p>
+
+<p>Si Nous étions nous capable d’extraire de n’importe quel homme une réponse complète à la question ; “Qu’est ce qui vous viens à l’esprit quand vous penser à Dieu ?” nous pourrions prédire avec certitude, l’avenir spirituel de cet homme. Si nous soyons capable de déterminer l’image de Dieu qu’on nos plus influents dirigeants religieux aujourd’hui, nous serions également en mesure de prédire l’état de l’église demain.</p>
+
+<p>Sans aucun doute, la pensée la plus puissante que l’esprit puisse entretenir est la pensée de Dieu et le mot le plus conséquent d’une langue est le mot qu’elle utilise pour Dieu. Pensées et discours sont des cadeaux de Dieu pour ses créatures faite à son image; celles-ci Lui sont intimement associé et inconcevable en dehors de Lui. Il est très pertinent que le premier mot soit la Parole. </p>
+
+<p>“et la Parole était avec Dieu et la Parole était Dieu”.</p>
+
+<p>Nous pouvons parler, car Dieu a parlé. En Lui, mots et idées sont indissociables.</p>
+
+<p>Ainsi donc, que l’idée que nous nous faisons de Dieu soit la plus proche possible du Dieu véritable est de la plus haute importance pour nous. Comparé à nos pensées véritables à propos de lui, nos creedal déclarations ont très peu de conséquences. Notre véritable idée de Dieu est probablement enfoui très profondément sous un tas de détritus que sont nos notions religieuses conventionnelles et peut requérir une recherche intélligente et vigoureuse avant qu’enfin elle ne soit déterrée et exposé pour ce qu’elle est véritablement. Seulement après l’épreuve d’une introspection douloureuse sommes nous capable de découvrir ce que nous croyons vraiment au sujet de Dieu.</p>
+
+<p>Une conception juste de Dieu est fondamental non seulement pour la théologie systématique mais aussi pour vivre la vie chrétienne de manière pratique.Il en va de la louange, ce que la fondation est au temple; là où ce n’est pas adéquate ou hors d’aplomb la structure finira tôt ou tard par s’écrouler.Je crois qu’il y a très peu d’erreurs doctrinale ou d’échec lors de l’application de l’éthique chrétienne qui ne soient pas du à des pensées imparfaites voir ignobles sur Dieu.</p>
+
+<p>Mon opinion au sujet de la conception chrétienne de Dieu qui coure aujourd’hui ces années à la moitié du 20ème siècle est tellement décadente qu’elle en est au point d’être exagérément au dessous de la dignité du Dieu Très Saint. et constitue en fait pour les croyants professants quelque chose d’équivalent à une calamité morale.</p>
+
+<p>Tout les problèmes de la terre et du ciel réunis, même rassemblé pour nous confronté d’un seul coup, ne serait rien comparé au problème submergeant de Dieu : qu’Il est, à comment est-Il, et ce que nous, créature doté du sens moral, devons nous faire à propos de Lui.</p>
+
+<p class="disclaimer">
+Ce texte ne constitue en aucun cas une traduction officielle. Elle est une tentative de l&#8217;auteur d&#8217;apporter aux lecteurs francophone la richesse de la reflexion de A. W. Tozer.
+</p>
+]]>
+		</content>
+	</entry>
+	
+	<entry>
+		
+			<title type="html"><![CDATA[Ce que j'aurai aimé savoir avant de me marier]]></title>
+		
+		<link href="http://ptitgraig.github.io/blog/2013/10/03/ce-que-jaurai-aime-savoir-avant-de-me-marier/"/>
+		<updated>2013-10-03T18:52:00+02:00</updated>
+		<id>http://ptitgraig.github.io/blog/2013/10/03/ce-que-jaurai-aime-savoir-avant-de-me-marier</id>
+		<content type="html">
+			<![CDATA[
+				
+					<p></p>
+				
+			]]>
+			<![CDATA[
+]]>
+		</content>
+	</entry>
+	
+	<entry>
+		
+			<title type="html"><![CDATA[Le chemin du calvaire]]></title>
+		
+		<link href="http://ptitgraig.github.io/blog/2013/10/03/le-chemin-du-calvaire/"/>
+		<updated>2013-10-03T18:51:00+02:00</updated>
+		<id>http://ptitgraig.github.io/blog/2013/10/03/le-chemin-du-calvaire</id>
+		<content type="html">
+			<![CDATA[
+				
+					<p></p>
+				
+			]]>
+			<![CDATA[
+]]>
+		</content>
+	</entry>
+	
+	<entry>
+		
+			<title type="html"><![CDATA[Javascript, les bons éléments]]></title>
+		
+		<link href="http://ptitgraig.github.io/blog/2013/10/03/javascript/"/>
+		<updated>2013-10-03T18:51:00+02:00</updated>
+		<id>http://ptitgraig.github.io/blog/2013/10/03/javascript</id>
+		<content type="html">
+			<![CDATA[
+				
+					<p></p>
+				
+			]]>
+			<![CDATA[
+]]>
+		</content>
+	</entry>
+	
+	<entry>
+		
+			<title type="html"><![CDATA[Un Dieu missionnaire]]></title>
+		
+		<link href="http://ptitgraig.github.io/blog/2013/09/17/un-dieu-missionnaire/"/>
+		<updated>2013-09-17T14:22:00+02:00</updated>
+		<id>http://ptitgraig.github.io/blog/2013/09/17/un-dieu-missionnaire</id>
+		<content type="html">
+			<![CDATA[
+				
+					<p></p>
+				
+			]]>
+			<![CDATA[<p>« Notre Dieu est un Dieu missionnaire ». Telle est l’affirmation que nous pouvons entendre parfois dans les églises.
+Essayons d’éprouver un peu cette affirmation.</p>
+
+<!-- more -->
+
+<h2 id="pourquoi-">1. Pourquoi ?</h2>
+
+<p>Dans un premier temps, nous allons définir le terme mission. Pour répondre à cette question il nous faudra aussi dire quel est le but de la mission et ses implications. Enfin nous nous efforcerons de montrer que la mission est attachée au caractère de Dieu et qu’il est lui-même un Dieu missionnaire.</p>
+
+<p>Mission signifie envoyer, en grec <em>apostelô</em> qui a donné apostolos, littéralement l’envoyé,  duquel on tire apôtre <sup><em>1</em></sup>. L’évangélisation est l’annonce de la bonne nouvelle (ange : annoncer, év : vient de eu qui signifie bon). La différence entre mission et évangélisation et que l’évangélisation fait partie de la mission. Elle est la réponse à l’appel de Dieu. Elle possède plusieurs facettes.
+Historiquement, les frères moraves, au XVIIIème siècle, sont reconnus comme étant les premiers missionnaires modernes. Suite à la Réforme, Jean Hus, fonde 400 églises, qui formeront la fratrie Hussite, qui enverra de nombreux missionnaires par le monde.
+Le but de la Mission est de faire connaître le vrai Dieu, Père, Fils Saint-Esprit aux hommes et qu’ils sachent ce qu’il a fait pour eux et attend d’eux. Cela n’implique pas seulement d’annoncer un message brut mais s’adapter à l’auditoire pour qu’il puisse saisir et accepter. Cela implique de considérer l’individu entièrement.
+Nous voyons tout au long de l’histoire biblique d’Israël et de l’histoire de l’église que Dieu est un Dieu qui se révèle. Le fait d’envoyer, spécifique à la Bible, n’existe pas dans les autres religions <sup><em>2</em></sup>. Dieu s’intéresse à l’homme et veut lui communiquer  des messages mais lui donne pleine liberté par rapport à ceux-ci. Il s’adresse ainsi à Adam, Abraham, Moïse etc… Le but de Dieu est que les hommes le connaissent. La relation d’antan a été brisée à cause du péché et il faut la restaurer. Ainsi  Dieu n’est pas statique envers les hommes. Il est à la fois celui qui envoie et qui vient lui-même. Il va vers les hommes. Au sein même de la Tri-unité, le Père envoie le Fils sur la terre pour annoncer la venue du royaume de Dieu et accomplir sa volonté de mourir pour les pécheurs (Rom. 8.5). Le Père et le Fils envoient le Saint-Esprit sur toute chair pour sceller le salut de ceux qui croient (Act. 2.19). La parabole des vignerons 3 est une très bonne illustration du caractère missionnaire de Dieu. Il envoie ses serviteurs, les prophètes. Moïse est le premier pour qui la notion d’envoyer devient nette (Ex.3.10 : « Je t’envoie »). Puis fini par venir lui-même, en son Fils.
+En venant, le Christ ne se contente pas d’annoncer la bonne nouvelle mais il s’occupe d’éduquer et de faire grandir dans la foi ceux qui l’écoutent et en particulier les 12. Ainsi, le Christ est un missionnaire entier. Il annonce la bonne nouvelle, s’occupe des individus pour les faire grandir dans leur foi. Il enseigne (Jean 6.6), prêche (Marc 1.14), s’occupe des besoins physiques <sup><em>4</em></sup> et spirituels de ceux à qui il s’adresse, et rend témoignage (Jean 5.36). Dès le début on dit que Jésus est envoyé (Heb3.1). Il est donc un apôtre.
+Jésus-Christ lance un appel clair à faire de toutes les nations des disciples (Mat. 28.19). Il ne parle  pas simplement d’annoncer la bonne nouvelle aux nations mais d’en faire des disciples. Il parle donc  de la mission et de considérer les besoins des individus et leur croissance spirituelle. Jésus envoie lui-même ses disciples en mission. Notre Dieu est bien un Dieu missionnaire.</p>
+
+<h2 id="comment-sy-prend-il--travers-lhistoire-selon-le-rcit-biblique-">2. Comment s’y prend-il à travers l’histoire selon le récit biblique ?</h2>
+
+<p>Nous commencerons par voir de quelles manières Dieu se manifeste au travers de l’histoire d’Israël et de celle de l’Eglise. Puis nous tacherons de de voir comment Dieu s’y est pris pour se révéler, ce qu’il a utilisé pour que les hommes le connaisse.</p>
+
+<p>Si nous prenons le récit biblique d’Israël dans son ensemble nous constatons que Dieu se révèle à son peuple de manière progressive. Il commence avec Abraham et ses descendants et se révèle ainsi aux hommes comme un Dieu qui s’intéresse à eux et leur fait des promesses. Il fait connaître son Nom à Moïse, et communique ainsi son essence d’être éternel : « Je suis celui est qui est ». Puis il se révèle comme celui qui veut faire une alliance avec son peuple. Il se manifeste comme celui qui est souverain et révèle sa perfection morale par la loi de Moïse. Ses règles et ses lois sont consignées par Moïse par écrit et sont conforme à sa volonté; Dieu revendique ces écrits comme son œuvre (Os. 8.12) <sup><em>5</em></sup>. Dieu se présente donc aux hommes de manière progressive. Toute la révélation de sa personne n’est pas donnée d’un seul coup.
+Dieu se révèle aussi aux hommes par des hommes : les prophètes. Le prophète est celui que Dieu revêt de son autorité pour qu’il communique sa volonté aux hommes et les instruise <sup><em>6</em></sup>. En les inspirants par son Saint-Esprit, il communique à son peuple sa volonté.
+Mais ce n’est qu’avec Jésus-Christ que Dieu se révèle pleinement aux hommes. En venant dans une chair semblable à la nôtre, Dieu se manifeste à la compréhension humaine de la meilleure manière qui soit. Par sa vie et son œuvre, Jésus a parfaitement révélé le Père (Jean 1.18) au point qu’il est appelé l’image du Dieu invisible (Heb. 1.3). Il fait connaître son plan de salut pour les hommes. Cette œuvre était symboliquement présente sous l’ancienne alliance par les sacrifices d’animaux sans défauts. Ainsi, Dieu, pendant des siècles, avait préparé son peuple à la venue de son Fils, celui qui le révèlerait entièrement et qui aurait à donner son sang, sa vie, pour les péchés.
+Avant de rejoindre son Père, Jésus a commandé ses disciples de faire de toutes les nations ses disciples. C’est donc aux apôtres que Dieu a confié la mission de révéler qui il est au reste du monde (Act. 1.8). A l’heure de l’Eglise, la foi peut se reposer sur les textes bibliques, rédigés sous la plume inspirée des premiers apôtres du Christ. C’est le dépôt qui doit passer de générations en générations que Paul confie à Timothée (2Tim 1.12). L’Eglise est la garante du message de Dieu. Elle possède la clé pour le ciel (Mat 16.19), le moyen donné par Dieu d’avoir la certitude de la vie éternelle par la foi. Dieu continue de se révéler aux hommes qui ne le connaissent pas par les pierres vivantes de son Eglise et par son Saint-Esprit qui convainc les cœurs de péché. En prenant exemple sur les récits bibliques, nous constatons que Jésus et ses apôtres créaient un lien avec le vécu de leurs interlocuteurs afin d’annoncer la bonne nouvelle. La forme du message peut changer mais le fond reste identique. Ainsi Paul ne s’adresse pas de la même manière aux Athéniens (Act. 17.15-34) qu’Etienne, au sanhédrin (Act. 7). Ils considèrent leur culture, ce qu’ils savent déjà et leur quotidien et cherche à créer une passerelle entre l’Evangile et eux.</p>
+
+<h2 id="comment-vivre-cette-mission-de-dieu-dans-votre-glise-aujourdhui-">3. Comment vivre cette mission de Dieu dans votre église aujourd’hui ?</h2>
+
+<p>Nous allons dans un premier temps rappeler ce qu’implique la mission de Dieu. Puis dans quel contexte culturel est installée l’église en France. Enfin nous proposerons quelques pistes concrètes pour vivre cette mission.
+Nous l’avons vu, elle a pour but de révéler Dieu, de le faire connaître par Jésus-Christ, de faire connaître sa volonté, et de faire des Hommes des disciples du Christ.
+Pour vivre cela dans l’église aujourd’hui il faut considérer la culture dans laquelle elle est installée. En France, on perçoit le catholicisme comme la religion normale. On ne comprend pas que des églises de professant puissent exister. On revendique la tolérance mais on ne veut pas de la pluralité. La doctrine de l’Homme est mise en avant, l’Homme possède un « bon fond », ce qui ne va pas dans le sens de l’Evangile. Enfin, on remarque aussi un certain anticléricalisme bien que l’intérêt pour le Christianisme semble se renouveler.
+Pour présenter Jésus à nos contemporains, il faut pouvoir créer des points de contact avec eux. David Brown suggère plusieurs passerelles pour atteindre nos contemporains : notre humanité, l’église, la spiritualité, le méta-récit <sup><em>7</em></sup>. Nous allons nous concentrer sur quelques-unes.
+En commençant par cette passerelle que constitue notre humanité, l’identité et la valeur de l’être humain peuvent être discuté autour d’un repas organisé pendant une soirée sur un thème particulier. Par exemple, il serait possible de proposer d’inviter à l’église un missionnaire dont le ministère est rattaché aux enfants défavorisés pour qu’il puisse présenter son travail. La discussion sur ce sujet pourrait ferait alors naturellement pendant le repas, surtout si les invités sont déjà parents. Ainsi les valeurs de l’évangile seraient partagées.
+Dans l’église, il est possible de mettre en place mensuellement des cultes « spéciaux » pendant lesquels, le vocabulaire utilisé sera accessible et le message approprié à un visiteur. Ainsi, chacun peut inviter un jour un collègue ou un ami à ce type de culte en sachant qu’il ne sera pas confronter à un « patois de Canaan ». Parallèlement l’église doit être sensibilisée à cela et chaque membre doit prendre ce projet à cœur, non pas seulement comme un projet personnel, mais aussi un projet d’église. Pour ceux qui voudraient aller plus loin, l’église peut mettre en place des rencontres pour présenter l’évangile clairement. Il est alors important de mettre également en place un suivi et d’entourer les personnes pour qu’elles puissent grandir dans leur foi. Les invités aux réunions de prières, aux études bibliques etc…
+Mais avant toutes ces choses, puisque nos contemporains sont méfiants à l’égard des méta-récits, il convient de développer une relation de confiance. Ainsi, en allant boire un café ou en aidant à un déménagement, nous montrons de l’intérêt pour la personne et nous sommes en train d’évangéliser par notre vie. Instaurer une relation de confiance est donc capitale aujourd’hui.</p>
+
+<p><strong>Références :</strong>
+&gt;
+1.	Mission, Nouveau Dictionnaire Biblique, Emmaüs, 2002
+2.	Envoyer, Nouveau Dictionnaire Biblique, page 410, Emmaüs, 2002
+3.	Mathieu 21.33-43
+4.	En Marc 6, Jésus nourrit la foule. En Marc 10, il guérit un aveugle né. En Luc 8, il chasse les démons.
+5.	Prophète, Nouveau Dictionnaire Biblique, page 1066, Emmaüs, 2002
+6.	Prophète, Nouveau Dictionnaire Biblique, page 1124, Emmaüs, 2002
+7.	David Brown, Passerelles, Editions Farel, 2003, p.26</p>
+
+<blockquote>
+  <p>Devoir également rédigé à l’aide de notes sur le stage « Evangélisation et Mission », D.Brown, FORMAPRE Nogent-sur-Marne.</p>
+</blockquote>
+]]>
+		</content>
+	</entry>
+	
+	<entry>
+		
+			<title type="html"><![CDATA[Prouver la trinité, Bible en main]]></title>
+		
+		<link href="http://ptitgraig.github.io/blog/2013/09/17/prouver-la-trinite/"/>
+		<updated>2013-09-17T14:02:00+02:00</updated>
+		<id>http://ptitgraig.github.io/blog/2013/09/17/prouver-la-trinite</id>
+		<content type="html">
+			<![CDATA[
+				
+					<p></p>
+				
+			]]>
+			<![CDATA[<p>Le mot Trinité, utilisé pour la première fois par Tertullien au IIème siècle, n’est pas employé dans la Bible. Tout d’abord présenté par Théophile d’Antioche sous le grec Triade (1), son enseignement est pourtant bien présent, en filigrane, tout au long des Ecritures. La 
+doctrine de la Trinité peut se définir en 3 points fondamentaux inséparables.
+<!-- more -->
+Il n’y a qu’un seul Dieu. Le Père est Dieu, le Fils est Dieu et le Saint-Esprit est Dieu; en Dieu il y a 3 Personnes distinctes et de même nature. La difficulté vient du fait qu’il faille articuler ces 3 vérités ensemble sans les simplifier, sous peine de concevoir une hérésie. Avant tout travail, il est important de rappeler que nous resterons modestes quant à la compréhension de cette réalité. En effet, qui peut comprendre pleinement la nature d’un Dieu transcendant qui se tient hors de l’espace et du temps ?
+Pour étayer la doctrine de la Trinité, nous allons nous appuyer sur les textes bibliques qui mettent en évidence ces vérités, successivement dans l’Ancien et le Nouveau Testament; il faut, bien entendu, reconnaître la parfaite fiabilité des textes bibliques. Nous commencerons par citer quelques versets affirmant l’existence d’un seul Dieu. La divinité du Père étant incontestable, nous chercherons dans un deuxième temps à démontrer la divinité du Fils puis celle du Saint-Esprit. Enfin, nous regarderons les textes qui soulignent que les 3 Personnes de la Trinité sont un seul et même Dieu.</p>
+
+<p><span class="pullquote-right" data-pullquote="La Bible affirme avec force l&#8217;existence d&#8217;un seul Dieu">
+Une constante, dans les 2 testaments, est la lutte contre les idoles et le polythéisme. La Bible affirme avec force l’existence d’un seul Dieu. Tout d’abord, les textes de l’Ancien Testament le soulignent. Citons-en quelques-uns. L’Ecriture commence avec le magistral « Au commencement, Dieu créa la terre et les cieux » (Gn1.1), qui d’emblée nous met face à un seul créateur. Il y a le premier des 10 commandements  « Je suis l’Eternel ton Dieu; tu n’auras point d’autres Dieu devant ma face » (Ex 20:2-3). Dieu lui-même affirme qu’il est un. Puis plus loin dans les Ecritures, nous trouvons également « Ecoute Israël, l’Eternel notre Dieu, l’Eternel est un » (Dt 6:4) qui est rappelé aux Israélites. Il y a aussi de nombreux textes soulignant qu’il n’y a qu’un seul Dieu dans le Nouveau Testament. Jésus, citant Moïse, affirme que Dieu est un (Mc 12:29). Paul, face à l’idolâtrie païenne, déclare publiquement l’existence d’un seul Créateur (Act 17:24-26).
+Ce Dieu unique, notre Père (Es 63:16), est aussi appelé Fils. Les affirmations le montrant étant nombreuses, nous nous limiterons à quelques textes.
+</span></p>
+
+<p>Dans l’Ancien Testament, la divinité du Christ est claire. Il est écrit que le Messie sera le Fils de Dieu (Ps 2:2-9; 110:1) et même qu’il sera Dieu lui-même (Ps 45:7-8).
+Certains textes du Nouveau Testament font références à Jésus quand il est question de Dieu dans l’Ancien Testament. Le chapitre 3 de Malachie parle du messager qui prépare la venue du Seigneur; ce texte est repris par les évangélistes pour parler de Jean-Baptiste préparant la venue de Jésus (Mat 11:10, Mc 1:2, Luc 7:27). Les versets 7 et 8 du Psaume 45, mentionnant un roi désigné par Dieu, appelé « Dieu » également, est repris par l’auteur de l’épître aux Hébreux pour désigner le Christ (Hb 1:8).
+Les premiers paragraphes de l’évangile selon Jean présentent la Parole comme Dieu lui-même, éternel et créateur. Cette Parole s’est incarnée en Jésus (Jn 1:14). Jésus est donc Dieu homme. Paul dit de Jésus-Christ, qu’il est de condition divine, égal de Dieu (Ph 2:6-7). De nouveau, Jean dans son épître, écrit que Jésus-Christ est Fils de Dieu, le seul vrai Dieu et la vie éternelle (1 Jn:5:20). Ajoutons à cela que la naissance du Messie est annoncée dans les évangiles. Sa venue signifiera que Dieu est avec nous « Emmanuel » (Es 7:14). La venue du Fils de Dieu est annoncée aux hommes comme la venue de Dieu lui-même. Le nom Jésus porte la marque de la divinité : Jésus signifie « Dieu sauve », hors il n’y a que Dieu qui puisse sauver du péché. Son éternité est affirmée en Mi 5:1.
+Jésus-Christ lui-même parle de sa divinité. Quand il s’applique à lui-même le « Je suis » de Yahvé (Jn 8:24), les juifs saisissent bien la référence et s’empressent de vouloir le tuer.</p>
+
+<p>Penchons-nous maintenant sur les textes qui mettent en évidence la divinité du Saint-Esprit.
+Dans l’Ancien Testament, quelques passages qui ramènent l’action de l’Esprit à celle de Dieu. Dans le Ps 104:29-30, le psalmiste reconnaît que l’Esprit donne vie à toute choses; Job dit la même chose (Job 3:34), hors c’est bien Dieu qui donne vie à toutes choses.
+Dans le Nouveau Testament, Paul affirme aux Corinthiens qu’ils sont le temple de Dieu parce que l’Esprit habite en eux (1Cor 3:16). Dieu est partout et ses créatures sont limitées. Le Saint-Esprit est présent dans l’esprit de tous les croyants et c’est une chose que Dieu seul peut réaliser. Toujours dans l’épître aux Corinthiens, Paul affirme clairement : « Le Seigneur c’est l’Esprit » (2Cor 3:17). Mentir à l’Esprit c’est mentir à Dieu (Act 5:3-4) et l’Esprit agit et parle comme si il était Dieu lui-même (Act 13:2). Malgré son nom quelque peu impersonnel, le Saint-Esprit est une personne. Il parle et il est possible de l’attrister (Eph4:30).</p>
+
+<p>Le dernier élément à démontrer est l’unité de ces 3 Personnes divines. Malgré leur distinction, elles sont unies. Cette unité apparaît aussi dans les textes bibliques. Premier panneau indicateur et détail probablement énigmatique pour les lecteurs de l’Ancien Testament, le premier verset de la Genèse commence en réalité avec « Au commencement les Dieux créa » (Gn 1:1). Elohim, qui est une forme du pluriel est suivie du verbe « créer » conjugué au  singulier. Dieu dit également après la chute « Voici l’homme est devenu comme l’un de nous … » (Gn 3:22). Autre élément « grammatical » pertinent : dans le Nouveau Testament, Jésus commande à ses disciples de baptiser au nom du Père du Fils et du Saint-Esprit et non pas aux noms. L’auteur, inspiré par le Saint-Esprit, a pris soin d’utiliser le singulier.
+Toujours dans le Nouveau Testament, on constate l’unité dans l’action des 3 Personnes divines. Prenons quelques exemples seulement. Les 3 Personnes de la Tri-unité agissent ensemble lors de l’incarnation du Fils (Luc1:35). Ensuite, lors du baptême de Jésus, Le Père et L’Esprit se manifestent clairement (Mat 3:16-17). Jésus est rempli de joie par le Saint-Esprit et il remercie le Père dans sa prière (Luc 10:21). Il est également écrit que le Père, le Fils et le Saint-Esprit viennent (vient, conviendrait-il mieux ?) habiter dans le croyant (Jn 14:17,23). 2 Cor 13:13 est la bénédiction apostolique qui présente les 3 Personnes de la trinité ensemble. Nous finirons avec l’exemple de la Croix en Heb 9:14, où le Christ s’est offert lui-même à Dieu par l’Esprit. Le Salut n’est possible que par l’action unie de ces 3 Personnes, de Dieu.</p>
+
+<p>L’Ecriture révèle un Dieu unique, cependant, elle révèle aussi 3 Personnes qui agissent ensemble, dans une parfaite relation d’amour (Jn 5:20), et qui partage la même nature divine. Nous touchons ici aux limites de notre compréhension humaine.
+Comment comprendre qu’un Dieu solitaire pourrait concevoir le multiple - manifeste lors de la création - sans s’aliéner lui-même ? La Tri-unité permet de comprendre ce concept. En un Dieu unique, il existe la diversité (1 Cor12).
+L’Ecriture, nous révèle, sans le dire de manière explicite que Dieu est unique et qu’en son sein vivent éternellement 3 Personnes unies totalement et de parfaite égalité. Cette révélation ne remet pas en cause le monothéisme mais nous montre que la nature de Dieu est bien plus inaccessible que nous pouvons le penser. C’est dans un sens c’est rassurant, car Dieu est bien un être inaccessible et transcendant. Sans une révélation de lui-même, par lui-même, nous ne pourrions le connaître. Pour les plus sceptiques qui verraient dans cette conclusion une sorte d’obscurantisme ou la traduction d’une foi charbonnière, admettons qu’il existe dans la création des similitudes comme l’âme humaine d’un individu. Elle est unique et cependant riche de sa diversité : intelligence, mémoire, volonté.</p>
+]]>
+		</content>
+	</entry>
+	
+	<entry>
+		
+			<title type="html"><![CDATA[Créer un blog avec Octopress 100% gratuit, pour les nuls]]></title>
+		
+		<link href="http://ptitgraig.github.io/blog/2013/08/07/installer-octopress-en-10-etapes/"/>
+		<updated>2013-08-07T00:50:00+02:00</updated>
+		<id>http://ptitgraig.github.io/blog/2013/08/07/installer-octopress-en-10-etapes</id>
+		<content type="html">
+			<![CDATA[
+				
+					<p></p>
+				
+			]]>
+			<![CDATA[<h2 id="introduction">Introduction</h2>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">$ git clone git@github.com:imathis/octopress.git # fork octopress</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>Octopress est un moteur de blog statique. Qui dit statique, dit plusieurs avantages :</p>
+
+<ol>
+  <li>Léger</li>
+  <li>Pas d’appels à une base de donnée</li>
+  <li>Pas de script côté serveur</li>
+  <li>Du coup c’est super rapide !!</li>
+</ol>
+
+<p>Si vous êtes débutant, cette page est pour vous. Dans 15 étapes, vous aurez votre blog statique prêt à l’emploi.</p>
+
+<h2 id="installation-doctopress-sous-mac-osx-lion">Installation d’Octopress sous Mac OSX Lion</h2>
+
+<ol>
+  <li>Ouvrir le terminal, puis saisir Terminal : Ctrl+espace, puis Terminal dans l’invite de recherche.</li>
+  <li>Installer Xcode. Dans l’appStore, chercher xcode. Cliquer sur le bouton “gratuit” (oui c’est gratuit :).</li>
+  <li>Une fois installé, lancer Xcode</li>
+  <li>Dans le menu, Xcode &gt; Préférences &gt; Downloads, puis cliquer sur le bouton “install” en face de la ligne “Command Line Tool”</li>
+  <li>
+    <p>Installer RVM. Dans le Terminal, lancer la commande suivante :</p>
+
+    <p><code>curl -L https://get.rvm.io | bash -s stable --ruby</code></p>
+  </li>
+  <li>Suivre les instructions proposées</li>
+  <li>
+    <p>Installer Ruby 1.9.3</p>
+
+    <p><code>rvm install 1.9.3
+ rvm use 1.9.3
+ rvm rubygems latest</code></p>
+  </li>
+  <li>
+    <p>Dans le terminal, verifier que 1.9.3 est bien la dernière version, saisissez</p>
+
+    <p><code>ruby --version</code></p>
+  </li>
+  <li>
+    <p>Installer Octopress, dans le Terminal, saisissez les lignes suivantes dans le Terminal:</p>
+
+    <p><code>git clone git://github.com/imathis/octopress.git octopress
+ cd octopress    # Vous utilisez RVM, On vous demandera de faire confiance au fichier .rvmrc (dites oui en tappant y).
+ ruby --version  # Ruby 1.9.3 devrait s'afficher</code></p>
+  </li>
+  <li>
+    <p>Installer les dépendances: saisir les commandes suivantes dans le Terminal</p>
+
+    <p><code>gem install bundler
+rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
+bundle install</code></p>
+  </li>
+  <li>
+    <p>Installer le thème d’Octopress par défaut</p>
+
+    <p><code>rake install</code></p>
+  </li>
+  <li>Installer Octopress avec les pages utilisateurs GitHub.<br />
+Se rendre sur <a href="http://www.github.com/">le site de GitHub</a> et créer un compte gratuitement. </li>
+</ol>
+
+]]>
+		</content>
+	</entry>
+	
 </feed>
