@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Lectures | Gorille Gris]]></title>
+  <link href="http://ptitgraig.github.io/blog/categories/lectures/atom.xml" rel="self"/>
+  <link href="http://ptitgraig.github.io/"/>
+  <updated>2015-01-05T13:01:28+01:00</updated>
+  <id>http://ptitgraig.github.io/</id>
+  <author>
+    <name><![CDATA[Grégory Pelletey]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Ce que j'aurai aimé savoir avant de me marier]]></title>
+    <link href="http://ptitgraig.github.io/blog/2013/10/03/ce-que-jaurai-aime-savoir-avant-de-me-marier/"/>
+    <updated>2013-10-03T18:52:00+02:00</updated>
+    <id>http://ptitgraig.github.io/blog/2013/10/03/ce-que-jaurai-aime-savoir-avant-de-me-marier</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Le chemin du calvaire]]></title>
+    <link href="http://ptitgraig.github.io/blog/2013/10/03/le-chemin-du-calvaire/"/>
+    <updated>2013-10-03T18:51:00+02:00</updated>
+    <id>http://ptitgraig.github.io/blog/2013/10/03/le-chemin-du-calvaire</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Javascript, les bons éléments]]></title>
+    <link href="http://ptitgraig.github.io/blog/2013/10/03/javascript/"/>
+    <updated>2013-10-03T18:51:00+02:00</updated>
+    <id>http://ptitgraig.github.io/blog/2013/10/03/javascript</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+</feed>

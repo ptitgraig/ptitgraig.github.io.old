@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Dev | Gorille Gris]]></title>
+  <link href="http://ptitgraig.github.io/blog/categories/dev/atom.xml" rel="self"/>
+  <link href="http://ptitgraig.github.io/"/>
+  <updated>2015-01-05T13:01:28+01:00</updated>
+  <id>http://ptitgraig.github.io/</id>
+  <author>
+    <name><![CDATA[Grégory Pelletey]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Comment bien calculer le poids d'un selecteur CSS]]></title>
+    <link href="http://ptitgraig.github.io/blog/2014/06/18/comment-bien-calculer-le-poids-dun-selecteur-css/"/>
+    <updated>2014-06-18T10:13:00+02:00</updated>
+    <id>http://ptitgraig.github.io/blog/2014/06/18/comment-bien-calculer-le-poids-dun-selecteur-css</id>
+    <content type="html"><![CDATA[<p class="foreword">
+Voici un article qui vous expliquera le poids des CSS. Cela est utile quand vous voulez surcharger un style, comprendre quel style s'applique à quel élément et pourquoi un style s'applique plutôt qu'un autre.
+</p>
+<!-- more -->
+<hr />
+
+<p>Quand vous reprenez un projet existant, qui date déjà un peu, vous vous retrouvez souvent avec des déclarations CSS à rallonge et ne savait plus quoi s’applique à quoi.</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="class">.container</span> <span class="class">.info</span><span class="class">.test</span> <span class="class">.spanner</span> <span class="class">.wrapper</span> <span class="class">.block</span> <span class="tag">div</span><span class="class">.pictos</span> <span class="id">#jailanausee</span> { <span class="key">color</span> : <span class="color">#000</span>; }
+</pre></div>
+</div>
+</div>
+
+<p>Pour éviter je genre de massacre, il est d’une extrème importance de comprendre quel style va s’appliquer à quel élement, et dans quel ordre.
+Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le combat et s’appliquer au span. Quelle va être la couleur du texte du span : rouge, bleu, vert ou jaune ?</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="id">#idSpan</span> { <span class="key">color</span>: <span class="value">red</span>; }
+<span class="tag">span</span><span class="class">.class-span</span> { <span class="key">color</span>: <span class="value">orange</span>; }
+<span class="class">.bloc</span><span class="class">.info</span> <span class="tag">span</span> { <span class="key">color</span>: <span class="value">yellow</span>; }
+<span class="class">.container</span> <span class="class">.bloc</span><span class="class">.info</span> <span class="class">.class-txt</span> <span class="tag">span</span><span class="class">.class-span</span> { <span class="key">color</span>: <span class="value">green</span>; }
+<span class="tag">span</span> { <span class="key">color</span>: <span class="value">blue</span> <span class="important">!important</span> }
+</pre></div>
+</div>
+</div>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">container</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">block info</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">class-span</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">idSpan</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">style</span>=<span class="string"><span class="delimiter">&quot;</span><span class="key">color</span>:<span class="value">purple</span>;<span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            je suis d'une certaine couleur
+        <span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+</pre></div>
+</div>
+</div>
+
+<p>La réponse est bleu ! <a href="http://jsfiddle.net/ptitgraig/L8CUS/2/">La preuve ici</a>.</p>
+
+<p>Voici un court explicatif de l’ordre d’application des styles sur le span.</p>
+
+<table>
+	
+		<td>
+			!important
+		</td>
+		<td>
+			attribut style (style="")
+		</td>
+		<td>
+			nombre d'id (#)
+		</td>
+		<td>
+			nombre de classes (.)
+		</td>
+		<td>
+			nombre de balises
+		</td>
+	
+	<tr>
+		<td>
+			gagne sur tous les autres style, même seul
+		</td>
+		<td>
+			0 .. n
+		</td>
+		<td>
+			0 .. n
+		</td>
+		<td>
+			0 .. n
+		</td>
+		<td>
+			0 .. n
+		</td>
+	</tr>
+</table>
+
+<p>Au final, vous vous trouvez avec un chiffre entre 0 et 19999. Reprenons notre exemple de départ. Sachant que l’attribut style s’applique toujours et annule les autres, nous allons nous en affranchir pour l’exemple.</p>
+
+<table>
+	<tr>
+		<th>Déclaration CSS</th>
+		<th>!important</th>
+		<th>nombre d'id (#)</th>
+		<th>nombre de classes (.)</th>
+		<th>nombre de balises</th>
+		<th>poids</th>
+	</tr>
+	<tr>
+		<td>#idSpan</td>
+		<td>0</td>
+		<td>1</td>
+		<td>0</td>
+		<td>0</td>
+		<td>0100</td>
+	</tr>
+	<tr>
+		<td>span.class-span</td>
+		<td>0</td>
+		<td>0</td>
+		<td>1</td>
+		<td>1</td>
+		<td>0011</td>
+	</tr>
+	<tr>
+		<td>.bloc.info span</td>
+		<td>0</td>
+		<td>0</td>
+		<td>2</td>
+		<td>1</td>
+		<td>0021</td>
+	</tr>
+	<tr>
+		<td>.container .bloc.info .class-txt span.class-span</td>
+		<td>0</td>
+		<td>0</td>
+		<td>5</td>
+		<td>1</td>
+		<td>0051</td>
+	</tr>
+	<tr>
+		<td>span (avec !important)</td>
+		<td>1</td>
+		<td>0</td>
+		<td>0</td>
+		<td>1</td>
+		<td>1001</td>
+	</tr>
+</table>
+
+<p>Au final vous voyez l’ordre d’importance se déssiner :</p>
+
+<ol>
+  <li>span (avec !important) /* 1001 */</li>
+  <li>#idSpan /* 0100 */</li>
+  <li>.container .bloc.info .class-txt span.class-span /* 0051 */</li>
+  <li>.bloc.info span /* 0021 */</li>
+  <li>span.class-span /* 0011 */</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Memento Backbone.js]]></title>
+    <link href="http://ptitgraig.github.io/blog/2014/02/05/memento-backbone-dot-js/"/>
+    <updated>2014-02-05T17:26:00+01:00</updated>
+    <id>http://ptitgraig.github.io/blog/2014/02/05/memento-backbone-dot-js</id>
+    <content type="html"><![CDATA[<p>Backbone est un framework javascript MVC qui permet de construire des applications de type Single-Page-Webapp.</p>
+
+<p>En vérité il s’agit plutôt d’un framework MV* car le Controller n’existe pas vraiment dans Backbone.</p>
+
+<p>Faisons un parrallèle entre un MVC classique et un MVC Backbone.</p>
+
+<h2 id="models">Models</h2>
+
+<ul>
+  <li>C’est là ou se fait la validation des données.</li>
+  <li>Sont persistés soit par du localStorage ou bien par synchronisation avec une base de données.</li>
+  <li>Plusieurs Views peuvent observer des changements sur un Model. Une View, en effet, regarde un Model et peut ainsi savoir quand un Model a changé et afficher les infos à jour du Model.</li>
+  <li>Un ensemble de Models est appelé une Collection. Dès qu’un Model dans cette Collection change, la View attachée à ce Model est notifiée.</li>
+</ul>
+
+<h2 id="controllers">Controllers</h2>
+
+<ul>
+  <li>N’existe pas. La View joue le rôle de Controller.</li>
+  <li>Gérer les changements effectués dans la vue par l’utilisateur</li>
+  <li>Mettre à jour le Model quand un utilisateur a terminé ses actions</li>
+</ul>
+
+<h2 id="views">Views</h2>
+
+<ul>
+  <li>C’est là que les utilisateurs cliquent et font mumuse.</li>
+  <li>Donc c’est là qu’on lit / edite / supprime les données d’un Model.</li>
+  <li>Il y a une fonction <code>render()</code> qui doit s’occuper d’afficher le contenu du Model (ça utilise le moteur de template de Underscore.js). On l’utilise en callback afin de notifier la View de potentiels changements sur le Model.</li>
+  <li>Dans le code, on fait référence à la vue avec <code>this.el</code></li>
+  <li>Quand un utilisateur clique dans la View, c’est normalement le Controller qui s’occupe du traitement a effectuer, mais comme on l’a vu, il n’y a pas de Controller dans Backbone. Les évenements sont gérés dans la View grâce à un objet <code>event : {}</code></li>
+</ul>
+
+<h2 id="pense-bte-pour-le-model">pense-bête pour le Model</h2>
+
+<h3 id="mthodes-native--backbone">Méthodes native à Backbone</h3>
+
+<ul>
+  <li>set : pour changer ou initialiser un attribut du Model <code>myModel.set('toto', 'un valeur');</code></li>
+  <li>get : pour obtenir la valeur d’un attribut du Model <code>myModel.get('toto');</code></li>
+  <li>validate : permet de valider le model ex :
+<code>
+validate: function(attributes){
+  if(attributes.title === undefined){
+      return "Remember to set a title for your todo.";
+  }
+},
+</code>
+### ecouter si le modèle change : 
+<code>
+this.on('change', function(){ 
+  //faire quelquechose
+});
+</code>
+### ecouter si l’attribut toto du model change : <code>this.on('change:toto')</code></li>
+</ul>
+
+<h2 id="pense-bte-pour-la-view">pense-bête pour la View</h2>
+
+<p>La méthode <code>render()</code> de la View peut être liée à la méthode <code>change()</code> du Model. Ainsi dès qu’il y a un changement dans le Model, la View refléte immédiatement ces changements.</p>
+
+<h3 id="setelement">setElement()</h3>
+
+<p>Colle un template HTML a une vue.</p>
+
+<p><code>
+var view = new Backbone.View;
+view.setElement('&lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;');
+view.el // &lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;
+</code></p>
+
+<h3 id="render">render()</h3>
+
+<p>A la fin de render() il est bien de faire <code>return this</code> car :</p>
+
+<ul>
+  <li>la View peut être réutiliser par des View parent</li>
+  <li>Créer une liste d’éléments sans repeindre chacun individuellement, l’élément est déssiné une fois par le navigateur et la liste entière est remplie en données (sens peu claire)</li>
+</ul>
+
+<h2 id="pense-bte-collection">pense-bête Collection</h2>
+
+<h3 id="syntaxe">Syntaxe</h3>
+<p>```
+var Todo = Backbone.Model.extend({});</p>
+
+<p>var TodosCollection = Backbone.Collection.extend({
+  model: Todo
+});
+```</p>
+
+<h3 id="ajout-suppression-de-models">Ajout suppression de Models</h3>
+
+<p>Une fois la Collection créée, on peut supprimer ou ajouter des Models à la Collection avec : <code>add()</code> et <code>remove()</code>. Ces 2 méthodes acceptent un ou plusieurs model en paramètre (sous forme de tableau [])</p>
+
+<h3 id="retrouver-un-model">Retrouver un Model</h3>
+
+<p><code>Collection.get(id)</code> avec id l’id du Model</p>
+
+<p><code>
+var myTodo = new Todo({title:'Read the whole book', id: 2});
+var todos = new TodosCollection([myTodo]);
+var todo2 = todos.get(2);
+</code></p>
+
+<p>Afin d’intentifier le Model récupéré on peut utiliser : <code>id</code> <code>cid</code> <code>idAttribute</code></p>
+
+<p>Chaque Model a un <code>id</code> qui est unique (type Integer ou String)
+<code>idAttribute</code> est l’attribut qui identifie le Model dans la database (<code>id</code> dans la base de donnée). Ca dit a Backbone quel champ de la base de donnée doit être remplir avec la propriété <code>id</code>. Exemple <code>userId</code> dans la base donnera un <code>userId</code> dans la définition du Model dans Backbone.</p>
+
+<h3 id="ecouter-des-vnements">Ecouter des événements</h3>
+
+<p><code>
+var TodosCollection = new Backbone.Collection();
+TodosCollection.on("change:title", function(model) {
+    console.log("J'ai changer d'avis, je devrais " + model.get('title'));
+});
+TodosCollection.add([
+  { title: 'go to Jamaica.', completed: false, id: 3 },
+]);
+var myTodo = TodosCollection.get(3);
+myTodo.set('title', 'aller nager');
+</code></p>
+
+<p>Va afficher : J’ai changer d’avis, je devrais aller nager</p>
+
+<p>On peut écouter si il y a du changement dans une collection (ajout suppression modification) :</p>
+
+<p>```
+TodosCollection.on(“add”, function(model) {
+  console.log(“Ajouté “ + model.get(‘title’));
+});
+TodosCollection.on(“remove”, function(model) {
+  console.log(“Supprimé “ + model.get(‘title’));
+});</p>
+
+<p>TodosCollection.on(“change:completed”, function(model) {
+  console.log(“Changement de l’attribute completed “ + model.get(‘title’));
+});
+TodosCollection.set([
+    { id: 1, title: ‘go to Jamaica.’, completed: true },
+    { id: 2, title: ‘go to China.’, completed: false },
+    { id: 4, title: ‘go to Disney World.’, completed: false }
+]);
+```</p>
+
+<p>Vider une Collection : <code>myCollection.reset()</code></p>
+
+<p>Ecouter le vidage d’une Collection : myCollection.on(“reset”, function)</p>
+
+<p>Faire un <code>set()</code> d’une Collection peut provoquer des <code>remove()</code> ou <code>add()</code> en fonction de ce qui est setté</p>
+
+<p>Fonctionnalités hérité d’Underscore :
+- <code>forEach</code>
+- <code>sortBy</code>
+- <code>map</code>
+- <code>min/max</code> :
+<code>
+Todos.max(function(model){
+  return model.id;
+}).id;
+</code>
+- <code>pluck</code></p>
+
+<p><code>chain()</code> permet de chainer l’appel de fonction sur une Collection</p>
+
+<p>```
+var collection = new Backbone.Collection([
+  { name: ‘Tim’, age: 5 },
+  { name: ‘Ida’, age: 26 },
+  { name: ‘Rob’, age: 55 }
+]);</p>
+
+<p>var filteredNames = collection.chain() // start chain, returns wrapper around collection’s models
+  .filter(function(item) { return item.get(‘age’) &gt; 10; }) // returns wrapped array excluding Tim
+  .map(function(item) { return item.get(‘name’); }) // returns wrapped array containing remaining names
+  .value(); // terminates the chain and returns the resulting array</p>
+
+<p>console.log(filteredNames); // logs: [‘Ida’, ‘Rob’]
+```</p>
+
+<h2 id="persistence-restful">Persistence RESTful</h2>
+
+<h3 id="rcuprr-un-model-du-serveur">Récupérér un Model du serveur</h3>
+
+<p><code>Collection.fetch()</code> retrouve un ensemble de Models du server sous la form d’un tableau JSON en envoyant une requête HTTP GET vers l’URL spécifié par la propriété <code>url</code> de la Collection. Quand les données sont récupérées, la fonction <code>set()</code> va être exécuté pour mettre à jour la Collection.</p>
+
+<h3 id="sauvegarder-un-model-sur-le-serveur">Sauvegarder un Model sur le serveur</h3>
+
+<p>On utilise la méthode <code>save()</code> du Model que l’on veut sauvegarder.
+- Quand <code>save()</code> est appelé sur un Model qui a été récupérer du serveur avec la méthode <code>fetch()</code>, un requête HTTP PUT est envoyée.
+- Si le Model est une nouvelle instance, une requête HTTP POST est envoyé à l’URL de la Collection.</p>
+
+<h3 id="supprimer-un-model-du-serveur">Supprimer un Model du serveur</h3>
+
+<p>Avec <code>destroy()</code> : envoie une requête HTTP DELETE</p>
+
+<h3 id="options">Options</h3>
+
+<p>Il est possible de passer seulement les choses que l’on veut mettre à jour dans un Model et pas forcememnt tout le Model (requête HTTP PATCH). Par exemple :
+<code>
+// Sauvegarde partielle avec PATCH
+model.clear().set({id: 1, a: 1, b: 2, c: 3, d: 4});
+model.save();
+model.save({b: 2, d: 4}, {patch: true});
+console.log(this.syncArgs.method);
+// 'patch'
+</code></p>
+
+<h2 id="events">Events</h2>
+
+<h3 id="on-off-trigger">on() off() trigger()</h3>
+
+<p><code>Backbone.Events</code> peut donner à un objet la capacité de lié et déclencher des événements personnalisés.</p>
+
+<p><code>on()</code> lie une fonction callback à un objet. Le callback est appelé à chaque fois que l’événement est déclenché.</p>
+
+<p>```
+var myObject = {};</p>
+
+<p>// Mixin
+_.extend(myObject, Backbone.Events);</p>
+
+<p>// Ajouter un événement personnalisé
+myObject.on(‘dance’, function(msg){
+  console.log(‘Déclenchement de ‘ + msg);
+});</p>
+
+<p>// Trigger the custom event
+myObject.trigger(‘dance’, ‘our event’);
+```</p>
+
+<p><code>off()</code> supprime toutes les fonctions de callback sur un objet</p>
+
+<p><code>
+// Removes event bound to the object
+myObject.off("dance:tap");
+</code></p>
+
+<p>Pour supprimer une callback en particulier :</p>
+
+<p>```
+var ourObject = {};</p>
+
+<p>// Mixin
+_.extend(ourObject, Backbone.Events);</p>
+
+<p>function dancing (msg) { console.log(“We are dancing. “ + msg); }
+function jumping (msg) { console.log(“We are jumping. “ + msg); }</p>
+
+<p>// Add two listeners to the same event
+ourObject.on(“move”, dancing);
+ourObject.on(“move”, jumping);</p>
+
+<p>// Trigger the events. Both listeners are called.
+ourObject.trigger(“move”, “Yeah!”);</p>
+
+<p>// Removes specified listener
+ourObject.off(“move”, dancing);</p>
+
+<p>// Trigger the events again. One listener left.
+ourObject.trigger(“move”, “Yeah, jump, jump!”);
+```</p>
+
+<p><code>trigger()</code> peut passer plusieurs arguments à une fonction callback</p>
+
+<p>```
+var ourObject = {};</p>
+
+<p>// Mixin
+_.extend(ourObject, Backbone.Events);</p>
+
+<p>function doAction (action, duration) {
+  console.log(“We are “ + action + ‘ for ‘ + duration ); 
+}</p>
+
+<p>// Add event listeners
+ourObject.on(“dance”, doAction);
+ourObject.on(“jump”, doAction);
+ourObject.on(“skip”, doAction);</p>
+
+<p>// Passing multiple arguments to single event
+ourObject.trigger(“dance”, ‘dancing’, “5 minutes”);</p>
+
+<p>// Passing multiple arguments to multiple events
+ourObject.trigger(“dance jump skip”, ‘on fire’, “15 minutes”);
+```</p>
+
+<p><code>listenTo()</code> et <code>stopListening()</code> permet à un objet {d’écouter/ arrêter d’écouter} les événements sur un autre objet.</p>
+
+<p><em>Chaque fois qu’on fait <code>on()</code> sur un objet on doit faire aussi <code>off()</code></em>, sinon quand on supprimer un Model il va rester en mémoire. <code>View.remove()</code> fait un appel à <code>stopListening()</code> afin de s’assurer que tous les écouteurs sont déliées.</p>
+
+<h3 id="events-et-views">Events et Views</h3>
+
+<p>2 types d’événements peuvent être lié à une View :
+- événements DOM (via jQuery.on() this va faire référence à l’objet DOM)
+- événements déclenché via une API Event (via la propriété events{} this fait référence à la View)</p>
+
+<h2 id="routers">Routers</h2>
+
+<p>Connecte des URLs à des parties de l’application. Nécessaire si tu veux que certaines parties de ton application soient : mise dans les favoris, partageable, si tu veux pouvoir faire un Back avec le bouton back du navigateur.</p>
+
+<p><code>
+var TodoRouter = Backbone.Router.extend({
+	routes: {
+		"search/:query/p:page" : "searchTodos"
+		// http://example.com/#search/job/p1
+	}
+});
+var myTodoRouter = new TodoRouter();
+</code>
+<code>Backbone.history.start();</code> dit à Backbone qu’il fait observer tout changement de hash dans l’URL (d’où le /# hyper vitale)</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[4 questions à se poser avant de commencer un projet Backbone]]></title>
+    <link href="http://ptitgraig.github.io/blog/2014/01/30/4-questions-a-se-poser-avant-de-commencer-un-projet-backbone/"/>
+    <updated>2014-01-30T10:45:00+01:00</updated>
+    <id>http://ptitgraig.github.io/blog/2014/01/30/4-questions-a-se-poser-avant-de-commencer-un-projet-backbone</id>
+    <content type="html"><![CDATA[<p class="foreword">
+Vous avez choisi de développer votre dernière super application web avec Backbone. Avant de vous lancer tête baissée dans le développement, réfléchissez à ces 4 questions afin de savoir si Backbone est ce qu'il vous faut.
+</p>
+<!-- more -->
+<hr />
+
+<p>Question 1 : Comment vais-je structurer les vues et les controlleurs imbriquées ?</p>
+
+<p>Malheureusement il ne semble pas y avoir de bonne pratique dans ce domaine et cela semble bien dépendre des cas d’utilisation.</p>
+
+<p>Question 2 : Comment vais-je tester les vues ?</p>
+
+<p>Backbone ne vient pas avec des outils de tests, il vous faudra les fabriquer vous même. Pour les vues, c’est difficile; si difficile que de nombreuses personnes ne se fatiguent pas avec ça.</p>
+
+<p>Question 3 : Pourquoi mon application a t-elle des fuites de mémoires ?</p>
+
+<p>Dans les Single-Page-Webapp , les objets peuvent demeurer en mémoire un bon moment, plutôt que d’être recréer quand la page est rafraichie. C’est très utile mais vous devez vous assurez que ces objets sont bien utilisez et ne consomme pas inutilement de la mémoire.</p>
+
+<p>Question 4 : Pourquoi est-ce que le rendu de mon application est si lent ?</p>
+
+<p>Avec Backbone, il est vraiment facile de faire de petites mise à jour du DOM pour chaque interaction de l’utilisateur. Dès que vous traitez un large ensemble de données, l’expérience utilisateur est altérée.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Créer un blog avec Octopress 100% gratuit, pour les nuls]]></title>
+    <link href="http://ptitgraig.github.io/blog/2013/08/07/installer-octopress-en-10-etapes/"/>
+    <updated>2013-08-07T00:50:00+02:00</updated>
+    <id>http://ptitgraig.github.io/blog/2013/08/07/installer-octopress-en-10-etapes</id>
+    <content type="html"><![CDATA[<h2 id="introduction">Introduction</h2>
+
+<p><code>
+$ git clone git@github.com:imathis/octopress.git # fork octopress
+</code></p>
+
+<p>Octopress est un moteur de blog statique. Qui dit statique, dit plusieurs avantages :</p>
+
+<ol>
+  <li>Léger</li>
+  <li>Pas d’appels à une base de donnée</li>
+  <li>Pas de script côté serveur</li>
+  <li>Du coup c’est super rapide !!</li>
+</ol>
+
+<p>Si vous êtes débutant, cette page est pour vous. Dans 15 étapes, vous aurez votre blog statique prêt à l’emploi.</p>
+
+<h2 id="installation-doctopress-sous-mac-osx-lion">Installation d’Octopress sous Mac OSX Lion</h2>
+
+<ol>
+  <li>Ouvrir le terminal, puis saisir Terminal : Ctrl+espace, puis Terminal dans l’invite de recherche.</li>
+  <li>Installer Xcode. Dans l’appStore, chercher xcode. Cliquer sur le bouton “gratuit” (oui c’est gratuit :).</li>
+  <li>Une fois installé, lancer Xcode</li>
+  <li>Dans le menu, Xcode &gt; Préférences &gt; Downloads, puis cliquer sur le bouton “install” en face de la ligne “Command Line Tool”</li>
+  <li>
+    <p>Installer RVM. Dans le Terminal, lancer la commande suivante :</p>
+
+    <p><code>curl -L https://get.rvm.io | bash -s stable --ruby</code></p>
+  </li>
+  <li>Suivre les instructions proposées</li>
+  <li>
+    <p>Installer Ruby 1.9.3</p>
+
+    <p><code>rvm install 1.9.3
+ rvm use 1.9.3
+ rvm rubygems latest</code></p>
+  </li>
+  <li>
+    <p>Dans le terminal, verifier que 1.9.3 est bien la dernière version, saisissez</p>
+
+    <p><code>ruby --version</code></p>
+  </li>
+  <li>
+    <p>Installer Octopress, dans le Terminal, saisissez les lignes suivantes dans le Terminal:</p>
+
+    <p><code>git clone git://github.com/imathis/octopress.git octopress
+ cd octopress    # Vous utilisez RVM, On vous demandera de faire confiance au fichier .rvmrc (dites oui en tappant y).
+ ruby --version  # Ruby 1.9.3 devrait s'afficher</code></p>
+  </li>
+  <li>
+    <p>Installer les dépendances: saisir les commandes suivantes dans le Terminal</p>
+
+    <p><code>gem install bundler
+rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
+bundle install</code></p>
+  </li>
+  <li>
+    <p>Installer le thème d’Octopress par défaut</p>
+
+    <p><code>rake install</code></p>
+  </li>
+  <li>Installer Octopress avec les pages utilisateurs GitHub.<br />
+Se rendre sur <a href="http://www.github.com/">le site de GitHub</a> et créer un compte gratuitement. </li>
+</ol>
+
+]]></content>
+  </entry>
+  
+</feed>

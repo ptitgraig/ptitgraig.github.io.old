@@ -1,0 +1,238 @@
+
+<!doctype html>
+<!-- START OF _layouts/default.html test -->
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" >
+		<meta content="width=device-width,initial-scale=1" name="viewport">
+		<meta content="" name="description">
+		<meta content="Gorille Gris" name="author">
+		
+		<title>Comment bien calculer le poids d'un selecteur CSS &mdash; Gorille Gris</title>
+		
+		<!-- Styles -->
+		<link href="/stylesheets/main.css" rel="stylesheet">
+		<!-- Google web fonts -->
+		<link href='http://fonts.googleapis.com/css?family=Lobster|Goudy+Bookletter+1911|Oswald:300' rel='stylesheet' type='text/css'>
+		<link href="/stylesheets/prettify-hemisu.css" type="text/css" rel="stylesheet" />
+		
+		<!--<link href="http://feeds.feedburner.com/turkeltaub" rel="alternate" title="Gorille Gris" type="application/rss+xml" />-->
+		
+	</head>
+	<body onload="prettyPrint()">
+	
+		<div class="wrap">
+	
+			<header>
+				<div class="title"><a href="">Gorille Gris</a></div>
+				<div class="navi">
+					<ul>
+						<li><a href="/blog/categories/dev">Dév</a></li>
+						<li><a href="/blog/categories/theologie">Théologie</a></li>
+						<li><a href="/blog/categories/lectures">Lectures</a></li>
+						<li><a href="/a-propos.html">&Agrave; propos</a></li>
+					<ul>
+				</div> <!-- // .navi -->
+			</header>
+		
+				<!-- START OF _layouts/post.html -->
+
+
+  
+  	<header>
+  		<h1>Comment bien calculer le poids d'un selecteur CSS</h1>
+  
+	<time>18 June 2014</time>
+  </header>
+
+
+<div class="entry-content"><p class="foreword">
+Voici un article qui vous expliquera le poids des CSS. Cela est utile quand vous voulez surcharger un style, comprendre quel style s&#8217;applique à quel élément et pourquoi un style s&#8217;applique plutôt qu&#8217;un autre.
+</p>
+<!-- more -->
+<hr />
+
+<p>Quand vous reprenez un projet existant, qui date déjà un peu, vous vous retrouvez souvent avec des déclarations CSS à rallonge et ne savait plus quoi s’applique à quoi.</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="class">.container</span> <span class="class">.info</span><span class="class">.test</span> <span class="class">.spanner</span> <span class="class">.wrapper</span> <span class="class">.block</span> <span class="tag">div</span><span class="class">.pictos</span> <span class="id">#jailanausee</span> { <span class="key">color</span> : <span class="color">#000</span>; }
+</pre></div>
+</div>
+</div>
+
+<p>Pour éviter je genre de massacre, il est d’une extrème importance de comprendre quel style va s’appliquer à quel élement, et dans quel ordre.
+Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le combat et s’appliquer au span. Quelle va être la couleur du texte du span : rouge, bleu, vert ou jaune ?</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="id">#idSpan</span> { <span class="key">color</span>: <span class="value">red</span>; }
+<span class="tag">span</span><span class="class">.class-span</span> { <span class="key">color</span>: <span class="value">orange</span>; }
+<span class="class">.bloc</span><span class="class">.info</span> <span class="tag">span</span> { <span class="key">color</span>: <span class="value">yellow</span>; }
+<span class="class">.container</span> <span class="class">.bloc</span><span class="class">.info</span> <span class="class">.class-txt</span> <span class="tag">span</span><span class="class">.class-span</span> { <span class="key">color</span>: <span class="value">green</span>; }
+<span class="tag">span</span> { <span class="key">color</span>: <span class="value">blue</span> <span class="important">!important</span> }
+</pre></div>
+</div>
+</div>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">container</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">block info</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">class-span</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">idSpan</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">style</span>=<span class="string"><span class="delimiter">&quot;</span><span class="key">color</span>:<span class="value">purple</span>;<span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+            je suis d'une certaine couleur
+        <span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+</pre></div>
+</div>
+</div>
+
+<p>La réponse est bleu ! <a href="http://jsfiddle.net/ptitgraig/L8CUS/2/">La preuve ici</a>.</p>
+
+<p>Voici un court explicatif de l’ordre d’application des styles sur le span.</p>
+
+<table>
+	
+		<td>
+			!important
+		</td>
+		<td>
+			attribut style (style=&#8221;&#8220;)
+		</td>
+		<td>
+			nombre d&#8217;id (#)
+		</td>
+		<td>
+			nombre de classes (.)
+		</td>
+		<td>
+			nombre de balises
+		</td>
+	
+	<tr>
+		<td>
+			gagne sur tous les autres style, même seul
+		</td>
+		<td>
+			0 .. n
+		</td>
+		<td>
+			0 .. n
+		</td>
+		<td>
+			0 .. n
+		</td>
+		<td>
+			0 .. n
+		</td>
+	</tr>
+</table>
+
+<p>Au final, vous vous trouvez avec un chiffre entre 0 et 19999. Reprenons notre exemple de départ. Sachant que l’attribut style s’applique toujours et annule les autres, nous allons nous en affranchir pour l’exemple.</p>
+
+<table>
+	<tr>
+		<th>Déclaration CSS</th>
+		<th>!important</th>
+		<th>nombre d&#8217;id (#)</th>
+		<th>nombre de classes (.)</th>
+		<th>nombre de balises</th>
+		<th>poids</th>
+	</tr>
+	<tr>
+		<td>#idSpan</td>
+		<td>0</td>
+		<td>1</td>
+		<td>0</td>
+		<td>0</td>
+		<td>0100</td>
+	</tr>
+	<tr>
+		<td>span.class-span</td>
+		<td>0</td>
+		<td>0</td>
+		<td>1</td>
+		<td>1</td>
+		<td>0011</td>
+	</tr>
+	<tr>
+		<td>.bloc.info span</td>
+		<td>0</td>
+		<td>0</td>
+		<td>2</td>
+		<td>1</td>
+		<td>0021</td>
+	</tr>
+	<tr>
+		<td>.container .bloc.info .class-txt span.class-span</td>
+		<td>0</td>
+		<td>0</td>
+		<td>5</td>
+		<td>1</td>
+		<td>0051</td>
+	</tr>
+	<tr>
+		<td>span (avec !important)</td>
+		<td>1</td>
+		<td>0</td>
+		<td>0</td>
+		<td>1</td>
+		<td>1001</td>
+	</tr>
+</table>
+
+<p>Au final vous voyez l’ordre d’importance se déssiner :</p>
+
+<ol>
+  <li>span (avec !important) /* 1001 */</li>
+  <li>#idSpan /* 0100 */</li>
+  <li>.container .bloc.info .class-txt span.class-span /* 0051 */</li>
+  <li>.bloc.info span /* 0021 */</li>
+  <li>span.class-span /* 0011 */</li>
+</ol>
+
+</div>
+
+
+
+
+<!-- END OF _/layouts/post.html -->
+
+
+			<footer>
+				Copyright &copy; 2015
+
+	Grégory Pelletey
+
+
+			</footer>
+			
+		</div> <!-- // .wrap -->
+	</body>
+	<!-- jQuery and plugins -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  	<script>!window.jQuery && document.write(unescape('%3Cscript src="/js/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  	<script src="/js/octopress.js" type="text/javascript"></script>
+	<script src="/js/jquery.zclip.min.js"></script>
+	<!-- Syntax highlighter -->
+	<script type="text/javascript" src="/js/prettify.js"></script>
+	<script>
+		$(document).ready(function() {
+			// Prettify code
+			$('code').addClass('prettyprint');
+			$('pre code').addClass('linenums');
+			
+			// Copy to clipboard with button
+			$('pre:has(code)').prepend(function(){
+				return '<div class="clip-btn">copy to clipboard</div>';
+			});
+			$('.clip-btn').zclip({
+				path:'/js/ZeroClipboard.swf',
+				copy: $(this).next('code').text(),
+				afterCopy: function(){
+					$(this).replaceWith('<div class="clip-btn">copied!');
+					}
+			});
+		});
+	</script>
+</html>
+<!-- END OF _layouts/default.html -->
