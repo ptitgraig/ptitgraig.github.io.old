@@ -47,7 +47,37 @@
   </header>
 
 
-<div class="entry-content">
+<div class="entry-content"><p class="foreword">
+Fonctionnement basique du framework JAVA Spring MVC. Très bon pour la culture générale d&#8217;un développeur front.
+</p>
+<!-- more -->
+<hr />
+
+<h2 id="fonctionnement">Fonctionnement</h2>
+
+<p>Le framework Spring Web MVC est conçu autour d’une DispatcherServlet qui gère toutes les requêtes et réponses HTTP. Illustration ci-dessous :</p>
+
+<p><img src="/images/spring_dispatcherservlet.png" /></p>
+
+<ol>
+  <li>
+    <p>Après avoir reçu une requête HTTP, DispatchServlet consulte le HandlerMapping pour appeler le Controller approprié.</p>
+  </li>
+  <li>
+    <p>Le Controller analyse la requête et apelle le la méthode du service appropriée, basé l’utilisation des méthodes POST ou GET. La méthode du service initialisera les données du model sur la base d’une logique business puis retournera ne nom de la vue à la DispatcherServlet</p>
+  </li>
+  <li>
+    <p>La DispatcherServlet s’appuiera sur la ViewResolver pour choisir la bonne vue pour la requête</p>
+  </li>
+  <li>
+    <p>Une fois que la vue est finalisée, la DispatcherServlet passe les données du model à la vue, cette dernière étant finalement affichée sur le navigateur.</p>
+  </li>
+</ol>
+
+<p>Tous les composants mentionnés ci-dessus (HandlerMapping, Controller et ViewResolver) font partis du WebApplicationContext, lequel est une extention du ApplicationContext auquel on a ajouté quelques caractéristiques supplémentaires pour les applications web.</p>
+
+<h2 id="spring-mvc-pour-faire-du-rest">Spring MVC pour faire du REST</h2>
+
 </div>
 
 

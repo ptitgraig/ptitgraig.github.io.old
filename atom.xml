@@ -4,7 +4,7 @@
 	<title><![CDATA[Gorille Gris]]></title>
 	<link href="http://ptitgraig.github.io/atom.xml" rel="self"/>
 	<link href="http://ptitgraig.github.io/"/>
-	<updated>2015-01-05T13:01:28+01:00</updated>
+	<updated>2015-01-05T17:22:22+01:00</updated>
 	<id>http://ptitgraig.github.io/</id>
 	<author>
 		<name><![CDATA[Grégory Pelletey]]></name>
@@ -12,6 +12,56 @@
 	</author>
 	<generator uri="http://octopress.org/">Octopress</generator>
 
+	
+	<entry>
+		
+			<title type="html"><![CDATA[S'y retrouver dans les outils de test Javascript]]></title>
+		
+		<link href="http://ptitgraig.github.io/blog/2015/01/05/sy-retrouver-dans-les-outils-de-test-javascript/"/>
+		<updated>2015-01-05T14:21:00+01:00</updated>
+		<id>http://ptitgraig.github.io/blog/2015/01/05/sy-retrouver-dans-les-outils-de-test-javascript</id>
+		<content type="html">
+			<![CDATA[
+				
+					<p></p>
+				
+			]]>
+			<![CDATA[<p class="foreword">
+Entre Jasmine, Sinon.js, Karma, QUnit tu ne sais plus où donner de la tête ? Voici un bref récapitulatif des outils pour tester du Javascript.
+</p>
+<!-- more -->
+<hr />
+
+<h2 id="dfinitions">Définitions</h2>
+
+<h3 id="les-frameworks-de-test">Les frameworks de test</h3>
+
+<h3 id="les-bibliotques-dassertions">Les bibliotèques d’assertions</h3>
+
+<p>Une assertion est un énoncé considéré comme vrai.</p>
+
+<h3 id="test-driven-development-tdd">Test-Driven Development (TDD)</h3>
+
+<h3 id="business-driven-development-bdd">Business-Driven Development (BDD)</h3>
+
+<h2 id="les-outils">Les outils</h2>
+
+<h3 id="jasmine">Jasmine</h3>
+
+<h3 id="mocha">Mocha</h3>
+
+<h3 id="sinonjs">sinon.js</h3>
+
+<h3 id="shouldjs">should.js</h3>
+
+<h3 id="expectjs">expect.js</h3>
+
+<h3 id="chaijs">chai.js</h3>
+
+<h3 id="qunit">qUnit</h3>
+]]>
+		</content>
+	</entry>
 	
 	<entry>
 		
@@ -26,7 +76,37 @@
 					<p></p>
 				
 			]]>
-			<![CDATA[
+			<![CDATA[<p class="foreword">
+Fonctionnement basique du framework JAVA Spring MVC. Très bon pour la culture générale d&#8217;un développeur front.
+</p>
+<!-- more -->
+<hr />
+
+<h2 id="fonctionnement">Fonctionnement</h2>
+
+<p>Le framework Spring Web MVC est conçu autour d’une DispatcherServlet qui gère toutes les requêtes et réponses HTTP. Illustration ci-dessous :</p>
+
+<p><img src="http://ptitgraig.github.io/images/spring_dispatcherservlet.png" /></p>
+
+<ol>
+  <li>
+    <p>Après avoir reçu une requête HTTP, DispatchServlet consulte le HandlerMapping pour appeler le Controller approprié.</p>
+  </li>
+  <li>
+    <p>Le Controller analyse la requête et apelle le la méthode du service appropriée, basé l’utilisation des méthodes POST ou GET. La méthode du service initialisera les données du model sur la base d’une logique business puis retournera ne nom de la vue à la DispatcherServlet</p>
+  </li>
+  <li>
+    <p>La DispatcherServlet s’appuiera sur la ViewResolver pour choisir la bonne vue pour la requête</p>
+  </li>
+  <li>
+    <p>Une fois que la vue est finalisée, la DispatcherServlet passe les données du model à la vue, cette dernière étant finalement affichée sur le navigateur.</p>
+  </li>
+</ol>
+
+<p>Tous les composants mentionnés ci-dessus (HandlerMapping, Controller et ViewResolver) font partis du WebApplicationContext, lequel est une extention du ApplicationContext auquel on a ajouté quelques caractéristiques supplémentaires pour les applications web.</p>
+
+<h2 id="spring-mvc-pour-faire-du-rest">Spring MVC pour faire du REST</h2>
+
 ]]>
 		</content>
 	</entry>
