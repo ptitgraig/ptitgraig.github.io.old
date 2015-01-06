@@ -43,6 +43,32 @@
 		
   
   	<header class="index">
+  		<h1><a href="/blog/2013/09/17/un-dieu-missionnaire/">Un Dieu missionnaire</a></h1>
+  
+	<time>17 September 2013</time>
+  </header>
+
+
+<div class="index">
+  	<div class="entry-content"><p>« Notre Dieu est un Dieu missionnaire ». Telle est l’affirmation que nous pouvons entendre parfois dans les églises.
+Essayons d’éprouver un peu cette affirmation.</p>
+
+</div>
+  	
+  	
+    <footer>
+      <a rel="full-article" href="">Lire la suite &rarr;</a>
+    </footer>
+  	
+</div>
+
+
+
+	
+		
+		
+  
+  	<header class="index">
   		<h1><a href="/blog/2013/09/17/prouver-la-trinite/">Prouver la trinité, Bible en main</a></h1>
   
 	<time>17 September 2013</time>
@@ -77,8 +103,11 @@ doctrine de la Trinité peut se définir en 3 points fondamentaux inséparables.
 <div class="index">
   	<div class="entry-content"><h2 id="introduction">Introduction</h2>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">$ git clone git@github.com:imathis/octopress.git # fork octopress</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre>$ git clone git@github.com:imathis/octopress.git # fork octopress
+</pre></div>
+</div>
+</div>
 
 <p>Octopress est un moteur de blog statique. Qui dit statique, dit plusieurs avantages :</p>
 
@@ -94,47 +123,91 @@ doctrine de la Trinité peut se définir en 3 points fondamentaux inséparables.
 <h2 id="installation-doctopress-sous-mac-osx-lion">Installation d’Octopress sous Mac OSX Lion</h2>
 
 <ol>
-  <li>Ouvrir le terminal, puis saisir Terminal : Ctrl+espace, puis Terminal dans l’invite de recherche.</li>
-  <li>Installer Xcode. Dans l’appStore, chercher xcode. Cliquer sur le bouton “gratuit” (oui c’est gratuit :).</li>
-  <li>Une fois installé, lancer Xcode</li>
-  <li>Dans le menu, Xcode &gt; Préférences &gt; Downloads, puis cliquer sur le bouton “install” en face de la ligne “Command Line Tool”</li>
+  <li>
+    <p>Ouvrir le terminal, puis saisir Terminal : Ctrl+espace, puis Terminal dans l’invite de recherche.</p>
+  </li>
+  <li>
+    <p>Installer Xcode. Dans l’appStore, chercher xcode. Cliquer sur le bouton “gratuit” (oui c’est gratuit :).</p>
+  </li>
+  <li>
+    <p>Une fois installé, lancer Xcode</p>
+  </li>
+  <li>
+    <p>Dans le menu, Xcode &gt; Préférences &gt; Downloads, puis cliquer sur le bouton “install” en face de la ligne “Command Line Tool”</p>
+  </li>
   <li>
     <p>Installer RVM. Dans le Terminal, lancer la commande suivante :</p>
-
-    <p><code>curl -L https://get.rvm.io | bash -s stable --ruby</code></p>
   </li>
-  <li>Suivre les instructions proposées</li>
+</ol>
+
+<div><div class="CodeRay">
+  <div class="code"><pre>curl -L https://get.rvm.io | bash -s stable --ruby
+</pre></div>
+</div>
+</div>
+
+<ol>
+  <li>
+    <p>Suivre les instructions proposées</p>
+  </li>
   <li>
     <p>Installer Ruby 1.9.3</p>
-
-    <p><code>rvm install 1.9.3
- rvm use 1.9.3
- rvm rubygems latest</code></p>
   </li>
-  <li>
-    <p>Dans le terminal, verifier que 1.9.3 est bien la dernière version, saisissez</p>
+</ol>
 
-    <p><code>ruby --version</code></p>
-  </li>
-  <li>
-    <p>Installer Octopress, dans le Terminal, saisissez les lignes suivantes dans le Terminal:</p>
+<div><div class="CodeRay">
+  <div class="code"><pre>rvm install 1.9.3
+rvm use 1.9.3
+rvm rubygems latest
+</pre></div>
+</div>
+</div>
 
-    <p><code>git clone git://github.com/imathis/octopress.git octopress
- cd octopress    # Vous utilisez RVM, On vous demandera de faire confiance au fichier .rvmrc (dites oui en tappant y).
- ruby --version  # Ruby 1.9.3 devrait s'afficher</code></p>
-  </li>
-  <li>
-    <p>Installer les dépendances: saisir les commandes suivantes dans le Terminal</p>
+<ol>
+  <li>Dans le terminal, verifier que 1.9.3 est bien la dernière version, saisissez</li>
+</ol>
 
-    <p><code>gem install bundler
+<div><div class="CodeRay">
+  <div class="code"><pre>ruby --version
+</pre></div>
+</div>
+</div>
+
+<ol>
+  <li>Installer Octopress, dans le Terminal, saisissez les lignes suivantes dans le Terminal:</li>
+</ol>
+
+<div><div class="CodeRay">
+  <div class="code"><pre>git clone git://github.com/imathis/octopress.git octopress
+cd octopress    # Vous utilisez RVM, On vous demandera de faire confiance au fichier .rvmrc (dites oui en tappant y).
+ruby --version  # Ruby 1.9.3 devrait s'afficher
+</pre></div>
+</div>
+</div>
+
+<ol>
+  <li>Installer les dépendances: saisir les commandes suivantes dans le Terminal</li>
+</ol>
+
+<div><div class="CodeRay">
+  <div class="code"><pre>gem install bundler
 rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
-bundle install</code></p>
-  </li>
-  <li>
-    <p>Installer le thème d’Octopress par défaut</p>
+bundle install
+</pre></div>
+</div>
+</div>
 
-    <p><code>rake install</code></p>
-  </li>
+<ol>
+  <li>Installer le thème d’Octopress par défaut</li>
+</ol>
+
+<div><div class="CodeRay">
+  <div class="code"><pre>rake install
+</pre></div>
+</div>
+</div>
+
+<ol>
   <li>Installer Octopress avec les pages utilisateurs GitHub.<br />
 Se rendre sur <a href="http://www.github.com/">le site de GitHub</a> et créer un compte gratuitement. </li>
 </ol>

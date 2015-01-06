@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Dev | Gorille Gris]]></title>
   <link href="http://ptitgraig.github.io/blog/categories/dev/atom.xml" rel="self"/>
   <link href="http://ptitgraig.github.io/"/>
-  <updated>2015-01-05T17:23:13+01:00</updated>
+  <updated>2015-01-06T10:50:25+01:00</updated>
   <id>http://ptitgraig.github.io/</id>
   <author>
     <name><![CDATA[Grégory Pelletey]]></name>
@@ -12,6 +12,121 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Les pours et contres des frameworks JS]]></title>
+    <link href="http://ptitgraig.github.io/blog/2015/01/05/les-pours-et-contres-des-frameworks-js/"/>
+    <updated>2015-01-05T18:04:00+01:00</updated>
+    <id>http://ptitgraig.github.io/blog/2015/01/05/les-pours-et-contres-des-frameworks-js</id>
+    <content type="html"><![CDATA[<p class="foreword">
+Les pours et les contres des framework BackboneJS, AngularJS, EXTJS, EmberJS : pour t'aider à choisir dans cette jungle.
+</p>
+<!-- more -->
+<hr />
+
+<h1 id="backbonejs">Backbone.js</h1>
+
+<p>Pours :</p>
+
+<ul>
+  <li>
+    <p>Simplicité - seulement 4 composants (Collection, Model, View, Router).</p>
+  </li>
+  <li>
+    <p>Très grosse communauté et beaucoup de solutions sur Stackoverflow.</p>
+  </li>
+  <li>
+    <p>Couche supérieures codés intelligemment comme Marionnette et Vertebae.</p>
+  </li>
+  <li>
+    <p>L’architecture de ton application peut être personnalisée.</p>
+  </li>
+  <li>
+    <p>Léger et mis à jour régulièrement. S’entend bien avec Underscore, jQuery/Zepto - des librairies très répendues.</p>
+  </li>
+  <li>
+    <p>Fourni un niveau d’ abstraction suffisant avec prise de position raisonnable, permettant une adapation au plus proche des besoins du projet.</p>
+  </li>
+  <li>
+    <p>Facile à prendre en main, offrant un bon tremplin pour les framework MV* Javascript.</p>
+  </li>
+  <li>
+    <p>Compatibilité avec d’anciens navigateurs : IE7, 8 t même 6 (on osera tout de même pas aller jusque là).</p>
+  </li>
+</ul>
+
+<p>Contres :</p>
+
+<ul>
+  <li>
+    <p>La méthode extend copie le contenu de l’objet parent dans une nouvel objet. Bénéficier de l’héritage prototypal aurait été préférable.</p>
+  </li>
+  <li>
+    <p>Manque de cas réel d’utilisation dans la documentation</p>
+  </li>
+  <li>
+    <p>L’application TODO met le pied à l’étrier mais il y a encore beaucoup à apprendre après pour construire de grosses applications.</p>
+  </li>
+  <li>
+    <p>La quantité de didacticiels sur comment faire les choses avec Backbone n’est pas cohérente et décrivrent des choses à différentes périodes de la vie de Backbone. Dand une équipe, des développeurs peuvent coder les choses à la façcon Backbone 0.3 alors que nous en sommes à une version antérieur à 1.</p>
+  </li>
+  <li>
+    <p>Quelques reserves sur Backbone.sync qui pose contient dans son code des hypothèses concernant les communications typique HTTP déclenché par un clien. Ca ne s’adapte pas bien à la nature des WebSockets.</p>
+  </li>
+  <li>
+    <p>Il n’y a pas, par défaut, de binding de view. Un re-rendu de la view alors qu’une simple propriété change semble être un peu du gâchi.</p>
+  </li>
+</ul>
+
+<h1 id="angularjs">Angular.js</h1>
+
+<p>Pours : </p>
+
+<ul>
+  <li>
+    <p>Two-way data binding (système de liaison des données en deux sens) est extremement puissant. On pense donc d’avantage au model et à son état qu’à une série d’événements à déclencher. Le model est la seul source de vérité.</p>
+  </li>
+  <li>
+    <p>Performance. AngularJS coûte peu en téléchargement. Son moteur de template utilise les noeuds du DOM au lieu de convertir des String en noeud. Ce qui doit améliorer les performances.</p>
+  </li>
+  <li>
+    <p>Si tu cibles les navigateurs récents et que tu ne te soucis pas, ou peu, des anciens navigateurs, tu peux supprimer jQuery de tes dépendances.</p>
+  </li>
+  <li>
+    <p>Intuitif, excellente documentation. Système de liaison des données ingénieux : Vue (view) HTML, portées (scope) imbriquées.</p>
+  </li>
+  <li>
+    <p>Une extension Chrome, Batarang, qui fourni un accès en direct aux structures de données Angular.</p>
+  </li>
+  <li>
+    <p>Minimisation du code de réutilisable (boilerplate code). Permet la réutilisation du code grâce à des composants. Etend la syntaxe HTML de sorte que de nombreuses fonctionnalités complexes finissent par êre aussi simple que la mise en place d’une directive (attribut) dans le code HTML. </p>
+  </li>
+  <li>
+    <p>Très facilement testable grâce au système d’injection de dépendance.</p>
+  </li>
+  <li>
+    <p>Ecrire une application complexe dans jQuery qui manipule le DOM : c’est déjà un petit exploit.</p>
+  </li>
+</ul>
+
+<p>Contres :</p>
+
+<ul>
+  <li>
+    <p>On ne peut pas, d’une manière simplement déclarative, spécifier une transition pour un changement d’UI qui vient d’un changement dans le model.</p>
+  </li>
+  <li>
+    <p>Courbe d’apprentissage plus raide que Backbone, mais le gain est appréciable. </p>
+  </li>
+  <li>
+    <p>La documentation pourrait être améliorée.</p>
+  </li>
+</ul>
+
+<p>Largement inspiré de l’article de Smashing Magazine : 
+<a href="http://www.smashingmagazine.com/2012/07/27/journey-through-the-javascript-mvc-jungle/">Journey Through The JavaScript MVC Jungle</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[S'y retrouver dans les outils de test Javascript]]></title>
@@ -289,22 +404,30 @@ Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le c
 <ul>
   <li>set : pour changer ou initialiser un attribut du Model <code>myModel.set('toto', 'un valeur');</code></li>
   <li>get : pour obtenir la valeur d’un attribut du Model <code>myModel.get('toto');</code></li>
-  <li>validate : permet de valider le model ex :
-<code>
-validate: function(attributes){
-  if(attributes.title === undefined){
-      return "Remember to set a title for your todo.";
-  }
-},
-</code>
-### ecouter si le modèle change : 
-<code>
-this.on('change', function(){ 
-  //faire quelquechose
-});
-</code>
-### ecouter si l’attribut toto du model change : <code>this.on('change:toto')</code></li>
+  <li>validate : permet de valider le model ex :</li>
 </ul>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="function">validate</span>: <span class="keyword">function</span>(attributes){
+    <span class="keyword">if</span>(attributes.title === <span class="predefined-constant">undefined</span>){
+        <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Remember to set a title for your todo.</span><span class="delimiter">&quot;</span></span>;
+    }
+},
+</pre></div>
+</div>
+</div>
+
+<h3 id="ecouter-si-le-modle-change-">ecouter si le modèle change :</h3>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="local-variable">this</span>.on(<span class="string"><span class="delimiter">'</span><span class="content">change</span><span class="delimiter">'</span></span>, <span class="keyword">function</span>(){ 
+    <span class="comment">//faire quelquechose</span>
+});
+</pre></div>
+</div>
+</div>
+
+<h3 id="ecouter-si-lattribut-toto-du-model-change--thisonchangetoto">ecouter si l’attribut toto du model change : <code>this.on('change:toto')</code></h3>
 
 <h2 id="pense-bte-pour-la-view">pense-bête pour la View</h2>
 
@@ -314,11 +437,13 @@ this.on('change', function(){
 
 <p>Colle un template HTML a une vue.</p>
 
-<p><code>
-var view = new Backbone.View;
-view.setElement('&lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;');
-view.el // &lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;
-</code></p>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> view = <span class="keyword">new</span> Backbone.View;
+view.setElement(<span class="string"><span class="delimiter">'</span><span class="content">&lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;</span><span class="delimiter">'</span></span>);
+view.el <span class="comment">// &lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;</span>
+</pre></div>
+</div>
+</div>
 
 <h3 id="render">render()</h3>
 
@@ -332,13 +457,16 @@ view.el // &lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;
 <h2 id="pense-bte-collection">pense-bête Collection</h2>
 
 <h3 id="syntaxe">Syntaxe</h3>
-<p>```
-var Todo = Backbone.Model.extend({});</p>
 
-<p>var TodosCollection = Backbone.Collection.extend({
-  model: Todo
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> Todo = Backbone.Model.extend({});
+
+<span class="keyword">var</span> TodosCollection = Backbone.Collection.extend({
+  <span class="key">model</span>: Todo
 });
-```</p>
+</pre></div>
+</div>
+</div>
 
 <h3 id="ajout-suppression-de-models">Ajout suppression de Models</h3>
 
@@ -348,11 +476,13 @@ var Todo = Backbone.Model.extend({});</p>
 
 <p><code>Collection.get(id)</code> avec id l’id du Model</p>
 
-<p><code>
-var myTodo = new Todo({title:'Read the whole book', id: 2});
-var todos = new TodosCollection([myTodo]);
-var todo2 = todos.get(2);
-</code></p>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> myTodo = <span class="keyword">new</span> Todo({<span class="key">title</span>:<span class="string"><span class="delimiter">'</span><span class="content">Read the whole book</span><span class="delimiter">'</span></span>, <span class="key">id</span>: <span class="integer">2</span>});
+<span class="keyword">var</span> todos = <span class="keyword">new</span> TodosCollection([myTodo]);
+<span class="keyword">var</span> todo2 = todos.get(<span class="integer">2</span>);
+</pre></div>
+</div>
+</div>
 
 <p>Afin d’intentifier le Model récupéré on peut utiliser : <code>id</code> <code>cid</code> <code>idAttribute</code></p>
 
@@ -361,39 +491,43 @@ var todo2 = todos.get(2);
 
 <h3 id="ecouter-des-vnements">Ecouter des événements</h3>
 
-<p><code>
-var TodosCollection = new Backbone.Collection();
-TodosCollection.on("change:title", function(model) {
-    console.log("J'ai changer d'avis, je devrais " + model.get('title'));
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> TodosCollection = <span class="keyword">new</span> Backbone.Collection();
+TodosCollection.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">change:title</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>(model) {
+    console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">J'ai changer d'avis, je devrais </span><span class="delimiter">&quot;</span></span> + model.get(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>));
 });
 TodosCollection.add([
-  { title: 'go to Jamaica.', completed: false, id: 3 },
+  { <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">go to Jamaica.</span><span class="delimiter">'</span></span>, <span class="key">completed</span>: <span class="predefined-constant">false</span>, <span class="key">id</span>: <span class="integer">3</span> },
 ]);
-var myTodo = TodosCollection.get(3);
-myTodo.set('title', 'aller nager');
-</code></p>
+<span class="keyword">var</span> myTodo = TodosCollection.get(<span class="integer">3</span>);
+myTodo.set(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">aller nager</span><span class="delimiter">'</span></span>);
+</pre></div>
+</div>
+</div>
 
 <p>Va afficher : J’ai changer d’avis, je devrais aller nager</p>
 
 <p>On peut écouter si il y a du changement dans une collection (ajout suppression modification) :</p>
 
-<p>```
-TodosCollection.on(“add”, function(model) {
-  console.log(“Ajouté “ + model.get(‘title’));
+<div><div class="CodeRay">
+  <div class="code"><pre>TodosCollection.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">add</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>(model) {
+  console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">Ajouté </span><span class="delimiter">&quot;</span></span> + model.get(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>));
 });
-TodosCollection.on(“remove”, function(model) {
-  console.log(“Supprimé “ + model.get(‘title’));
-});</p>
+TodosCollection.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">remove</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>(model) {
+  console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">Supprimé </span><span class="delimiter">&quot;</span></span> + model.get(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>));
+});
 
-<p>TodosCollection.on(“change:completed”, function(model) {
-  console.log(“Changement de l’attribute completed “ + model.get(‘title’));
+TodosCollection.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">change:completed</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>(model) {
+  console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">Changement de l'attribute completed </span><span class="delimiter">&quot;</span></span> + model.get(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>));
 });
 TodosCollection.set([
-    { id: 1, title: ‘go to Jamaica.’, completed: true },
-    { id: 2, title: ‘go to China.’, completed: false },
-    { id: 4, title: ‘go to Disney World.’, completed: false }
+    { <span class="key">id</span>: <span class="integer">1</span>, <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">go to Jamaica.</span><span class="delimiter">'</span></span>, <span class="key">completed</span>: <span class="predefined-constant">true</span> },
+    { <span class="key">id</span>: <span class="integer">2</span>, <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">go to China.</span><span class="delimiter">'</span></span>, <span class="key">completed</span>: <span class="predefined-constant">false</span> },
+    { <span class="key">id</span>: <span class="integer">4</span>, <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">go to Disney World.</span><span class="delimiter">'</span></span>, <span class="key">completed</span>: <span class="predefined-constant">false</span> }
 ]);
-```</p>
+</pre></div>
+</div>
+</div>
 
 <p>Vider une Collection : <code>myCollection.reset()</code></p>
 
@@ -405,30 +539,38 @@ TodosCollection.set([
 - <code>forEach</code>
 - <code>sortBy</code>
 - <code>map</code>
-- <code>min/max</code> :
-<code>
-Todos.max(function(model){
-  return model.id;
+- <code>min/max</code> :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre>Todos.max(<span class="keyword">function</span>(model){
+  <span class="keyword">return</span> model.id;
 }).id;
-</code>
-- <code>pluck</code></p>
+</pre></div>
+</div>
+</div>
+
+<ul>
+  <li><code>pluck</code></li>
+</ul>
 
 <p><code>chain()</code> permet de chainer l’appel de fonction sur une Collection</p>
 
-<p>```
-var collection = new Backbone.Collection([
-  { name: ‘Tim’, age: 5 },
-  { name: ‘Ida’, age: 26 },
-  { name: ‘Rob’, age: 55 }
-]);</p>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> collection = <span class="keyword">new</span> Backbone.Collection([
+  { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Tim</span><span class="delimiter">'</span></span>, <span class="key">age</span>: <span class="integer">5</span> },
+  { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Ida</span><span class="delimiter">'</span></span>, <span class="key">age</span>: <span class="integer">26</span> },
+  { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Rob</span><span class="delimiter">'</span></span>, <span class="key">age</span>: <span class="integer">55</span> }
+]);
 
-<p>var filteredNames = collection.chain() // start chain, returns wrapper around collection’s models
-  .filter(function(item) { return item.get(‘age’) &gt; 10; }) // returns wrapped array excluding Tim
-  .map(function(item) { return item.get(‘name’); }) // returns wrapped array containing remaining names
-  .value(); // terminates the chain and returns the resulting array</p>
+<span class="keyword">var</span> filteredNames = collection.chain() <span class="comment">// start chain, returns wrapper around collection's models</span>
+  .filter(<span class="keyword">function</span>(item) { <span class="keyword">return</span> item.get(<span class="string"><span class="delimiter">'</span><span class="content">age</span><span class="delimiter">'</span></span>) &gt; <span class="integer">10</span>; }) <span class="comment">// returns wrapped array excluding Tim</span>
+  .map(<span class="keyword">function</span>(item) { <span class="keyword">return</span> item.get(<span class="string"><span class="delimiter">'</span><span class="content">name</span><span class="delimiter">'</span></span>); }) <span class="comment">// returns wrapped array containing remaining names</span>
+  .value(); <span class="comment">// terminates the chain and returns the resulting array</span>
 
-<p>console.log(filteredNames); // logs: [‘Ida’, ‘Rob’]
-```</p>
+console.log(filteredNames); <span class="comment">// logs: ['Ida', 'Rob']</span>
+</pre></div>
+</div>
+</div>
 
 <h2 id="persistence-restful">Persistence RESTful</h2>
 
@@ -448,15 +590,18 @@ var collection = new Backbone.Collection([
 
 <h3 id="options">Options</h3>
 
-<p>Il est possible de passer seulement les choses que l’on veut mettre à jour dans un Model et pas forcememnt tout le Model (requête HTTP PATCH). Par exemple :
-<code>
-// Sauvegarde partielle avec PATCH
-model.clear().set({id: 1, a: 1, b: 2, c: 3, d: 4});
+<p>Il est possible de passer seulement les choses que l’on veut mettre à jour dans un Model et pas forcememnt tout le Model (requête HTTP PATCH). Par exemple :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="comment">// Sauvegarde partielle avec PATCH</span>
+model.clear().set({<span class="key">id</span>: <span class="integer">1</span>, <span class="key">a</span>: <span class="integer">1</span>, <span class="key">b</span>: <span class="integer">2</span>, <span class="key">c</span>: <span class="integer">3</span>, <span class="key">d</span>: <span class="integer">4</span>});
 model.save();
-model.save({b: 2, d: 4}, {patch: true});
-console.log(this.syncArgs.method);
-// 'patch'
-</code></p>
+model.save({<span class="key">b</span>: <span class="integer">2</span>, <span class="key">d</span>: <span class="integer">4</span>}, {<span class="key">patch</span>: <span class="predefined-constant">true</span>});
+console.log(<span class="local-variable">this</span>.syncArgs.method);
+<span class="comment">// 'patch'</span>
+</pre></div>
+</div>
+</div>
 
 <h2 id="events">Events</h2>
 
@@ -466,76 +611,84 @@ console.log(this.syncArgs.method);
 
 <p><code>on()</code> lie une fonction callback à un objet. Le callback est appelé à chaque fois que l’événement est déclenché.</p>
 
-<p>```
-var myObject = {};</p>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> myObject = {};
 
-<p>// Mixin
-_.extend(myObject, Backbone.Events);</p>
+<span class="comment">// Mixin</span>
+_.extend(myObject, Backbone.Events);
 
-<p>// Ajouter un événement personnalisé
-myObject.on(‘dance’, function(msg){
-  console.log(‘Déclenchement de ‘ + msg);
-});</p>
+<span class="comment">// Ajouter un événement personnalisé</span>
+myObject.on(<span class="string"><span class="delimiter">'</span><span class="content">dance</span><span class="delimiter">'</span></span>, <span class="keyword">function</span>(msg){
+  console.log(<span class="string"><span class="delimiter">'</span><span class="content">Déclenchement de </span><span class="delimiter">'</span></span> + msg);
+});
 
-<p>// Trigger the custom event
-myObject.trigger(‘dance’, ‘our event’);
-```</p>
+<span class="comment">// Trigger the custom event</span>
+myObject.trigger(<span class="string"><span class="delimiter">'</span><span class="content">dance</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">our event</span><span class="delimiter">'</span></span>);
+</pre></div>
+</div>
+</div>
 
 <p><code>off()</code> supprime toutes les fonctions de callback sur un objet</p>
 
-<p><code>
-// Removes event bound to the object
-myObject.off("dance:tap");
-</code></p>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="comment">// Removes event bound to the object</span>
+myObject.off(<span class="string"><span class="delimiter">&quot;</span><span class="content">dance:tap</span><span class="delimiter">&quot;</span></span>);
+</pre></div>
+</div>
+</div>
 
 <p>Pour supprimer une callback en particulier :</p>
 
-<p>```
-var ourObject = {};</p>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> ourObject = {};
 
-<p>// Mixin
-_.extend(ourObject, Backbone.Events);</p>
+<span class="comment">// Mixin</span>
+_.extend(ourObject, Backbone.Events);
 
-<p>function dancing (msg) { console.log(“We are dancing. “ + msg); }
-function jumping (msg) { console.log(“We are jumping. “ + msg); }</p>
+<span class="keyword">function</span> <span class="function">dancing</span> (msg) { console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">We are dancing. </span><span class="delimiter">&quot;</span></span> + msg); }
+<span class="keyword">function</span> <span class="function">jumping</span> (msg) { console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">We are jumping. </span><span class="delimiter">&quot;</span></span> + msg); }
 
-<p>// Add two listeners to the same event
-ourObject.on(“move”, dancing);
-ourObject.on(“move”, jumping);</p>
+<span class="comment">// Add two listeners to the same event</span>
+ourObject.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">move</span><span class="delimiter">&quot;</span></span>, dancing);
+ourObject.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">move</span><span class="delimiter">&quot;</span></span>, jumping);
 
-<p>// Trigger the events. Both listeners are called.
-ourObject.trigger(“move”, “Yeah!”);</p>
+<span class="comment">// Trigger the events. Both listeners are called.</span>
+ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><span class="content">move</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Yeah!</span><span class="delimiter">&quot;</span></span>);
 
-<p>// Removes specified listener
-ourObject.off(“move”, dancing);</p>
+<span class="comment">// Removes specified listener</span>
+ourObject.off(<span class="string"><span class="delimiter">&quot;</span><span class="content">move</span><span class="delimiter">&quot;</span></span>, dancing);
 
-<p>// Trigger the events again. One listener left.
-ourObject.trigger(“move”, “Yeah, jump, jump!”);
-```</p>
+<span class="comment">// Trigger the events again. One listener left.</span>
+ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><span class="content">move</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Yeah, jump, jump!</span><span class="delimiter">&quot;</span></span>);
+</pre></div>
+</div>
+</div>
 
 <p><code>trigger()</code> peut passer plusieurs arguments à une fonction callback</p>
 
-<p>```
-var ourObject = {};</p>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> ourObject = {};
 
-<p>// Mixin
-_.extend(ourObject, Backbone.Events);</p>
+<span class="comment">// Mixin</span>
+_.extend(ourObject, Backbone.Events);
 
-<p>function doAction (action, duration) {
-  console.log(“We are “ + action + ‘ for ‘ + duration ); 
-}</p>
+<span class="keyword">function</span> <span class="function">doAction</span> (action, duration) {
+  console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">We are </span><span class="delimiter">&quot;</span></span> + action + <span class="string"><span class="delimiter">'</span><span class="content"> for </span><span class="delimiter">'</span></span> + duration ); 
+}
 
-<p>// Add event listeners
-ourObject.on(“dance”, doAction);
-ourObject.on(“jump”, doAction);
-ourObject.on(“skip”, doAction);</p>
+<span class="comment">// Add event listeners</span>
+ourObject.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">dance</span><span class="delimiter">&quot;</span></span>, doAction);
+ourObject.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">jump</span><span class="delimiter">&quot;</span></span>, doAction);
+ourObject.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">skip</span><span class="delimiter">&quot;</span></span>, doAction);
 
-<p>// Passing multiple arguments to single event
-ourObject.trigger(“dance”, ‘dancing’, “5 minutes”);</p>
+<span class="comment">// Passing multiple arguments to single event</span>
+ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><span class="content">dance</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">dancing</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">5 minutes</span><span class="delimiter">&quot;</span></span>);
 
-<p>// Passing multiple arguments to multiple events
-ourObject.trigger(“dance jump skip”, ‘on fire’, “15 minutes”);
-```</p>
+<span class="comment">// Passing multiple arguments to multiple events</span>
+ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><span class="content">dance jump skip</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">on fire</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">15 minutes</span><span class="delimiter">&quot;</span></span>);
+</pre></div>
+</div>
+</div>
 
 <p><code>listenTo()</code> et <code>stopListening()</code> permet à un objet {d’écouter/ arrêter d’écouter} les événements sur un autre objet.</p>
 
@@ -551,46 +704,20 @@ ourObject.trigger(“dance jump skip”, ‘on fire’, “15 minutes”);
 
 <p>Connecte des URLs à des parties de l’application. Nécessaire si tu veux que certaines parties de ton application soient : mise dans les favoris, partageable, si tu veux pouvoir faire un Back avec le bouton back du navigateur.</p>
 
-<p><code>
-var TodoRouter = Backbone.Router.extend({
-	routes: {
-		"search/:query/p:page" : "searchTodos"
-		// http://example.com/#search/job/p1
-	}
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> TodoRouter = Backbone.Router.extend({
+    <span class="key">routes</span>: {
+        <span class="key"><span class="delimiter">&quot;</span><span class="content">search/:query/p:page</span><span class="delimiter">&quot;</span></span> : <span class="string"><span class="delimiter">&quot;</span><span class="content">searchTodos</span><span class="delimiter">&quot;</span></span>
+        <span class="comment">// http://example.com/#search/job/p1</span>
+    }
 });
-var myTodoRouter = new TodoRouter();
-</code>
-<code>Backbone.history.start();</code> dit à Backbone qu’il fait observer tout changement de hash dans l’URL (d’où le /# hyper vitale)</p>
+<span class="keyword">var</span> myTodoRouter = <span class="keyword">new</span> TodoRouter();
+</pre></div>
+</div>
+</div>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[4 questions à se poser avant de commencer un projet Backbone]]></title>
-    <link href="http://ptitgraig.github.io/blog/2014/01/30/4-questions-a-se-poser-avant-de-commencer-un-projet-backbone/"/>
-    <updated>2014-01-30T10:45:00+01:00</updated>
-    <id>http://ptitgraig.github.io/blog/2014/01/30/4-questions-a-se-poser-avant-de-commencer-un-projet-backbone</id>
-    <content type="html"><![CDATA[<p class="foreword">
-Vous avez choisi de développer votre dernière super application web avec Backbone. Avant de vous lancer tête baissée dans le développement, réfléchissez à ces 4 questions afin de savoir si Backbone est ce qu'il vous faut.
-</p>
-<!-- more -->
-<hr />
+<p><code>Backbone.history.start();</code> dit à Backbone qu’il fait observer tout changement de hash dans l’URL (d’où le /# hyper vitale)</p>
 
-<p>Question 1 : Comment vais-je structurer les vues et les controlleurs imbriquées ?</p>
-
-<p>Malheureusement il ne semble pas y avoir de bonne pratique dans ce domaine et cela semble bien dépendre des cas d’utilisation.</p>
-
-<p>Question 2 : Comment vais-je tester les vues ?</p>
-
-<p>Backbone ne vient pas avec des outils de tests, il vous faudra les fabriquer vous même. Pour les vues, c’est difficile; si difficile que de nombreuses personnes ne se fatiguent pas avec ça.</p>
-
-<p>Question 3 : Pourquoi mon application a t-elle des fuites de mémoires ?</p>
-
-<p>Dans les Single-Page-Webapp , les objets peuvent demeurer en mémoire un bon moment, plutôt que d’être recréer quand la page est rafraichie. C’est très utile mais vous devez vous assurez que ces objets sont bien utilisez et ne consomme pas inutilement de la mémoire.</p>
-
-<p>Question 4 : Pourquoi est-ce que le rendu de mon application est si lent ?</p>
-
-<p>Avec Backbone, il est vraiment facile de faire de petites mise à jour du DOM pour chaque interaction de l’utilisateur. Dès que vous traitez un large ensemble de données, l’expérience utilisateur est altérée.</p>
 ]]></content>
   </entry>
   
