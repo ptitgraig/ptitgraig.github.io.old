@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Dev | Gorille Gris]]></title>
   <link href="http://ptitgraig.github.io/blog/categories/dev/atom.xml" rel="self"/>
   <link href="http://ptitgraig.github.io/"/>
-  <updated>2015-01-06T10:50:25+01:00</updated>
+  <updated>2015-01-07T10:19:20+01:00</updated>
   <id>http://ptitgraig.github.io/</id>
   <author>
     <name><![CDATA[Grégory Pelletey]]></name>
@@ -22,9 +22,8 @@
 Les pours et les contres des framework BackboneJS, AngularJS, EXTJS, EmberJS : pour t'aider à choisir dans cette jungle.
 </p>
 <!-- more -->
-<hr />
 
-<h1 id="backbonejs">Backbone.js</h1>
+<h2 id="backbonejs">Backbone.js</h2>
 
 <p>Pours :</p>
 
@@ -78,7 +77,7 @@ Les pours et les contres des framework BackboneJS, AngularJS, EXTJS, EmberJS : p
   </li>
 </ul>
 
-<h1 id="angularjs">Angular.js</h1>
+<h2 id="angularjs">Angular.js</h2>
 
 <p>Pours : </p>
 
@@ -137,7 +136,6 @@ Les pours et les contres des framework BackboneJS, AngularJS, EXTJS, EmberJS : p
 Entre Jasmine, Sinon.js, Karma, QUnit tu ne sais plus où donner de la tête ? Voici un bref récapitulatif des outils pour tester du Javascript.
 </p>
 <!-- more -->
-<hr />
 
 <h2 id="dfinitions">Définitions</h2>
 
@@ -178,7 +176,6 @@ Entre Jasmine, Sinon.js, Karma, QUnit tu ne sais plus où donner de la tête ? V
 Fonctionnement basique du framework JAVA Spring MVC. Très bon pour la culture générale d'un développeur front.
 </p>
 <!-- more -->
-<hr />
 
 <h2 id="fonctionnement">Fonctionnement</h2>
 
@@ -217,7 +214,6 @@ Fonctionnement basique du framework JAVA Spring MVC. Très bon pour la culture g
 Voici un article qui vous expliquera le poids des CSS. Cela est utile quand vous voulez surcharger un style, comprendre quel style s'applique à quel élément et pourquoi un style s'applique plutôt qu'un autre.
 </p>
 <!-- more -->
-<hr />
 
 <p>Quand vous reprenez un projet existant, qui date déjà un peu, vous vous retrouvez souvent avec des déclarations CSS à rallonge et ne savait plus quoi s’applique à quoi.</p>
 
@@ -368,7 +364,8 @@ Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le c
 
 <p>En vérité il s’agit plutôt d’un framework MV* car le Controller n’existe pas vraiment dans Backbone.</p>
 
-<p>Faisons un parrallèle entre un MVC classique et un MVC Backbone.</p>
+<p>Faisons un parrallèle entre un MVC classique et un MVC Backbone.
+<!-- more --></p>
 
 <h2 id="models">Models</h2>
 
