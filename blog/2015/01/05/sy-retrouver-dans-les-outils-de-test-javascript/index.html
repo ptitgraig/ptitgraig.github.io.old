@@ -68,15 +68,114 @@ Entre Jasmine, Sinon.js, Karma, QUnit tu ne sais plus où donner de la tête ? V
 
 <h3 id="jasmine">Jasmine</h3>
 
+<p><img class="left" src="/images/test-jasmine.png" width="140" height="140" /></p>
+
+<p>DOM-less simple JavaScript testing framework.
+Jasmine is a behavior-driven development framework for testing JavaScript code. It does not depend on any other JavaScript frameworks. It does not require a DOM. And it has a clean, obvious syntax so that you can easily write tests. This guide is running against Jasmine version 2.1.0.</p>
+
+<hr />
+
 <h3 id="mocha">Mocha</h3>
+
+<p><img class="left" src="/images/test-mocha.png" width="140" height="140" /></p>
+
+<p>Mocha is a feature-rich JavaScript test framework running on node.js and the browser, making asynchronous testing simple and fun. Mocha tests run serially, allowing for flexible and accurate reporting, while mapping uncaught exceptions to the correct test cases. </p>
+
+<hr />
+
+<h3 id="karma-anciennement-testacular">Karma (anciennement Testacular)</h3>
+
+<p><img class="left" src="/images/test-karma.png" width="140" height="140" /></p>
+
+<p>The main goal for Karma is to bring a productive testing environment to developers. The environment being one where they don’t have to set up loads of configurations, but rather a place where developers can just write the code and get instant feedback from their tests. Because getting quick feedback is what makes you productive and creative.</p>
+
+<p>Karma is essentially a tool which spawns a web server that executes source code against test code for each of the browsers connected. The results for each test against each browser are examined and displayed via the command line to the developer such that they can see which browsers and tests passed or failed.
+A browser can be captured either
+manually, by visiting the URL where the Karma server is listening (typically http://localhost:9876/),
+or automatically by letting Karma know which browsers to start when Karma is run (see browsers).
+Karma also watches all the files, specified within the configuration file, and whenever any file changes, it triggers the test run by sending a signal to the testing server to inform all of the captured browsers to run the test code again. Each browser then loads the source files inside an IFrame, executes the tests and reports the results back to the server.
+The server collects the results from all of the captured browsers and presents them to the developer.
+This is only a very brief overview, as the internals of how Karma works aren’t entirely necessary when using Karma.
+However, if you are interested in learning more, Karma itself originates from a university thesis, which goes into detail about the design and implementation, and it is available to read right here.</p>
+
+<hr />
+
+<h3 id="intern">Intern</h3>
+
+<p><img class="left" src="/images/test-intern.png" width="140" height="140" /></p>
+
+<p>A next-generation code testing stack for JavaScript.</p>
+
+<hr />
 
 <h3 id="sinonjs">sinon.js</h3>
 
+<p>Standalone test spies, stubs and mocks for JavaScript.
+No dependencies, works with any unit testing framework.</p>
+
+<hr />
+
 <h3 id="shouldjs">should.js</h3>
+
+<p>BDD style assertions for node.js – test framework agnostic</p>
+
+<p>var should = require(‘should’);</p>
+
+<p>var user = {
+    name: ‘tj’
+  , pets: [‘tobi’, ‘loki’, ‘jane’, ‘bandit’]
+};</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre>user.should.have.property(<span class="string"><span class="delimiter">'</span><span class="content">name</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">tj</span><span class="delimiter">'</span></span>);
+user.should.have.property(<span class="string"><span class="delimiter">'</span><span class="content">pets</span><span class="delimiter">'</span></span>).<span class="keyword">with</span>.lengthOf(<span class="integer">4</span>);
+
+<span class="comment">// If the object was created with Object.create(null)</span>
+<span class="comment">// then it doesn't inherit `Object.prototype`, so it will not have `.should` getter</span>
+<span class="comment">// so you can do:</span>
+should(user).have.property(<span class="string"><span class="delimiter">'</span><span class="content">name</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">tj</span><span class="delimiter">'</span></span>);
+
+<span class="comment">// also you can test in that way for null's</span>
+should(<span class="predefined-constant">null</span>).not.be.ok;
+
+someAsyncTask(foo, <span class="keyword">function</span>(err, result){
+  should.not.exist(err);
+  should.exist(result);
+  result.bar.should.equal(foo);
+});
+</pre></div>
+</div>
+</div>
+
+<hr />
 
 <h3 id="expectjs">expect.js</h3>
 
+<p>Minimalistic BDD-style assertions for Node.JS and the browser.
+BDD assertion toolkit based on should.js</p>
+
+<ul>
+  <li>Cross-browser: works on IE6+, Firefox, Safari, Chrome, Opera.</li>
+  <li>Compatible with all test frameworks.</li>
+  <li>Node.JS ready (require(‘expect.js’)).</li>
+  <li>Standalone. Single global with no prototype extensions or shims.</li>
+</ul>
+
+<div><div class="CodeRay">
+  <div class="code"><pre>expect(window.r).to.be(<span class="predefined-constant">undefined</span>);
+expect({ <span class="key">a</span>: <span class="string"><span class="delimiter">'</span><span class="content">b</span><span class="delimiter">'</span></span> }).to.eql({ <span class="key">a</span>: <span class="string"><span class="delimiter">'</span><span class="content">b</span><span class="delimiter">'</span></span> })
+expect(<span class="integer">5</span>).to.be.a(<span class="string"><span class="delimiter">'</span><span class="content">number</span><span class="delimiter">'</span></span>);
+expect([]).to.be.an(<span class="string"><span class="delimiter">'</span><span class="content">array</span><span class="delimiter">'</span></span>);
+expect(window).not.to.be.an(Image);
+</pre></div>
+</div>
+</div>
+
 <h3 id="chaijs">chai.js</h3>
+
+<p><img class="left" src="/images/test-chai.png" width="140" height="140" /></p>
+
+<p>Chai is a BDD / TDD assertion library for node and the browser that can be delightfully paired with any javascript testing framework.</p>
 
 <h3 id="qunit">qUnit</h3>
 </div>
