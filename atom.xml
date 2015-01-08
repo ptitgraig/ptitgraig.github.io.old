@@ -4,7 +4,7 @@
 	<title><![CDATA[Gorille Gris]]></title>
 	<link href="http://ptitgraig.github.io/atom.xml" rel="self"/>
 	<link href="http://ptitgraig.github.io/"/>
-	<updated>2015-01-07T18:14:37+01:00</updated>
+	<updated>2015-01-08T14:18:45+01:00</updated>
 	<id>http://ptitgraig.github.io/</id>
 	<author>
 		<name><![CDATA[Grégory Pelletey]]></name>
@@ -151,93 +151,139 @@ Les pours et les contres des framework BackboneJS, AngularJS, EXTJS, EmberJS : p
 			]]>
 			<![CDATA[<p class="foreword">
 Entre Jasmine, Sinon.js, Karma, QUnit tu ne sais plus où donner de la tête ? Voici un bref récapitulatif des outils pour tester du Javascript.
+Cet article sera enrichi au fur et à mesure des mes connaissances sur les sujets.
 </p>
 <!-- more -->
 
 <h2 id="dfinitions">Définitions</h2>
 
-<h3 id="les-frameworks-de-test">Les frameworks de test</h3>
-
-<h3 id="les-bibliotques-dassertions">Les bibliotèques d’assertions</h3>
-
-<p>Une assertion est un énoncé considéré comme vrai.</p>
-
 <h3 id="test-driven-development-tdd">Test-Driven Development (TDD)</h3>
 
-<h3 id="business-driven-development-bdd">Business-Driven Development (BDD)</h3>
+<p>Le Test Driven Development (TDD) ou en français développement piloté par les tests est une technique de développement de logiciel qui préconise d’écrire les tests unitaires avant d’écrire le code source d’un logiciel <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.</p>
+
+<p>Le cycle préconisé par TDD comporte 5 étapes :</p>
+
+<ol>
+  <li>écrire un premier test;</li>
+  <li>vérifier qu’il échoue (car le code qu’il teste n’existe pas), afin de vérifier que le test est valide;</li>
+  <li>écrire juste le code suffisant pour passer le test;</li>
+  <li>vérifier que le test passe;</li>
+  <li>puis refactoriser le code.</li>
+</ol>
+
+<p>Les intérêts :</p>
+
+<ul>
+  <li>facilite la production de code valide en toutes circonstances</li>
+  <li>on utilise le programme avant même qu’il existe</li>
+  <li>évite des erreurs de conceptions dues à la précipitation avant d’avoir défini les objectifs</li>
+  <li>plus grande assurance lors du refactoring, tu sais que les tests ont fonctionné à un moment donné. Tu peux ainsi te permettre des changements radicaux dans le code</li>
+</ul>
+
+<p>Une chose importante est que les demandeurs doivent formaliser la manière dont ils testeront la fonctionnalité. C’est le travail du responsable applicatif de s’en assurer.</p>
+
+<h3 id="behavior-driven-development-bdd">Behavior-Driven Development (BDD)</h3>
+
+<p>Behavior Driven Development (ou BDD) est une méthode Agile qui encourage la collaboration entre les développeurs, les responsables qualités, les intervenants non-techniques et les entreprises participant à un projet de logiciel. Il a été conçu en 2003 par Dan North comme une réponse au Test Driven Development. <sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup></p>
+
+<p>Le processus BDD met en avant le langage naturel et les interactions dans le processus de développement logiciel. Les développeurs utilisant le BDD utilisent leur langue maternelle en combinaison avec le langage du domaine Domaine Driven Design pour décrire l’objectif et le bénéfice de leur code. Cela permet aux développeurs de se concentrer sur les raisons pour lesquelles le code doit être créé, plutôt que les détails techniques, et minimise la traduction entre le langage technique dans lequel le code est écrit et le domaine de la langue parlée par les entreprises, les utilisateurs, les intervenants, la gestion de projet etc…</p>
+
+<p>Dans la pratique :</p>
+
+<ul>
+  <li>on utilise des exemples pour décrire le comportement de la demande;</li>
+  <li>on automatise ces exemples pour fournir rapidement des commentaires ou tests de non-regression;</li>
+  <li>on utilise le mot ‘devrait’, ce qui contribue à clarifier la résponsabilité et permet la remise en cause de la fonctionnalité de l’application;</li>
+  <li>on utilise ‘verifier que’, ce qui permet de faire la différence entre les résultats provenant du champ d’application du code et d’autres éléments du code;</li>
+  <li>on utilise des ‘mocks’ (fausse fonction) en remplacant des modules de code qui ne sont pas encore écrits.</li>
+</ul>
+
+<h3 id="les-bibliotques-dnoncs-assertions-library">Les bibliotèques d’énoncés (assertions library)</h3>
+
+<p>Une assertion est un énoncé considéré comme vrai. Les bibliothèques d’énoncés permettent de formuler les tests de manière compréhensible.
+Quelques bibliothèques d’énoncés :
+* should.js
+* expect.js
+* chai.js</p>
+
+<h3 id="les-frameworks-de-test">Les frameworks de test</h3>
+
+<p>Un framework de test engloble une ou plusieurs bibliothèques d’énoncés, permet de lancer des tests.</p>
+
+<p>A compléter…</p>
 
 <h2 id="les-outils">Les outils</h2>
 
 <h3 id="jasmine">Jasmine</h3>
 
-<p><img class="left" src="http://ptitgraig.github.io/images/test-jasmine.png" width="140" height="140" /></p>
-
-<p>DOM-less simple JavaScript testing framework.
-Jasmine is a behavior-driven development framework for testing JavaScript code. It does not depend on any other JavaScript frameworks. It does not require a DOM. And it has a clean, obvious syntax so that you can easily write tests. This guide is running against Jasmine version 2.1.0.</p>
-
-<hr />
+<p><img class="left" src="http://ptitgraig.github.io/images/test-jasmine.png" width="140" height="140" />
+Jasmine est un <em>framework de test</em> JavaScript developpement orienté comportement (BDD). Il ne dépend d’aucun autre framework JavaScript.
+Il ne requiert pas un DOM et possède une syntaxe propre et évidente, ce qui permet d’écrire facilement tes tests.</p>
 
 <h3 id="mocha">Mocha</h3>
 
-<p><img class="left" src="http://ptitgraig.github.io/images/test-mocha.png" width="140" height="140" /></p>
-
-<p>Mocha is a feature-rich JavaScript test framework running on node.js and the browser, making asynchronous testing simple and fun. Mocha tests run serially, allowing for flexible and accurate reporting, while mapping uncaught exceptions to the correct test cases. </p>
-
-<hr />
+<p><img class="left" src="http://ptitgraig.github.io/images/test-mocha.png" width="140" height="140" />
+Mocha est un <em>framework de test</em> JavaScript riche en fonctionnalités, basé sur Node.js et sur le navigateur, qui rend les tests asynchrones simple et agréable. Les tests Mocha se déroulent de manière séquentielle, ce qui permet d’établir un rapporte précis et flexible, tout en faisant concorder les exceptions non interceptées au bon cas de test.</p>
 
 <h3 id="karma-anciennement-testacular">Karma (anciennement Testacular)</h3>
 
-<p><img class="left" src="http://ptitgraig.github.io/images/test-karma.png" width="140" height="140" /></p>
+<p><img class="left" src="http://ptitgraig.github.io/images/test-karma.png" width="140" height="140" />
+Karma est un <em>environnement de test</em>. Le but principal de Karma est d’offrir aux développeurs un environnement de test productif. Plutôt que de demander de mettre en place tout un tas de configurations, Karma te permet d’écire le code est d’obtenir un retour instantané de tes tests. La philosphie de Karma est : une retour rapide sur ton code, c’est ce qui te rend productif et créatif. C’est une opinion.</p>
 
-<p>The main goal for Karma is to bring a productive testing environment to developers. The environment being one where they don’t have to set up loads of configurations, but rather a place where developers can just write the code and get instant feedback from their tests. Because getting quick feedback is what makes you productive and creative.</p>
+<p>Karma est essentiellement un outil qui génère un serveur Web qui exécute le code source en se basant sur le code de test, et ce pour chaque navigateurs connectés. Les résultats de chaque test contre sur chaque navigateur sont calculées et affichées sur la ligne de commande de telle sorte que tu puisses voir quels sont les tests qui ont réussis et échoués, et ce sur chaque navigateur.
+Tu peux tester le résulat sur un navigateur soit manuellement, en visitant l’URL écoutée par le serveur Karma (habituellement http://localhost:9876/), soit
+automatiquement en configurant Karma de sorte qu’il sache quel navigateur démarrer quand Karma est exécuté.</p>
 
-<p>Karma is essentially a tool which spawns a web server that executes source code against test code for each of the browsers connected. The results for each test against each browser are examined and displayed via the command line to the developer such that they can see which browsers and tests passed or failed.
-A browser can be captured either
-manually, by visiting the URL where the Karma server is listening (typically http://localhost:9876/),
-or automatically by letting Karma know which browsers to start when Karma is run (see browsers).
-Karma also watches all the files, specified within the configuration file, and whenever any file changes, it triggers the test run by sending a signal to the testing server to inform all of the captured browsers to run the test code again. Each browser then loads the source files inside an IFrame, executes the tests and reports the results back to the server.
-The server collects the results from all of the captured browsers and presents them to the developer.
-This is only a very brief overview, as the internals of how Karma works aren’t entirely necessary when using Karma.
-However, if you are interested in learning more, Karma itself originates from a university thesis, which goes into detail about the design and implementation, and it is available to read right here.</p>
-
-<hr />
+<p>Karma surveille aussi tous les fichiers listés dans le fichier de configuration. Dès qu’un fichier change, Karma déclenche les tests en envoyant un signal 
+au serveur de test pour informer tout les navigayeurs connectés d’executer le code de test à nouveau. Chaque navigateur charge ensuite le code source dans une IFrame, exécute les tests, et rapporte les résultats au serveur.
+Le serveur collecte les résultats de l’ensemble des navigateurs connectés et te les présente.</p>
 
 <h3 id="intern">Intern</h3>
 
-<p><img class="left" src="http://ptitgraig.github.io/images/test-intern.png" width="140" height="140" /></p>
-
-<p>A next-generation code testing stack for JavaScript.</p>
-
-<hr />
+<p><img class="left" src="http://ptitgraig.github.io/images/test-intern.png" width="140" height="140" />
+Intern est <em>une pile de test complète pour Javascript</em>, conçue pour t’aider à écrire et exécuter des cas de test, pour applications et biblothèques de scripts, cohérent et de haute qualité. Intern peut être utilisé pour tester n’importe quel code JavaScript. Ses capacités de test fonctionnel peuvent même être utilisé pour tester des applications mobile et web non JavaScript - si tu le veux vraiment.</p>
 
 <h3 id="sinonjs">sinon.js</h3>
 
-<p>Standalone test spies, stubs and mocks for JavaScript.
-No dependencies, works with any unit testing framework.</p>
+<p>Espions de test autonome et mocks pour JavaScript.
+Aucune dépendances, fonctionne avec n’importe quel framework JavaScript.
+Un espion de test est une fonction qui enregistre les paramètres, retourne la valeur de <code>this</code> et l’exception levée - si présente.
+Un espion de test peut être une fonction anonyme ou peut être encapsuler dans une autre fonction.</p>
 
-<hr />
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="string"><span class="delimiter">&quot;</span><span class="content">test should call subscribers on publish</span><span class="delimiter">&quot;</span></span>: <span class="keyword">function</span> () {
+    <span class="keyword">var</span> callback = sinon.spy();
+    PubSub.subscribe(<span class="string"><span class="delimiter">&quot;</span><span class="content">message</span><span class="delimiter">&quot;</span></span>, callback);
+
+    PubSub.publishSync(<span class="string"><span class="delimiter">&quot;</span><span class="content">message</span><span class="delimiter">&quot;</span></span>);
+
+    assertTrue(callback.called);
+}
+</pre></div>
+</div>
+</div>
 
 <h3 id="shouldjs">should.js</h3>
 
-<p>BDD style assertions for node.js – test framework agnostic</p>
-
-<p>var should = require(‘should’);</p>
-
-<p>var user = {
-    name: ‘tj’
-  , pets: [‘tobi’, ‘loki’, ‘jane’, ‘bandit’]
-};</p>
+<p>Enoncés (assertions) de style Behavior-Driven-Developemnt (BDD) pour Node.js, indépendant de tout framework de test.</p>
 
 <div><div class="CodeRay">
-  <div class="code"><pre>user.should.have.property(<span class="string"><span class="delimiter">'</span><span class="content">name</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">tj</span><span class="delimiter">'</span></span>);
+  <div class="code"><pre><span class="keyword">var</span> should = require(<span class="string"><span class="delimiter">'</span><span class="content">should</span><span class="delimiter">'</span></span>);
+
+<span class="keyword">var</span> user = {
+    <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">tj</span><span class="delimiter">'</span></span>
+  , <span class="key">pets</span>: [<span class="string"><span class="delimiter">'</span><span class="content">tobi</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">loki</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">jane</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">bandit</span><span class="delimiter">'</span></span>]
+};
+
+user.should.have.property(<span class="string"><span class="delimiter">'</span><span class="content">name</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">tj</span><span class="delimiter">'</span></span>);
 user.should.have.property(<span class="string"><span class="delimiter">'</span><span class="content">pets</span><span class="delimiter">'</span></span>).<span class="keyword">with</span>.lengthOf(<span class="integer">4</span>);
 
-<span class="comment">// If the object was created with Object.create(null)</span>
-<span class="comment">// then it doesn't inherit `Object.prototype`, so it will not have `.should` getter</span>
-<span class="comment">// so you can do:</span>
+<span class="comment">// Si l'objet a été créé avec Object.create(null)</span>
+<span class="comment">// alors il n'hérite pas de `Object.prototype`, donc il n'aura pas une getter `.should`</span>
+<span class="comment">// donc tu peux faire :</span>
 should(user).have.property(<span class="string"><span class="delimiter">'</span><span class="content">name</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">tj</span><span class="delimiter">'</span></span>);
 
-<span class="comment">// also you can test in that way for null's</span>
+<span class="comment">// aussi, tu peux tester de cette manières les `null`</span>
 should(<span class="predefined-constant">null</span>).not.be.ok;
 
 someAsyncTask(foo, <span class="keyword">function</span>(err, result){
@@ -249,18 +295,15 @@ someAsyncTask(foo, <span class="keyword">function</span>(err, result){
 </div>
 </div>
 
-<hr />
-
 <h3 id="expectjs">expect.js</h3>
 
-<p>Minimalistic BDD-style assertions for Node.JS and the browser.
-BDD assertion toolkit based on should.js</p>
+<p>Outils d’enoncés minimalistes de style BDD pour Node.JS et pour navigateurs, basé sur should.js</p>
 
 <ul>
-  <li>Cross-browser: works on IE6+, Firefox, Safari, Chrome, Opera.</li>
-  <li>Compatible with all test frameworks.</li>
-  <li>Node.JS ready (require(‘expect.js’)).</li>
-  <li>Standalone. Single global with no prototype extensions or shims.</li>
+  <li>Cross-browser : fonctionne sur IE6+, Firefox, Safari, Chrome, Opera.</li>
+  <li>Compatible avec tous les frameworks de test.</li>
+  <li>Prête pour Node.JS (require(‘expect.js’)).</li>
+  <li>Autonome. Global seule sans extensions de prototype ou brique (shims)</li>
 </ul>
 
 <div><div class="CodeRay">
@@ -275,11 +318,23 @@ expect(window).not.to.be.an(Image);
 
 <h3 id="chaijs">chai.js</h3>
 
-<p><img class="left" src="http://ptitgraig.github.io/images/test-chai.png" width="140" height="140" /></p>
-
-<p>Chai is a BDD / TDD assertion library for node and the browser that can be delightfully paired with any javascript testing framework.</p>
+<p><img class="left" src="http://ptitgraig.github.io/images/test-chai.png" width="140" height="140" />
+Chai est une bibliothèque d’énoncés BDD / TDD pour node.js et les navigateurs qui peut être couplé à n’importe quel framework de test JavaScript</p>
 
 <h3 id="qunit">qUnit</h3>
+
+<p>A venir.</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>http://fr.wikipedia.org/wiki/Test_Driven_Development<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>http://fr.wikipedia.org/wiki/Behavior_Driven_Development<a href="#fnref:2" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 ]]>
 		</content>
 	</entry>
