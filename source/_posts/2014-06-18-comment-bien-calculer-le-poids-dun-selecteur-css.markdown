@@ -12,7 +12,6 @@ categories: Dev
 Voici un article qui vous expliquera le poids des CSS. Cela est utile quand vous voulez surcharger un style, comprendre quel style s'applique à quel élément et pourquoi un style s'applique plutôt qu'un autre.
 </p>
 <!-- more -->
-- - -
 
 Quand vous reprenez un projet existant, qui date déjà un peu, vous vous retrouvez souvent avec des déclarations CSS à rallonge et ne savait plus quoi s'applique à quoi.
 

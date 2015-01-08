@@ -10,7 +10,6 @@ categories: Théologie
 Premier chapitre du livre <em>Knowledge of the Holy</em> de A. W. Tozer. L'auteur argumente en faveur de l'importance cruciale d'une juste connaissance de Dieu.
 </p>
 <!-- more -->
-- - -
 
 ###Chapître 1
 

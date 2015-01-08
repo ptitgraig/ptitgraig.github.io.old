@@ -4,7 +4,7 @@
 	<title><![CDATA[Gorille Gris]]></title>
 	<link href="http://ptitgraig.github.io/atom.xml" rel="self"/>
 	<link href="http://ptitgraig.github.io/"/>
-	<updated>2015-01-05T13:01:28+01:00</updated>
+	<updated>2015-01-08T14:18:45+01:00</updated>
 	<id>http://ptitgraig.github.io/</id>
 	<author>
 		<name><![CDATA[Grégory Pelletey]]></name>
@@ -12,6 +12,332 @@
 	</author>
 	<generator uri="http://octopress.org/">Octopress</generator>
 
+	
+	<entry>
+		
+			<title type="html"><![CDATA[Les pours et contres des frameworks JS]]></title>
+		
+		<link href="http://ptitgraig.github.io/blog/2015/01/05/les-pours-et-contres-des-frameworks-js/"/>
+		<updated>2015-01-05T18:04:00+01:00</updated>
+		<id>http://ptitgraig.github.io/blog/2015/01/05/les-pours-et-contres-des-frameworks-js</id>
+		<content type="html">
+			<![CDATA[
+				
+					<p></p>
+				
+			]]>
+			<![CDATA[<p class="foreword">
+Les pours et les contres des framework BackboneJS, AngularJS, EXTJS, EmberJS : pour t&#8217;aider à choisir dans cette jungle.
+</p>
+<!-- more -->
+
+<h2 id="backbonejs">Backbone.js</h2>
+
+<p>Pours :</p>
+
+<ul>
+  <li>
+    <p>Simplicité - seulement 4 composants (Collection, Model, View, Router).</p>
+  </li>
+  <li>
+    <p>Très grosse communauté et beaucoup de solutions sur Stackoverflow.</p>
+  </li>
+  <li>
+    <p>Couche supérieures codés intelligemment comme Marionnette et Vertebae.</p>
+  </li>
+  <li>
+    <p>L’architecture de ton application peut être personnalisée.</p>
+  </li>
+  <li>
+    <p>Léger et mis à jour régulièrement. S’entend bien avec Underscore, jQuery/Zepto - des librairies très répendues.</p>
+  </li>
+  <li>
+    <p>Fourni un niveau d’ abstraction suffisant avec prise de position raisonnable, permettant une adapation au plus proche des besoins du projet.</p>
+  </li>
+  <li>
+    <p>Facile à prendre en main, offrant un bon tremplin pour les framework MV* Javascript.</p>
+  </li>
+  <li>
+    <p>Compatibilité avec d’anciens navigateurs : IE7, 8 t même 6 (on osera tout de même pas aller jusque là).</p>
+  </li>
+</ul>
+
+<p>Contres :</p>
+
+<ul>
+  <li>
+    <p>La méthode extend copie le contenu de l’objet parent dans une nouvel objet. Bénéficier de l’héritage prototypal aurait été préférable.</p>
+  </li>
+  <li>
+    <p>Manque de cas réel d’utilisation dans la documentation</p>
+  </li>
+  <li>
+    <p>L’application TODO met le pied à l’étrier mais il y a encore beaucoup à apprendre après pour construire de grosses applications.</p>
+  </li>
+  <li>
+    <p>La quantité de didacticiels sur comment faire les choses avec Backbone n’est pas cohérente et décrivrent des choses à différentes périodes de la vie de Backbone. Dand une équipe, des développeurs peuvent coder les choses à la façcon Backbone 0.3 alors que nous en sommes à une version antérieur à 1.</p>
+  </li>
+  <li>
+    <p>Quelques reserves sur Backbone.sync qui pose contient dans son code des hypothèses concernant les communications typique HTTP déclenché par un clien. Ca ne s’adapte pas bien à la nature des WebSockets.</p>
+  </li>
+  <li>
+    <p>Il n’y a pas, par défaut, de binding de view. Un re-rendu de la view alors qu’une simple propriété change semble être un peu du gâchi.</p>
+  </li>
+</ul>
+
+<h2 id="angularjs">Angular.js</h2>
+
+<p>Pours : </p>
+
+<ul>
+  <li>
+    <p>Two-way data binding (système de liaison des données en deux sens) est extremement puissant. On pense donc d’avantage au model et à son état qu’à une série d’événements à déclencher. Le model est la seul source de vérité.</p>
+  </li>
+  <li>
+    <p>Performance. AngularJS coûte peu en téléchargement. Son moteur de template utilise les noeuds du DOM au lieu de convertir des String en noeud. Ce qui doit améliorer les performances.</p>
+  </li>
+  <li>
+    <p>Si tu cibles les navigateurs récents et que tu ne te soucis pas, ou peu, des anciens navigateurs, tu peux supprimer jQuery de tes dépendances.</p>
+  </li>
+  <li>
+    <p>Intuitif, excellente documentation. Système de liaison des données ingénieux : Vue (view) HTML, portées (scope) imbriquées.</p>
+  </li>
+  <li>
+    <p>Une extension Chrome, Batarang, qui fourni un accès en direct aux structures de données Angular.</p>
+  </li>
+  <li>
+    <p>Minimisation du code de réutilisable (boilerplate code). Permet la réutilisation du code grâce à des composants. Etend la syntaxe HTML de sorte que de nombreuses fonctionnalités complexes finissent par êre aussi simple que la mise en place d’une directive (attribut) dans le code HTML. </p>
+  </li>
+  <li>
+    <p>Très facilement testable grâce au système d’injection de dépendance.</p>
+  </li>
+  <li>
+    <p>Ecrire une application complexe dans jQuery qui manipule le DOM : c’est déjà un petit exploit.</p>
+  </li>
+</ul>
+
+<p>Contres :</p>
+
+<ul>
+  <li>
+    <p>On ne peut pas, d’une manière simplement déclarative, spécifier une transition pour un changement d’UI qui vient d’un changement dans le model.</p>
+  </li>
+  <li>
+    <p>Courbe d’apprentissage plus raide que Backbone, mais le gain est appréciable. </p>
+  </li>
+  <li>
+    <p>La documentation pourrait être améliorée.</p>
+  </li>
+</ul>
+
+<p>Largement inspiré de l’article de Smashing Magazine : 
+<a href="http://www.smashingmagazine.com/2012/07/27/journey-through-the-javascript-mvc-jungle/">Journey Through The JavaScript MVC Jungle</a></p>
+]]>
+		</content>
+	</entry>
+	
+	<entry>
+		
+			<title type="html"><![CDATA[S'y retrouver dans les outils de test Javascript]]></title>
+		
+		<link href="http://ptitgraig.github.io/blog/2015/01/05/sy-retrouver-dans-les-outils-de-test-javascript/"/>
+		<updated>2015-01-05T14:21:00+01:00</updated>
+		<id>http://ptitgraig.github.io/blog/2015/01/05/sy-retrouver-dans-les-outils-de-test-javascript</id>
+		<content type="html">
+			<![CDATA[
+				
+					<p></p>
+				
+			]]>
+			<![CDATA[<p class="foreword">
+Entre Jasmine, Sinon.js, Karma, QUnit tu ne sais plus où donner de la tête ? Voici un bref récapitulatif des outils pour tester du Javascript.
+Cet article sera enrichi au fur et à mesure des mes connaissances sur les sujets.
+</p>
+<!-- more -->
+
+<h2 id="dfinitions">Définitions</h2>
+
+<h3 id="test-driven-development-tdd">Test-Driven Development (TDD)</h3>
+
+<p>Le Test Driven Development (TDD) ou en français développement piloté par les tests est une technique de développement de logiciel qui préconise d’écrire les tests unitaires avant d’écrire le code source d’un logiciel <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>.</p>
+
+<p>Le cycle préconisé par TDD comporte 5 étapes :</p>
+
+<ol>
+  <li>écrire un premier test;</li>
+  <li>vérifier qu’il échoue (car le code qu’il teste n’existe pas), afin de vérifier que le test est valide;</li>
+  <li>écrire juste le code suffisant pour passer le test;</li>
+  <li>vérifier que le test passe;</li>
+  <li>puis refactoriser le code.</li>
+</ol>
+
+<p>Les intérêts :</p>
+
+<ul>
+  <li>facilite la production de code valide en toutes circonstances</li>
+  <li>on utilise le programme avant même qu’il existe</li>
+  <li>évite des erreurs de conceptions dues à la précipitation avant d’avoir défini les objectifs</li>
+  <li>plus grande assurance lors du refactoring, tu sais que les tests ont fonctionné à un moment donné. Tu peux ainsi te permettre des changements radicaux dans le code</li>
+</ul>
+
+<p>Une chose importante est que les demandeurs doivent formaliser la manière dont ils testeront la fonctionnalité. C’est le travail du responsable applicatif de s’en assurer.</p>
+
+<h3 id="behavior-driven-development-bdd">Behavior-Driven Development (BDD)</h3>
+
+<p>Behavior Driven Development (ou BDD) est une méthode Agile qui encourage la collaboration entre les développeurs, les responsables qualités, les intervenants non-techniques et les entreprises participant à un projet de logiciel. Il a été conçu en 2003 par Dan North comme une réponse au Test Driven Development. <sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup></p>
+
+<p>Le processus BDD met en avant le langage naturel et les interactions dans le processus de développement logiciel. Les développeurs utilisant le BDD utilisent leur langue maternelle en combinaison avec le langage du domaine Domaine Driven Design pour décrire l’objectif et le bénéfice de leur code. Cela permet aux développeurs de se concentrer sur les raisons pour lesquelles le code doit être créé, plutôt que les détails techniques, et minimise la traduction entre le langage technique dans lequel le code est écrit et le domaine de la langue parlée par les entreprises, les utilisateurs, les intervenants, la gestion de projet etc…</p>
+
+<p>Dans la pratique :</p>
+
+<ul>
+  <li>on utilise des exemples pour décrire le comportement de la demande;</li>
+  <li>on automatise ces exemples pour fournir rapidement des commentaires ou tests de non-regression;</li>
+  <li>on utilise le mot ‘devrait’, ce qui contribue à clarifier la résponsabilité et permet la remise en cause de la fonctionnalité de l’application;</li>
+  <li>on utilise ‘verifier que’, ce qui permet de faire la différence entre les résultats provenant du champ d’application du code et d’autres éléments du code;</li>
+  <li>on utilise des ‘mocks’ (fausse fonction) en remplacant des modules de code qui ne sont pas encore écrits.</li>
+</ul>
+
+<h3 id="les-bibliotques-dnoncs-assertions-library">Les bibliotèques d’énoncés (assertions library)</h3>
+
+<p>Une assertion est un énoncé considéré comme vrai. Les bibliothèques d’énoncés permettent de formuler les tests de manière compréhensible.
+Quelques bibliothèques d’énoncés :
+* should.js
+* expect.js
+* chai.js</p>
+
+<h3 id="les-frameworks-de-test">Les frameworks de test</h3>
+
+<p>Un framework de test engloble une ou plusieurs bibliothèques d’énoncés, permet de lancer des tests.</p>
+
+<p>A compléter…</p>
+
+<h2 id="les-outils">Les outils</h2>
+
+<h3 id="jasmine">Jasmine</h3>
+
+<p><img class="left" src="http://ptitgraig.github.io/images/test-jasmine.png" width="140" height="140" />
+Jasmine est un <em>framework de test</em> JavaScript developpement orienté comportement (BDD). Il ne dépend d’aucun autre framework JavaScript.
+Il ne requiert pas un DOM et possède une syntaxe propre et évidente, ce qui permet d’écrire facilement tes tests.</p>
+
+<h3 id="mocha">Mocha</h3>
+
+<p><img class="left" src="http://ptitgraig.github.io/images/test-mocha.png" width="140" height="140" />
+Mocha est un <em>framework de test</em> JavaScript riche en fonctionnalités, basé sur Node.js et sur le navigateur, qui rend les tests asynchrones simple et agréable. Les tests Mocha se déroulent de manière séquentielle, ce qui permet d’établir un rapporte précis et flexible, tout en faisant concorder les exceptions non interceptées au bon cas de test.</p>
+
+<h3 id="karma-anciennement-testacular">Karma (anciennement Testacular)</h3>
+
+<p><img class="left" src="http://ptitgraig.github.io/images/test-karma.png" width="140" height="140" />
+Karma est un <em>environnement de test</em>. Le but principal de Karma est d’offrir aux développeurs un environnement de test productif. Plutôt que de demander de mettre en place tout un tas de configurations, Karma te permet d’écire le code est d’obtenir un retour instantané de tes tests. La philosphie de Karma est : une retour rapide sur ton code, c’est ce qui te rend productif et créatif. C’est une opinion.</p>
+
+<p>Karma est essentiellement un outil qui génère un serveur Web qui exécute le code source en se basant sur le code de test, et ce pour chaque navigateurs connectés. Les résultats de chaque test contre sur chaque navigateur sont calculées et affichées sur la ligne de commande de telle sorte que tu puisses voir quels sont les tests qui ont réussis et échoués, et ce sur chaque navigateur.
+Tu peux tester le résulat sur un navigateur soit manuellement, en visitant l’URL écoutée par le serveur Karma (habituellement http://localhost:9876/), soit
+automatiquement en configurant Karma de sorte qu’il sache quel navigateur démarrer quand Karma est exécuté.</p>
+
+<p>Karma surveille aussi tous les fichiers listés dans le fichier de configuration. Dès qu’un fichier change, Karma déclenche les tests en envoyant un signal 
+au serveur de test pour informer tout les navigayeurs connectés d’executer le code de test à nouveau. Chaque navigateur charge ensuite le code source dans une IFrame, exécute les tests, et rapporte les résultats au serveur.
+Le serveur collecte les résultats de l’ensemble des navigateurs connectés et te les présente.</p>
+
+<h3 id="intern">Intern</h3>
+
+<p><img class="left" src="http://ptitgraig.github.io/images/test-intern.png" width="140" height="140" />
+Intern est <em>une pile de test complète pour Javascript</em>, conçue pour t’aider à écrire et exécuter des cas de test, pour applications et biblothèques de scripts, cohérent et de haute qualité. Intern peut être utilisé pour tester n’importe quel code JavaScript. Ses capacités de test fonctionnel peuvent même être utilisé pour tester des applications mobile et web non JavaScript - si tu le veux vraiment.</p>
+
+<h3 id="sinonjs">sinon.js</h3>
+
+<p>Espions de test autonome et mocks pour JavaScript.
+Aucune dépendances, fonctionne avec n’importe quel framework JavaScript.
+Un espion de test est une fonction qui enregistre les paramètres, retourne la valeur de <code>this</code> et l’exception levée - si présente.
+Un espion de test peut être une fonction anonyme ou peut être encapsuler dans une autre fonction.</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="string"><span class="delimiter">&quot;</span><span class="content">test should call subscribers on publish</span><span class="delimiter">&quot;</span></span>: <span class="keyword">function</span> () {
+    <span class="keyword">var</span> callback = sinon.spy();
+    PubSub.subscribe(<span class="string"><span class="delimiter">&quot;</span><span class="content">message</span><span class="delimiter">&quot;</span></span>, callback);
+
+    PubSub.publishSync(<span class="string"><span class="delimiter">&quot;</span><span class="content">message</span><span class="delimiter">&quot;</span></span>);
+
+    assertTrue(callback.called);
+}
+</pre></div>
+</div>
+</div>
+
+<h3 id="shouldjs">should.js</h3>
+
+<p>Enoncés (assertions) de style Behavior-Driven-Developemnt (BDD) pour Node.js, indépendant de tout framework de test.</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> should = require(<span class="string"><span class="delimiter">'</span><span class="content">should</span><span class="delimiter">'</span></span>);
+
+<span class="keyword">var</span> user = {
+    <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">tj</span><span class="delimiter">'</span></span>
+  , <span class="key">pets</span>: [<span class="string"><span class="delimiter">'</span><span class="content">tobi</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">loki</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">jane</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">bandit</span><span class="delimiter">'</span></span>]
+};
+
+user.should.have.property(<span class="string"><span class="delimiter">'</span><span class="content">name</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">tj</span><span class="delimiter">'</span></span>);
+user.should.have.property(<span class="string"><span class="delimiter">'</span><span class="content">pets</span><span class="delimiter">'</span></span>).<span class="keyword">with</span>.lengthOf(<span class="integer">4</span>);
+
+<span class="comment">// Si l'objet a été créé avec Object.create(null)</span>
+<span class="comment">// alors il n'hérite pas de `Object.prototype`, donc il n'aura pas une getter `.should`</span>
+<span class="comment">// donc tu peux faire :</span>
+should(user).have.property(<span class="string"><span class="delimiter">'</span><span class="content">name</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">tj</span><span class="delimiter">'</span></span>);
+
+<span class="comment">// aussi, tu peux tester de cette manières les `null`</span>
+should(<span class="predefined-constant">null</span>).not.be.ok;
+
+someAsyncTask(foo, <span class="keyword">function</span>(err, result){
+  should.not.exist(err);
+  should.exist(result);
+  result.bar.should.equal(foo);
+});
+</pre></div>
+</div>
+</div>
+
+<h3 id="expectjs">expect.js</h3>
+
+<p>Outils d’enoncés minimalistes de style BDD pour Node.JS et pour navigateurs, basé sur should.js</p>
+
+<ul>
+  <li>Cross-browser : fonctionne sur IE6+, Firefox, Safari, Chrome, Opera.</li>
+  <li>Compatible avec tous les frameworks de test.</li>
+  <li>Prête pour Node.JS (require(‘expect.js’)).</li>
+  <li>Autonome. Global seule sans extensions de prototype ou brique (shims)</li>
+</ul>
+
+<div><div class="CodeRay">
+  <div class="code"><pre>expect(window.r).to.be(<span class="predefined-constant">undefined</span>);
+expect({ <span class="key">a</span>: <span class="string"><span class="delimiter">'</span><span class="content">b</span><span class="delimiter">'</span></span> }).to.eql({ <span class="key">a</span>: <span class="string"><span class="delimiter">'</span><span class="content">b</span><span class="delimiter">'</span></span> })
+expect(<span class="integer">5</span>).to.be.a(<span class="string"><span class="delimiter">'</span><span class="content">number</span><span class="delimiter">'</span></span>);
+expect([]).to.be.an(<span class="string"><span class="delimiter">'</span><span class="content">array</span><span class="delimiter">'</span></span>);
+expect(window).not.to.be.an(Image);
+</pre></div>
+</div>
+</div>
+
+<h3 id="chaijs">chai.js</h3>
+
+<p><img class="left" src="http://ptitgraig.github.io/images/test-chai.png" width="140" height="140" />
+Chai est une bibliothèque d’énoncés BDD / TDD pour node.js et les navigateurs qui peut être couplé à n’importe quel framework de test JavaScript</p>
+
+<h3 id="qunit">qUnit</h3>
+
+<p>A venir.</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>http://fr.wikipedia.org/wiki/Test_Driven_Development<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>http://fr.wikipedia.org/wiki/Behavior_Driven_Development<a href="#fnref:2" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]>
+		</content>
+	</entry>
 	
 	<entry>
 		
@@ -26,7 +352,36 @@
 					<p></p>
 				
 			]]>
-			<![CDATA[
+			<![CDATA[<p class="foreword">
+Fonctionnement basique du framework JAVA Spring MVC. Très bon pour la culture générale d&#8217;un développeur front.
+</p>
+<!-- more -->
+
+<h2 id="fonctionnement">Fonctionnement</h2>
+
+<p>Le framework Spring Web MVC est conçu autour d’une DispatcherServlet qui gère toutes les requêtes et réponses HTTP. Illustration ci-dessous :</p>
+
+<p><img src="http://ptitgraig.github.io/images/spring_dispatcherservlet.png" /></p>
+
+<ol>
+  <li>
+    <p>Après avoir reçu une requête HTTP, DispatchServlet consulte le HandlerMapping pour appeler le Controller approprié.</p>
+  </li>
+  <li>
+    <p>Le Controller analyse la requête et apelle le la méthode du service appropriée, basé l’utilisation des méthodes POST ou GET. La méthode du service initialisera les données du model sur la base d’une logique business puis retournera ne nom de la vue à la DispatcherServlet</p>
+  </li>
+  <li>
+    <p>La DispatcherServlet s’appuiera sur la ViewResolver pour choisir la bonne vue pour la requête</p>
+  </li>
+  <li>
+    <p>Une fois que la vue est finalisée, la DispatcherServlet passe les données du model à la vue, cette dernière étant finalement affichée sur le navigateur.</p>
+  </li>
+</ol>
+
+<p>Tous les composants mentionnés ci-dessus (HandlerMapping, Controller et ViewResolver) font partis du WebApplicationContext, lequel est une extention du ApplicationContext auquel on a ajouté quelques caractéristiques supplémentaires pour les applications web.</p>
+
+<h2 id="spring-mvc-pour-faire-du-rest">Spring MVC pour faire du REST</h2>
+
 ]]>
 		</content>
 	</entry>
@@ -48,7 +403,6 @@
 Voici un article qui vous expliquera le poids des CSS. Cela est utile quand vous voulez surcharger un style, comprendre quel style s&#8217;applique à quel élément et pourquoi un style s&#8217;applique plutôt qu&#8217;un autre.
 </p>
 <!-- more -->
-<hr />
 
 <p>Quand vous reprenez un projet existant, qui date déjà un peu, vous vous retrouvez souvent avec des déclarations CSS à rallonge et ne savait plus quoi s’applique à quoi.</p>
 
@@ -208,7 +562,8 @@ Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le c
 
 <p>En vérité il s’agit plutôt d’un framework MV* car le Controller n’existe pas vraiment dans Backbone.</p>
 
-<p>Faisons un parrallèle entre un MVC classique et un MVC Backbone.</p>
+<p>Faisons un parrallèle entre un MVC classique et un MVC Backbone.
+<!-- more --></p>
 
 <h2 id="models">Models</h2>
 
@@ -244,26 +599,30 @@ Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le c
 <ul>
   <li>set : pour changer ou initialiser un attribut du Model <code>myModel.set('toto', 'un valeur');</code></li>
   <li>get : pour obtenir la valeur d’un attribut du Model <code>myModel.get('toto');</code></li>
-  <li>validate : permet de valider le model ex :
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span></figure></notextile></li>
+  <li>validate : permet de valider le model ex :</li>
 </ul>
-<p>&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">validate: function(attributes){
-</span><span class="line">	if(attributes.title === undefined){
-</span><span class="line">	    return "Remember to set a title for your todo.";
-</span><span class="line">	}
-</span><span class="line">},</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;
-### ecouter si le modèle change : 
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">this.on('change', function(){ 
-</span><span class="line">	//faire quelquechose
-</span><span class="line">});</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;
-### ecouter si l’attribut toto du model change : <code>this.on('change:toto')</code></p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="function">validate</span>: <span class="keyword">function</span>(attributes){
+    <span class="keyword">if</span>(attributes.title === <span class="predefined-constant">undefined</span>){
+        <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Remember to set a title for your todo.</span><span class="delimiter">&quot;</span></span>;
+    }
+},
+</pre></div>
+</div>
+</div>
+
+<h3 id="ecouter-si-le-modle-change-">ecouter si le modèle change :</h3>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="local-variable">this</span>.on(<span class="string"><span class="delimiter">'</span><span class="content">change</span><span class="delimiter">'</span></span>, <span class="keyword">function</span>(){ 
+    <span class="comment">//faire quelquechose</span>
+});
+</pre></div>
+</div>
+</div>
+
+<h3 id="ecouter-si-lattribut-toto-du-model-change--thisonchangetoto">ecouter si l’attribut toto du model change : <code>this.on('change:toto')</code></h3>
 
 <h2 id="pense-bte-pour-la-view">pense-bête pour la View</h2>
 
@@ -273,12 +632,13 @@ Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le c
 
 <p>Colle un template HTML a une vue.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var view = new Backbone.View;
-</span><span class="line">view.setElement('&lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;');
-</span><span class="line">view.el // &lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> view = <span class="keyword">new</span> Backbone.View;
+view.setElement(<span class="string"><span class="delimiter">'</span><span class="content">&lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;</span><span class="delimiter">'</span></span>);
+view.el <span class="comment">// &lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;</span>
+</pre></div>
+</div>
+</div>
 
 <h3 id="render">render()</h3>
 
@@ -292,16 +652,16 @@ Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le c
 <h2 id="pense-bte-collection">pense-bête Collection</h2>
 
 <h3 id="syntaxe">Syntaxe</h3>
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var Todo = Backbone.Model.extend({});
-</span><span class="line">
-</span><span class="line">var TodosCollection = Backbone.Collection.extend({
-</span><span class="line">  model: Todo
-</span><span class="line">});</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> Todo = Backbone.Model.extend({});
+
+<span class="keyword">var</span> TodosCollection = Backbone.Collection.extend({
+  <span class="key">model</span>: Todo
+});
+</pre></div>
+</div>
+</div>
 
 <h3 id="ajout-suppression-de-models">Ajout suppression de Models</h3>
 
@@ -311,12 +671,13 @@ Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le c
 
 <p><code>Collection.get(id)</code> avec id l’id du Model</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var myTodo = new Todo({title:'Read the whole book', id: 2});
-</span><span class="line">var todos = new TodosCollection([myTodo]);
-</span><span class="line">var todo2 = todos.get(2);</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> myTodo = <span class="keyword">new</span> Todo({<span class="key">title</span>:<span class="string"><span class="delimiter">'</span><span class="content">Read the whole book</span><span class="delimiter">'</span></span>, <span class="key">id</span>: <span class="integer">2</span>});
+<span class="keyword">var</span> todos = <span class="keyword">new</span> TodosCollection([myTodo]);
+<span class="keyword">var</span> todo2 = todos.get(<span class="integer">2</span>);
+</pre></div>
+</div>
+</div>
 
 <p>Afin d’intentifier le Model récupéré on peut utiliser : <code>id</code> <code>cid</code> <code>idAttribute</code></p>
 
@@ -325,59 +686,43 @@ Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le c
 
 <h3 id="ecouter-des-vnements">Ecouter des événements</h3>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var TodosCollection = new Backbone.Collection();
-</span><span class="line">TodosCollection.on("change:title", function(model) {
-</span><span class="line">    console.log("J'ai changer d'avis, je devrais " + model.get('title'));
-</span><span class="line">});
-</span><span class="line">TodosCollection.add([
-</span><span class="line">  { title: 'go to Jamaica.', completed: false, id: 3 },
-</span><span class="line">]);
-</span><span class="line">var myTodo = TodosCollection.get(3);
-</span><span class="line">myTodo.set('title', 'aller nager');</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> TodosCollection = <span class="keyword">new</span> Backbone.Collection();
+TodosCollection.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">change:title</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>(model) {
+    console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">J'ai changer d'avis, je devrais </span><span class="delimiter">&quot;</span></span> + model.get(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>));
+});
+TodosCollection.add([
+  { <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">go to Jamaica.</span><span class="delimiter">'</span></span>, <span class="key">completed</span>: <span class="predefined-constant">false</span>, <span class="key">id</span>: <span class="integer">3</span> },
+]);
+<span class="keyword">var</span> myTodo = TodosCollection.get(<span class="integer">3</span>);
+myTodo.set(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">aller nager</span><span class="delimiter">'</span></span>);
+</pre></div>
+</div>
+</div>
 
 <p>Va afficher : J’ai changer d’avis, je devrais aller nager</p>
 
 <p>On peut écouter si il y a du changement dans une collection (ajout suppression modification) :</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">TodosCollection.on("add", function(model) {
-</span><span class="line">  console.log("Ajouté " + model.get('title'));
-</span><span class="line">});
-</span><span class="line">TodosCollection.on("remove", function(model) {
-</span><span class="line">  console.log("Supprimé " + model.get('title'));
-</span><span class="line">});
-</span><span class="line">
-</span><span class="line">TodosCollection.on("change:completed", function(model) {
-</span><span class="line">  console.log("Changement de l'attribute completed " + model.get('title'));
-</span><span class="line">});
-</span><span class="line">TodosCollection.set([
-</span><span class="line">    { id: 1, title: 'go to Jamaica.', completed: true },
-</span><span class="line">    { id: 2, title: 'go to China.', completed: false },
-</span><span class="line">    { id: 4, title: 'go to Disney World.', completed: false }
-</span><span class="line">]);</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre>TodosCollection.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">add</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>(model) {
+  console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">Ajouté </span><span class="delimiter">&quot;</span></span> + model.get(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>));
+});
+TodosCollection.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">remove</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>(model) {
+  console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">Supprimé </span><span class="delimiter">&quot;</span></span> + model.get(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>));
+});
+
+TodosCollection.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">change:completed</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>(model) {
+  console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">Changement de l'attribute completed </span><span class="delimiter">&quot;</span></span> + model.get(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>));
+});
+TodosCollection.set([
+    { <span class="key">id</span>: <span class="integer">1</span>, <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">go to Jamaica.</span><span class="delimiter">'</span></span>, <span class="key">completed</span>: <span class="predefined-constant">true</span> },
+    { <span class="key">id</span>: <span class="integer">2</span>, <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">go to China.</span><span class="delimiter">'</span></span>, <span class="key">completed</span>: <span class="predefined-constant">false</span> },
+    { <span class="key">id</span>: <span class="integer">4</span>, <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">go to Disney World.</span><span class="delimiter">'</span></span>, <span class="key">completed</span>: <span class="predefined-constant">false</span> }
+]);
+</pre></div>
+</div>
+</div>
 
 <p>Vider une Collection : <code>myCollection.reset()</code></p>
 
@@ -389,41 +734,38 @@ Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le c
 - <code>forEach</code>
 - <code>sortBy</code>
 - <code>map</code>
-- <code>min/max</code> :
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">Todos.max(function(model){
-</span><span class="line">  return model.id;
-</span><span class="line">}).id;</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;
-- <code>pluck</code></p>
+- <code>min/max</code> :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre>Todos.max(<span class="keyword">function</span>(model){
+  <span class="keyword">return</span> model.id;
+}).id;
+</pre></div>
+</div>
+</div>
+
+<ul>
+  <li><code>pluck</code></li>
+</ul>
 
 <p><code>chain()</code> permet de chainer l’appel de fonction sur une Collection</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var collection = new Backbone.Collection([
-</span><span class="line">  { name: 'Tim', age: 5 },
-</span><span class="line">  { name: 'Ida', age: 26 },
-</span><span class="line">  { name: 'Rob', age: 55 }
-</span><span class="line">]);
-</span><span class="line">
-</span><span class="line">var filteredNames = collection.chain() // start chain, returns wrapper around collection's models
-</span><span class="line">  .filter(function(item) { return item.get('age') &gt; 10; }) // returns wrapped array excluding Tim
-</span><span class="line">  .map(function(item) { return item.get('name'); }) // returns wrapped array containing remaining names
-</span><span class="line">  .value(); // terminates the chain and returns the resulting array
-</span><span class="line">
-</span><span class="line">console.log(filteredNames); // logs: ['Ida', 'Rob']</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> collection = <span class="keyword">new</span> Backbone.Collection([
+  { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Tim</span><span class="delimiter">'</span></span>, <span class="key">age</span>: <span class="integer">5</span> },
+  { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Ida</span><span class="delimiter">'</span></span>, <span class="key">age</span>: <span class="integer">26</span> },
+  { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Rob</span><span class="delimiter">'</span></span>, <span class="key">age</span>: <span class="integer">55</span> }
+]);
+
+<span class="keyword">var</span> filteredNames = collection.chain() <span class="comment">// start chain, returns wrapper around collection's models</span>
+  .filter(<span class="keyword">function</span>(item) { <span class="keyword">return</span> item.get(<span class="string"><span class="delimiter">'</span><span class="content">age</span><span class="delimiter">'</span></span>) &gt; <span class="integer">10</span>; }) <span class="comment">// returns wrapped array excluding Tim</span>
+  .map(<span class="keyword">function</span>(item) { <span class="keyword">return</span> item.get(<span class="string"><span class="delimiter">'</span><span class="content">name</span><span class="delimiter">'</span></span>); }) <span class="comment">// returns wrapped array containing remaining names</span>
+  .value(); <span class="comment">// terminates the chain and returns the resulting array</span>
+
+console.log(filteredNames); <span class="comment">// logs: ['Ida', 'Rob']</span>
+</pre></div>
+</div>
+</div>
 
 <h2 id="persistence-restful">Persistence RESTful</h2>
 
@@ -443,19 +785,18 @@ Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le c
 
 <h3 id="options">Options</h3>
 
-<p>Il est possible de passer seulement les choses que l’on veut mettre à jour dans un Model et pas forcememnt tout le Model (requête HTTP PATCH). Par exemple :
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">// Sauvegarde partielle avec PATCH
-</span><span class="line">model.clear().set({id: 1, a: 1, b: 2, c: 3, d: 4});
-</span><span class="line">model.save();
-</span><span class="line">model.save({b: 2, d: 4}, {patch: true});
-</span><span class="line">console.log(this.syncArgs.method);
-</span><span class="line">// 'patch'</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
+<p>Il est possible de passer seulement les choses que l’on veut mettre à jour dans un Model et pas forcememnt tout le Model (requête HTTP PATCH). Par exemple :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="comment">// Sauvegarde partielle avec PATCH</span>
+model.clear().set({<span class="key">id</span>: <span class="integer">1</span>, <span class="key">a</span>: <span class="integer">1</span>, <span class="key">b</span>: <span class="integer">2</span>, <span class="key">c</span>: <span class="integer">3</span>, <span class="key">d</span>: <span class="integer">4</span>});
+model.save();
+model.save({<span class="key">b</span>: <span class="integer">2</span>, <span class="key">d</span>: <span class="integer">4</span>}, {<span class="key">patch</span>: <span class="predefined-constant">true</span>});
+console.log(<span class="local-variable">this</span>.syncArgs.method);
+<span class="comment">// 'patch'</span>
+</pre></div>
+</div>
+</div>
 
 <h2 id="events">Events</h2>
 
@@ -465,121 +806,84 @@ Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le c
 
 <p><code>on()</code> lie une fonction callback à un objet. Le callback est appelé à chaque fois que l’événement est déclenché.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var myObject = {};
-</span><span class="line">
-</span><span class="line">// Mixin
-</span><span class="line">_.extend(myObject, Backbone.Events);
-</span><span class="line">
-</span><span class="line">// Ajouter un événement personnalisé
-</span><span class="line">myObject.on('dance', function(msg){
-</span><span class="line">  console.log('Déclenchement de ' + msg);
-</span><span class="line">});
-</span><span class="line">
-</span><span class="line">// Trigger the custom event
-</span><span class="line">myObject.trigger('dance', 'our event');</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> myObject = {};
+
+<span class="comment">// Mixin</span>
+_.extend(myObject, Backbone.Events);
+
+<span class="comment">// Ajouter un événement personnalisé</span>
+myObject.on(<span class="string"><span class="delimiter">'</span><span class="content">dance</span><span class="delimiter">'</span></span>, <span class="keyword">function</span>(msg){
+  console.log(<span class="string"><span class="delimiter">'</span><span class="content">Déclenchement de </span><span class="delimiter">'</span></span> + msg);
+});
+
+<span class="comment">// Trigger the custom event</span>
+myObject.trigger(<span class="string"><span class="delimiter">'</span><span class="content">dance</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">our event</span><span class="delimiter">'</span></span>);
+</pre></div>
+</div>
+</div>
 
 <p><code>off()</code> supprime toutes les fonctions de callback sur un objet</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">// Removes event bound to the object
-</span><span class="line">myObject.off("dance:tap");</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="comment">// Removes event bound to the object</span>
+myObject.off(<span class="string"><span class="delimiter">&quot;</span><span class="content">dance:tap</span><span class="delimiter">&quot;</span></span>);
+</pre></div>
+</div>
+</div>
 
 <p>Pour supprimer une callback en particulier :</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var ourObject = {};
-</span><span class="line">
-</span><span class="line">// Mixin
-</span><span class="line">_.extend(ourObject, Backbone.Events);
-</span><span class="line">
-</span><span class="line">function dancing (msg) { console.log("We are dancing. " + msg); }
-</span><span class="line">function jumping (msg) { console.log("We are jumping. " + msg); }
-</span><span class="line">
-</span><span class="line">// Add two listeners to the same event
-</span><span class="line">ourObject.on("move", dancing);
-</span><span class="line">ourObject.on("move", jumping);
-</span><span class="line">
-</span><span class="line">// Trigger the events. Both listeners are called.
-</span><span class="line">ourObject.trigger("move", "Yeah!");
-</span><span class="line">
-</span><span class="line">// Removes specified listener
-</span><span class="line">ourObject.off("move", dancing);
-</span><span class="line">
-</span><span class="line">// Trigger the events again. One listener left.
-</span><span class="line">ourObject.trigger("move", "Yeah, jump, jump!");</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> ourObject = {};
+
+<span class="comment">// Mixin</span>
+_.extend(ourObject, Backbone.Events);
+
+<span class="keyword">function</span> <span class="function">dancing</span> (msg) { console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">We are dancing. </span><span class="delimiter">&quot;</span></span> + msg); }
+<span class="keyword">function</span> <span class="function">jumping</span> (msg) { console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">We are jumping. </span><span class="delimiter">&quot;</span></span> + msg); }
+
+<span class="comment">// Add two listeners to the same event</span>
+ourObject.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">move</span><span class="delimiter">&quot;</span></span>, dancing);
+ourObject.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">move</span><span class="delimiter">&quot;</span></span>, jumping);
+
+<span class="comment">// Trigger the events. Both listeners are called.</span>
+ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><span class="content">move</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Yeah!</span><span class="delimiter">&quot;</span></span>);
+
+<span class="comment">// Removes specified listener</span>
+ourObject.off(<span class="string"><span class="delimiter">&quot;</span><span class="content">move</span><span class="delimiter">&quot;</span></span>, dancing);
+
+<span class="comment">// Trigger the events again. One listener left.</span>
+ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><span class="content">move</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Yeah, jump, jump!</span><span class="delimiter">&quot;</span></span>);
+</pre></div>
+</div>
+</div>
 
 <p><code>trigger()</code> peut passer plusieurs arguments à une fonction callback</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var ourObject = {};
-</span><span class="line">
-</span><span class="line">// Mixin
-</span><span class="line">_.extend(ourObject, Backbone.Events);
-</span><span class="line">
-</span><span class="line">function doAction (action, duration) {
-</span><span class="line">  console.log("We are " + action + ' for ' + duration ); 
-</span><span class="line">}
-</span><span class="line">
-</span><span class="line">// Add event listeners
-</span><span class="line">ourObject.on("dance", doAction);
-</span><span class="line">ourObject.on("jump", doAction);
-</span><span class="line">ourObject.on("skip", doAction);
-</span><span class="line">
-</span><span class="line">// Passing multiple arguments to single event
-</span><span class="line">ourObject.trigger("dance", 'dancing', "5 minutes");
-</span><span class="line">
-</span><span class="line">// Passing multiple arguments to multiple events
-</span><span class="line">ourObject.trigger("dance jump skip", 'on fire', "15 minutes");</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> ourObject = {};
+
+<span class="comment">// Mixin</span>
+_.extend(ourObject, Backbone.Events);
+
+<span class="keyword">function</span> <span class="function">doAction</span> (action, duration) {
+  console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">We are </span><span class="delimiter">&quot;</span></span> + action + <span class="string"><span class="delimiter">'</span><span class="content"> for </span><span class="delimiter">'</span></span> + duration ); 
+}
+
+<span class="comment">// Add event listeners</span>
+ourObject.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">dance</span><span class="delimiter">&quot;</span></span>, doAction);
+ourObject.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">jump</span><span class="delimiter">&quot;</span></span>, doAction);
+ourObject.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">skip</span><span class="delimiter">&quot;</span></span>, doAction);
+
+<span class="comment">// Passing multiple arguments to single event</span>
+ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><span class="content">dance</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">dancing</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">5 minutes</span><span class="delimiter">&quot;</span></span>);
+
+<span class="comment">// Passing multiple arguments to multiple events</span>
+ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><span class="content">dance jump skip</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">on fire</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">15 minutes</span><span class="delimiter">&quot;</span></span>);
+</pre></div>
+</div>
+</div>
 
 <p><code>listenTo()</code> et <code>stopListening()</code> permet à un objet {d’écouter/ arrêter d’écouter} les événements sur un autre objet.</p>
 
@@ -595,20 +899,18 @@ Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le c
 
 <p>Connecte des URLs à des parties de l’application. Nécessaire si tu veux que certaines parties de ton application soient : mise dans les favoris, partageable, si tu veux pouvoir faire un Back avec le bouton back du navigateur.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var TodoRouter = Backbone.Router.extend({
-</span><span class="line">	routes: {
-</span><span class="line">		"search/:query/p:page" : "searchTodos"
-</span><span class="line">		// http://example.com/#search/job/p1
-</span><span class="line">	}
-</span><span class="line">});
-</span><span class="line">var myTodoRouter = new TodoRouter();</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> TodoRouter = Backbone.Router.extend({
+    <span class="key">routes</span>: {
+        <span class="key"><span class="delimiter">&quot;</span><span class="content">search/:query/p:page</span><span class="delimiter">&quot;</span></span> : <span class="string"><span class="delimiter">&quot;</span><span class="content">searchTodos</span><span class="delimiter">&quot;</span></span>
+        <span class="comment">// http://example.com/#search/job/p1</span>
+    }
+});
+<span class="keyword">var</span> myTodoRouter = <span class="keyword">new</span> TodoRouter();
+</pre></div>
+</div>
+</div>
+
 <p><code>Backbone.history.start();</code> dit à Backbone qu’il fait observer tout changement de hash dans l’URL (d’où le /# hyper vitale)</p>
 
 ]]>
@@ -632,7 +934,6 @@ Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le c
 Vous avez choisi de développer votre dernière super application web avec Backbone. Avant de vous lancer tête baissée dans le développement, réfléchissez à ces 4 questions afin de savoir si Backbone est ce qu&#8217;il vous faut.
 </p>
 <!-- more -->
-<hr />
 
 <p>Question 1 : Comment vais-je structurer les vues et les controlleurs imbriquées ?</p>
 
@@ -670,7 +971,6 @@ Vous avez choisi de développer votre dernière super application web avec Backb
 Premier chapitre du livre <em>Knowledge of the Holy</em> de A. W. Tozer. L&#8217;auteur argumente en faveur de l&#8217;importance cruciale d&#8217;une juste connaissance de Dieu.
 </p>
 <!-- more -->
-<hr />
 
 <h3 id="chaptre-1">Chapître 1</h3>
 
@@ -795,19 +1095,19 @@ Essayons d’éprouver un peu cette affirmation.</p>
 
 <p>Dans un premier temps, nous allons définir le terme mission. Pour répondre à cette question il nous faudra aussi dire quel est le but de la mission et ses implications. Enfin nous nous efforcerons de montrer que la mission est attachée au caractère de Dieu et qu’il est lui-même un Dieu missionnaire.</p>
 
-<p>Mission signifie envoyer, en grec <em>apostelô</em> qui a donné apostolos, littéralement l’envoyé,  duquel on tire apôtre <sup><em>1</em></sup>. L’évangélisation est l’annonce de la bonne nouvelle (ange : annoncer, év : vient de eu qui signifie bon). La différence entre mission et évangélisation et que l’évangélisation fait partie de la mission. Elle est la réponse à l’appel de Dieu. Elle possède plusieurs facettes.
+<p>Mission signifie envoyer, en grec <em>apostelô</em> qui a donné apostolos, littéralement l’envoyé,  duquel on tire apôtre <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>. L’évangélisation est l’annonce de la bonne nouvelle (ange : annoncer, év : vient de eu qui signifie bon). La différence entre mission et évangélisation et que l’évangélisation fait partie de la mission. Elle est la réponse à l’appel de Dieu. Elle possède plusieurs facettes.
 Historiquement, les frères moraves, au XVIIIème siècle, sont reconnus comme étant les premiers missionnaires modernes. Suite à la Réforme, Jean Hus, fonde 400 églises, qui formeront la fratrie Hussite, qui enverra de nombreux missionnaires par le monde.
 Le but de la Mission est de faire connaître le vrai Dieu, Père, Fils Saint-Esprit aux hommes et qu’ils sachent ce qu’il a fait pour eux et attend d’eux. Cela n’implique pas seulement d’annoncer un message brut mais s’adapter à l’auditoire pour qu’il puisse saisir et accepter. Cela implique de considérer l’individu entièrement.
-Nous voyons tout au long de l’histoire biblique d’Israël et de l’histoire de l’église que Dieu est un Dieu qui se révèle. Le fait d’envoyer, spécifique à la Bible, n’existe pas dans les autres religions <sup><em>2</em></sup>. Dieu s’intéresse à l’homme et veut lui communiquer  des messages mais lui donne pleine liberté par rapport à ceux-ci. Il s’adresse ainsi à Adam, Abraham, Moïse etc… Le but de Dieu est que les hommes le connaissent. La relation d’antan a été brisée à cause du péché et il faut la restaurer. Ainsi  Dieu n’est pas statique envers les hommes. Il est à la fois celui qui envoie et qui vient lui-même. Il va vers les hommes. Au sein même de la Tri-unité, le Père envoie le Fils sur la terre pour annoncer la venue du royaume de Dieu et accomplir sa volonté de mourir pour les pécheurs (Rom. 8.5). Le Père et le Fils envoient le Saint-Esprit sur toute chair pour sceller le salut de ceux qui croient (Act. 2.19). La parabole des vignerons 3 est une très bonne illustration du caractère missionnaire de Dieu. Il envoie ses serviteurs, les prophètes. Moïse est le premier pour qui la notion d’envoyer devient nette (Ex.3.10 : « Je t’envoie »). Puis fini par venir lui-même, en son Fils.
-En venant, le Christ ne se contente pas d’annoncer la bonne nouvelle mais il s’occupe d’éduquer et de faire grandir dans la foi ceux qui l’écoutent et en particulier les 12. Ainsi, le Christ est un missionnaire entier. Il annonce la bonne nouvelle, s’occupe des individus pour les faire grandir dans leur foi. Il enseigne (Jean 6.6), prêche (Marc 1.14), s’occupe des besoins physiques <sup><em>4</em></sup> et spirituels de ceux à qui il s’adresse, et rend témoignage (Jean 5.36). Dès le début on dit que Jésus est envoyé (Heb3.1). Il est donc un apôtre.
+Nous voyons tout au long de l’histoire biblique d’Israël et de l’histoire de l’église que Dieu est un Dieu qui se révèle. Le fait d’envoyer, spécifique à la Bible, n’existe pas dans les autres religions <sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>. Dieu s’intéresse à l’homme et veut lui communiquer  des messages mais lui donne pleine liberté par rapport à ceux-ci. Il s’adresse ainsi à Adam, Abraham, Moïse etc… Le but de Dieu est que les hommes le connaissent. La relation d’antan a été brisée à cause du péché et il faut la restaurer. Ainsi  Dieu n’est pas statique envers les hommes. Il est à la fois celui qui envoie et qui vient lui-même. Il va vers les hommes. Au sein même de la Tri-unité, le Père envoie le Fils sur la terre pour annoncer la venue du royaume de Dieu et accomplir sa volonté de mourir pour les pécheurs (Rom. 8.5). Le Père et le Fils envoient le Saint-Esprit sur toute chair pour sceller le salut de ceux qui croient (Act. 2.19). La parabole des vignerons 3 est une très bonne illustration du caractère missionnaire de Dieu. Il envoie ses serviteurs, les prophètes. Moïse est le premier pour qui la notion d’envoyer devient nette (Ex.3.10 : « Je t’envoie »). Puis fini par venir lui-même, en son Fils.
+En venant, le Christ ne se contente pas d’annoncer la bonne nouvelle mais il s’occupe d’éduquer et de faire grandir dans la foi ceux qui l’écoutent et en particulier les 12. Ainsi, le Christ est un missionnaire entier. Il annonce la bonne nouvelle, s’occupe des individus pour les faire grandir dans leur foi. Il enseigne (Jean 6.6), prêche (Marc 1.14), s’occupe des besoins physiques <sup id="fnref:4"><a href="#fn:4" rel="footnote">3</a></sup> et spirituels de ceux à qui il s’adresse, et rend témoignage (Jean 5.36). Dès le début on dit que Jésus est envoyé (Heb3.1). Il est donc un apôtre.
 Jésus-Christ lance un appel clair à faire de toutes les nations des disciples (Mat. 28.19). Il ne parle  pas simplement d’annoncer la bonne nouvelle aux nations mais d’en faire des disciples. Il parle donc  de la mission et de considérer les besoins des individus et leur croissance spirituelle. Jésus envoie lui-même ses disciples en mission. Notre Dieu est bien un Dieu missionnaire.</p>
 
 <h2 id="comment-sy-prend-il--travers-lhistoire-selon-le-rcit-biblique-">2. Comment s’y prend-il à travers l’histoire selon le récit biblique ?</h2>
 
 <p>Nous commencerons par voir de quelles manières Dieu se manifeste au travers de l’histoire d’Israël et de celle de l’Eglise. Puis nous tacherons de de voir comment Dieu s’y est pris pour se révéler, ce qu’il a utilisé pour que les hommes le connaisse.</p>
 
-<p>Si nous prenons le récit biblique d’Israël dans son ensemble nous constatons que Dieu se révèle à son peuple de manière progressive. Il commence avec Abraham et ses descendants et se révèle ainsi aux hommes comme un Dieu qui s’intéresse à eux et leur fait des promesses. Il fait connaître son Nom à Moïse, et communique ainsi son essence d’être éternel : « Je suis celui est qui est ». Puis il se révèle comme celui qui veut faire une alliance avec son peuple. Il se manifeste comme celui qui est souverain et révèle sa perfection morale par la loi de Moïse. Ses règles et ses lois sont consignées par Moïse par écrit et sont conforme à sa volonté; Dieu revendique ces écrits comme son œuvre (Os. 8.12) <sup><em>5</em></sup>. Dieu se présente donc aux hommes de manière progressive. Toute la révélation de sa personne n’est pas donnée d’un seul coup.
-Dieu se révèle aussi aux hommes par des hommes : les prophètes. Le prophète est celui que Dieu revêt de son autorité pour qu’il communique sa volonté aux hommes et les instruise <sup><em>6</em></sup>. En les inspirants par son Saint-Esprit, il communique à son peuple sa volonté.
+<p>Si nous prenons le récit biblique d’Israël dans son ensemble nous constatons que Dieu se révèle à son peuple de manière progressive. Il commence avec Abraham et ses descendants et se révèle ainsi aux hommes comme un Dieu qui s’intéresse à eux et leur fait des promesses. Il fait connaître son Nom à Moïse, et communique ainsi son essence d’être éternel : « Je suis celui est qui est ». Puis il se révèle comme celui qui veut faire une alliance avec son peuple. Il se manifeste comme celui qui est souverain et révèle sa perfection morale par la loi de Moïse. Ses règles et ses lois sont consignées par Moïse par écrit et sont conforme à sa volonté; Dieu revendique ces écrits comme son œuvre (Os. 8.12) <sup id="fnref:5"><a href="#fn:5" rel="footnote">4</a></sup>. Dieu se présente donc aux hommes de manière progressive. Toute la révélation de sa personne n’est pas donnée d’un seul coup.
+Dieu se révèle aussi aux hommes par des hommes : les prophètes. Le prophète est celui que Dieu revêt de son autorité pour qu’il communique sa volonté aux hommes et les instruise <sup id="fnref:6"><a href="#fn:6" rel="footnote">5</a></sup>. En les inspirants par son Saint-Esprit, il communique à son peuple sa volonté.
 Mais ce n’est qu’avec Jésus-Christ que Dieu se révèle pleinement aux hommes. En venant dans une chair semblable à la nôtre, Dieu se manifeste à la compréhension humaine de la meilleure manière qui soit. Par sa vie et son œuvre, Jésus a parfaitement révélé le Père (Jean 1.18) au point qu’il est appelé l’image du Dieu invisible (Heb. 1.3). Il fait connaître son plan de salut pour les hommes. Cette œuvre était symboliquement présente sous l’ancienne alliance par les sacrifices d’animaux sans défauts. Ainsi, Dieu, pendant des siècles, avait préparé son peuple à la venue de son Fils, celui qui le révèlerait entièrement et qui aurait à donner son sang, sa vie, pour les péchés.
 Avant de rejoindre son Père, Jésus a commandé ses disciples de faire de toutes les nations ses disciples. C’est donc aux apôtres que Dieu a confié la mission de révéler qui il est au reste du monde (Act. 1.8). A l’heure de l’Eglise, la foi peut se reposer sur les textes bibliques, rédigés sous la plume inspirée des premiers apôtres du Christ. C’est le dépôt qui doit passer de générations en générations que Paul confie à Timothée (2Tim 1.12). L’Eglise est la garante du message de Dieu. Elle possède la clé pour le ciel (Mat 16.19), le moyen donné par Dieu d’avoir la certitude de la vie éternelle par la foi. Dieu continue de se révéler aux hommes qui ne le connaissent pas par les pierres vivantes de son Eglise et par son Saint-Esprit qui convainc les cœurs de péché. En prenant exemple sur les récits bibliques, nous constatons que Jésus et ses apôtres créaient un lien avec le vécu de leurs interlocuteurs afin d’annoncer la bonne nouvelle. La forme du message peut changer mais le fond reste identique. Ainsi Paul ne s’adresse pas de la même manière aux Athéniens (Act. 17.15-34) qu’Etienne, au sanhédrin (Act. 7). Ils considèrent leur culture, ce qu’ils savent déjà et leur quotidien et cherche à créer une passerelle entre l’Evangile et eux.</p>
 
@@ -816,24 +1116,36 @@ Avant de rejoindre son Père, Jésus a commandé ses disciples de faire de toute
 <p>Nous allons dans un premier temps rappeler ce qu’implique la mission de Dieu. Puis dans quel contexte culturel est installée l’église en France. Enfin nous proposerons quelques pistes concrètes pour vivre cette mission.
 Nous l’avons vu, elle a pour but de révéler Dieu, de le faire connaître par Jésus-Christ, de faire connaître sa volonté, et de faire des Hommes des disciples du Christ.
 Pour vivre cela dans l’église aujourd’hui il faut considérer la culture dans laquelle elle est installée. En France, on perçoit le catholicisme comme la religion normale. On ne comprend pas que des églises de professant puissent exister. On revendique la tolérance mais on ne veut pas de la pluralité. La doctrine de l’Homme est mise en avant, l’Homme possède un « bon fond », ce qui ne va pas dans le sens de l’Evangile. Enfin, on remarque aussi un certain anticléricalisme bien que l’intérêt pour le Christianisme semble se renouveler.
-Pour présenter Jésus à nos contemporains, il faut pouvoir créer des points de contact avec eux. David Brown suggère plusieurs passerelles pour atteindre nos contemporains : notre humanité, l’église, la spiritualité, le méta-récit <sup><em>7</em></sup>. Nous allons nous concentrer sur quelques-unes.
+Pour présenter Jésus à nos contemporains, il faut pouvoir créer des points de contact avec eux. David Brown suggère plusieurs passerelles pour atteindre nos contemporains : notre humanité, l’église, la spiritualité, le méta-récit <sup id="fnref:7"><a href="#fn:7" rel="footnote">6</a></sup>. Nous allons nous concentrer sur quelques-unes.
 En commençant par cette passerelle que constitue notre humanité, l’identité et la valeur de l’être humain peuvent être discuté autour d’un repas organisé pendant une soirée sur un thème particulier. Par exemple, il serait possible de proposer d’inviter à l’église un missionnaire dont le ministère est rattaché aux enfants défavorisés pour qu’il puisse présenter son travail. La discussion sur ce sujet pourrait ferait alors naturellement pendant le repas, surtout si les invités sont déjà parents. Ainsi les valeurs de l’évangile seraient partagées.
 Dans l’église, il est possible de mettre en place mensuellement des cultes « spéciaux » pendant lesquels, le vocabulaire utilisé sera accessible et le message approprié à un visiteur. Ainsi, chacun peut inviter un jour un collègue ou un ami à ce type de culte en sachant qu’il ne sera pas confronter à un « patois de Canaan ». Parallèlement l’église doit être sensibilisée à cela et chaque membre doit prendre ce projet à cœur, non pas seulement comme un projet personnel, mais aussi un projet d’église. Pour ceux qui voudraient aller plus loin, l’église peut mettre en place des rencontres pour présenter l’évangile clairement. Il est alors important de mettre également en place un suivi et d’entourer les personnes pour qu’elles puissent grandir dans leur foi. Les invités aux réunions de prières, aux études bibliques etc…
 Mais avant toutes ces choses, puisque nos contemporains sont méfiants à l’égard des méta-récits, il convient de développer une relation de confiance. Ainsi, en allant boire un café ou en aidant à un déménagement, nous montrons de l’intérêt pour la personne et nous sommes en train d’évangéliser par notre vie. Instaurer une relation de confiance est donc capitale aujourd’hui.</p>
 
-<p><strong>Références :</strong>
-&gt;
-1.	Mission, Nouveau Dictionnaire Biblique, Emmaüs, 2002
-2.	Envoyer, Nouveau Dictionnaire Biblique, page 410, Emmaüs, 2002
-3.	Mathieu 21.33-43
-4.	En Marc 6, Jésus nourrit la foule. En Marc 10, il guérit un aveugle né. En Luc 8, il chasse les démons.
-5.	Prophète, Nouveau Dictionnaire Biblique, page 1066, Emmaüs, 2002
-6.	Prophète, Nouveau Dictionnaire Biblique, page 1124, Emmaüs, 2002
-7.	David Brown, Passerelles, Editions Farel, 2003, p.26</p>
-
 <blockquote>
   <p>Devoir également rédigé à l’aide de notes sur le stage « Evangélisation et Mission », D.Brown, FORMAPRE Nogent-sur-Marne.</p>
 </blockquote>
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>Mission, Nouveau Dictionnaire Biblique, Emmaüs, 2002<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>Envoyer, Nouveau Dictionnaire Biblique, page 410, Emmaüs, 2002<a href="#fnref:2" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:4">
+      <p>En Marc 6, Jésus nourrit la foule. En Marc 10, il guérit un aveugle né. En Luc 8, il chasse les démons.<a href="#fnref:4" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:5">
+      <p>Prophète, Nouveau Dictionnaire Biblique, page 1066, Emmaüs, 2002<a href="#fnref:5" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:6">
+      <p>Prophète, Nouveau Dictionnaire Biblique, page 1124, Emmaüs, 2002<a href="#fnref:6" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:7">
+      <p>David Brown, Passerelles, Editions Farel, 2003, p.26<a href="#fnref:7" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 ]]>
 		</content>
 	</entry>
@@ -896,8 +1208,11 @@ L’Ecriture, nous révèle, sans le dire de manière explicite que Dieu est uni
 			]]>
 			<![CDATA[<h2 id="introduction">Introduction</h2>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">$ git clone git@github.com:imathis/octopress.git # fork octopress</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre>$ git clone git@github.com:imathis/octopress.git # fork octopress
+</pre></div>
+</div>
+</div>
 
 <p>Octopress est un moteur de blog statique. Qui dit statique, dit plusieurs avantages :</p>
 
@@ -913,47 +1228,91 @@ L’Ecriture, nous révèle, sans le dire de manière explicite que Dieu est uni
 <h2 id="installation-doctopress-sous-mac-osx-lion">Installation d’Octopress sous Mac OSX Lion</h2>
 
 <ol>
-  <li>Ouvrir le terminal, puis saisir Terminal : Ctrl+espace, puis Terminal dans l’invite de recherche.</li>
-  <li>Installer Xcode. Dans l’appStore, chercher xcode. Cliquer sur le bouton “gratuit” (oui c’est gratuit :).</li>
-  <li>Une fois installé, lancer Xcode</li>
-  <li>Dans le menu, Xcode &gt; Préférences &gt; Downloads, puis cliquer sur le bouton “install” en face de la ligne “Command Line Tool”</li>
+  <li>
+    <p>Ouvrir le terminal, puis saisir Terminal : Ctrl+espace, puis Terminal dans l’invite de recherche.</p>
+  </li>
+  <li>
+    <p>Installer Xcode. Dans l’appStore, chercher xcode. Cliquer sur le bouton “gratuit” (oui c’est gratuit :).</p>
+  </li>
+  <li>
+    <p>Une fois installé, lancer Xcode</p>
+  </li>
+  <li>
+    <p>Dans le menu, Xcode &gt; Préférences &gt; Downloads, puis cliquer sur le bouton “install” en face de la ligne “Command Line Tool”</p>
+  </li>
   <li>
     <p>Installer RVM. Dans le Terminal, lancer la commande suivante :</p>
-
-    <p><code>curl -L https://get.rvm.io | bash -s stable --ruby</code></p>
   </li>
-  <li>Suivre les instructions proposées</li>
+</ol>
+
+<div><div class="CodeRay">
+  <div class="code"><pre>curl -L https://get.rvm.io | bash -s stable --ruby
+</pre></div>
+</div>
+</div>
+
+<ol>
+  <li>
+    <p>Suivre les instructions proposées</p>
+  </li>
   <li>
     <p>Installer Ruby 1.9.3</p>
-
-    <p><code>rvm install 1.9.3
- rvm use 1.9.3
- rvm rubygems latest</code></p>
   </li>
-  <li>
-    <p>Dans le terminal, verifier que 1.9.3 est bien la dernière version, saisissez</p>
+</ol>
 
-    <p><code>ruby --version</code></p>
-  </li>
-  <li>
-    <p>Installer Octopress, dans le Terminal, saisissez les lignes suivantes dans le Terminal:</p>
+<div><div class="CodeRay">
+  <div class="code"><pre>rvm install 1.9.3
+rvm use 1.9.3
+rvm rubygems latest
+</pre></div>
+</div>
+</div>
 
-    <p><code>git clone git://github.com/imathis/octopress.git octopress
- cd octopress    # Vous utilisez RVM, On vous demandera de faire confiance au fichier .rvmrc (dites oui en tappant y).
- ruby --version  # Ruby 1.9.3 devrait s'afficher</code></p>
-  </li>
-  <li>
-    <p>Installer les dépendances: saisir les commandes suivantes dans le Terminal</p>
+<ol>
+  <li>Dans le terminal, verifier que 1.9.3 est bien la dernière version, saisissez</li>
+</ol>
 
-    <p><code>gem install bundler
+<div><div class="CodeRay">
+  <div class="code"><pre>ruby --version
+</pre></div>
+</div>
+</div>
+
+<ol>
+  <li>Installer Octopress, dans le Terminal, saisissez les lignes suivantes dans le Terminal:</li>
+</ol>
+
+<div><div class="CodeRay">
+  <div class="code"><pre>git clone git://github.com/imathis/octopress.git octopress
+cd octopress    # Vous utilisez RVM, On vous demandera de faire confiance au fichier .rvmrc (dites oui en tappant y).
+ruby --version  # Ruby 1.9.3 devrait s'afficher
+</pre></div>
+</div>
+</div>
+
+<ol>
+  <li>Installer les dépendances: saisir les commandes suivantes dans le Terminal</li>
+</ol>
+
+<div><div class="CodeRay">
+  <div class="code"><pre>gem install bundler
 rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
-bundle install</code></p>
-  </li>
-  <li>
-    <p>Installer le thème d’Octopress par défaut</p>
+bundle install
+</pre></div>
+</div>
+</div>
 
-    <p><code>rake install</code></p>
-  </li>
+<ol>
+  <li>Installer le thème d’Octopress par défaut</li>
+</ol>
+
+<div><div class="CodeRay">
+  <div class="code"><pre>rake install
+</pre></div>
+</div>
+</div>
+
+<ol>
   <li>Installer Octopress avec les pages utilisateurs GitHub.<br />
 Se rendre sur <a href="http://www.github.com/">le site de GitHub</a> et créer un compte gratuitement. </li>
 </ol>

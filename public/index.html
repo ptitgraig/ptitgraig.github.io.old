@@ -14,7 +14,7 @@
 		<!-- Styles -->
 		<link href="/stylesheets/main.css" rel="stylesheet">
 		<!-- Google web fonts -->
-		<link href='http://fonts.googleapis.com/css?family=Lobster|Goudy+Bookletter+1911|Oswald:300' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Lobster|Goudy+Bookletter+1911|Oswald:700' rel='stylesheet' type='text/css'>
 		<link href="/stylesheets/prettify-hemisu.css" type="text/css" rel="stylesheet" />
 		
 		<!--<link href="http://feeds.feedburner.com/turkeltaub" rel="alternate" title="Gorille Gris" type="application/rss+xml" />-->
@@ -43,6 +43,59 @@
 		
   
   	<header class="index">
+  		<h1><a href="/blog/2015/01/05/les-pours-et-contres-des-frameworks-js/">Les pours et contres des frameworks JS</a></h1>
+  
+	<time>05 January 2015</time>
+  </header>
+
+
+<div class="index">
+  	<div class="entry-content"><p class="foreword">
+Les pours et les contres des framework BackboneJS, AngularJS, EXTJS, EmberJS : pour t&#8217;aider à choisir dans cette jungle.
+</p>
+</div>
+  	
+  	
+    <footer>
+      <a rel="full-article" href="">Lire la suite &rarr;</a>
+    </footer>
+  	
+</div>
+
+
+
+	
+		
+		
+  
+  	<header class="index">
+  		<h1><a href="/blog/2015/01/05/sy-retrouver-dans-les-outils-de-test-javascript/">S&#8217;y retrouver dans les outils de test Javascript</a></h1>
+  
+	<time>05 January 2015</time>
+  </header>
+
+
+<div class="index">
+  	<div class="entry-content"><p class="foreword">
+Entre Jasmine, Sinon.js, Karma, QUnit tu ne sais plus où donner de la tête ? Voici un bref récapitulatif des outils pour tester du Javascript.
+Cet article sera enrichi au fur et à mesure des mes connaissances sur les sujets.
+</p>
+</div>
+  	
+  	
+    <footer>
+      <a rel="full-article" href="">Lire la suite &rarr;</a>
+    </footer>
+  	
+</div>
+
+
+
+	
+		
+		
+  
+  	<header class="index">
   		<h1><a href="/blog/2015/01/05/la-base-de-spring-mvc/">La base de Spring MVC</a></h1>
   
 	<time>05 January 2015</time>
@@ -50,9 +103,15 @@
 
 
 <div class="index">
-  	<div class="entry-content">
+  	<div class="entry-content"><p class="foreword">
+Fonctionnement basique du framework JAVA Spring MVC. Très bon pour la culture générale d&#8217;un développeur front.
+</p>
 </div>
   	
+  	
+    <footer>
+      <a rel="full-article" href="">Lire la suite &rarr;</a>
+    </footer>
   	
 </div>
 
@@ -100,457 +159,7 @@ Voici un article qui vous expliquera le poids des CSS. Cela est utile quand vous
 
 <p>En vérité il s’agit plutôt d’un framework MV* car le Controller n’existe pas vraiment dans Backbone.</p>
 
-<p>Faisons un parrallèle entre un MVC classique et un MVC Backbone.</p>
-
-<h2 id="models">Models</h2>
-
-<ul>
-  <li>C’est là ou se fait la validation des données.</li>
-  <li>Sont persistés soit par du localStorage ou bien par synchronisation avec une base de données.</li>
-  <li>Plusieurs Views peuvent observer des changements sur un Model. Une View, en effet, regarde un Model et peut ainsi savoir quand un Model a changé et afficher les infos à jour du Model.</li>
-  <li>Un ensemble de Models est appelé une Collection. Dès qu’un Model dans cette Collection change, la View attachée à ce Model est notifiée.</li>
-</ul>
-
-<h2 id="controllers">Controllers</h2>
-
-<ul>
-  <li>N’existe pas. La View joue le rôle de Controller.</li>
-  <li>Gérer les changements effectués dans la vue par l’utilisateur</li>
-  <li>Mettre à jour le Model quand un utilisateur a terminé ses actions</li>
-</ul>
-
-<h2 id="views">Views</h2>
-
-<ul>
-  <li>C’est là que les utilisateurs cliquent et font mumuse.</li>
-  <li>Donc c’est là qu’on lit / edite / supprime les données d’un Model.</li>
-  <li>Il y a une fonction <code>render()</code> qui doit s’occuper d’afficher le contenu du Model (ça utilise le moteur de template de Underscore.js). On l’utilise en callback afin de notifier la View de potentiels changements sur le Model.</li>
-  <li>Dans le code, on fait référence à la vue avec <code>this.el</code></li>
-  <li>Quand un utilisateur clique dans la View, c’est normalement le Controller qui s’occupe du traitement a effectuer, mais comme on l’a vu, il n’y a pas de Controller dans Backbone. Les évenements sont gérés dans la View grâce à un objet <code>event : {}</code></li>
-</ul>
-
-<h2 id="pense-bte-pour-le-model">pense-bête pour le Model</h2>
-
-<h3 id="mthodes-native--backbone">Méthodes native à Backbone</h3>
-
-<ul>
-  <li>set : pour changer ou initialiser un attribut du Model <code>myModel.set('toto', 'un valeur');</code></li>
-  <li>get : pour obtenir la valeur d’un attribut du Model <code>myModel.get('toto');</code></li>
-  <li>validate : permet de valider le model ex :
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span></figure></notextile></li>
-</ul>
-<p>&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">validate: function(attributes){
-</span><span class="line">	if(attributes.title === undefined){
-</span><span class="line">	    return "Remember to set a title for your todo.";
-</span><span class="line">	}
-</span><span class="line">},</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;
-### ecouter si le modèle change : 
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">this.on('change', function(){ 
-</span><span class="line">	//faire quelquechose
-</span><span class="line">});</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;
-### ecouter si l’attribut toto du model change : <code>this.on('change:toto')</code></p>
-
-<h2 id="pense-bte-pour-la-view">pense-bête pour la View</h2>
-
-<p>La méthode <code>render()</code> de la View peut être liée à la méthode <code>change()</code> du Model. Ainsi dès qu’il y a un changement dans le Model, la View refléte immédiatement ces changements.</p>
-
-<h3 id="setelement">setElement()</h3>
-
-<p>Colle un template HTML a une vue.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var view = new Backbone.View;
-</span><span class="line">view.setElement('&lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;');
-</span><span class="line">view.el // &lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h3 id="render">render()</h3>
-
-<p>A la fin de render() il est bien de faire <code>return this</code> car :</p>
-
-<ul>
-  <li>la View peut être réutiliser par des View parent</li>
-  <li>Créer une liste d’éléments sans repeindre chacun individuellement, l’élément est déssiné une fois par le navigateur et la liste entière est remplie en données (sens peu claire)</li>
-</ul>
-
-<h2 id="pense-bte-collection">pense-bête Collection</h2>
-
-<h3 id="syntaxe">Syntaxe</h3>
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var Todo = Backbone.Model.extend({});
-</span><span class="line">
-</span><span class="line">var TodosCollection = Backbone.Collection.extend({
-</span><span class="line">  model: Todo
-</span><span class="line">});</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h3 id="ajout-suppression-de-models">Ajout suppression de Models</h3>
-
-<p>Une fois la Collection créée, on peut supprimer ou ajouter des Models à la Collection avec : <code>add()</code> et <code>remove()</code>. Ces 2 méthodes acceptent un ou plusieurs model en paramètre (sous forme de tableau [])</p>
-
-<h3 id="retrouver-un-model">Retrouver un Model</h3>
-
-<p><code>Collection.get(id)</code> avec id l’id du Model</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var myTodo = new Todo({title:'Read the whole book', id: 2});
-</span><span class="line">var todos = new TodosCollection([myTodo]);
-</span><span class="line">var todo2 = todos.get(2);</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Afin d’intentifier le Model récupéré on peut utiliser : <code>id</code> <code>cid</code> <code>idAttribute</code></p>
-
-<p>Chaque Model a un <code>id</code> qui est unique (type Integer ou String)
-<code>idAttribute</code> est l’attribut qui identifie le Model dans la database (<code>id</code> dans la base de donnée). Ca dit a Backbone quel champ de la base de donnée doit être remplir avec la propriété <code>id</code>. Exemple <code>userId</code> dans la base donnera un <code>userId</code> dans la définition du Model dans Backbone.</p>
-
-<h3 id="ecouter-des-vnements">Ecouter des événements</h3>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var TodosCollection = new Backbone.Collection();
-</span><span class="line">TodosCollection.on("change:title", function(model) {
-</span><span class="line">    console.log("J'ai changer d'avis, je devrais " + model.get('title'));
-</span><span class="line">});
-</span><span class="line">TodosCollection.add([
-</span><span class="line">  { title: 'go to Jamaica.', completed: false, id: 3 },
-</span><span class="line">]);
-</span><span class="line">var myTodo = TodosCollection.get(3);
-</span><span class="line">myTodo.set('title', 'aller nager');</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Va afficher : J’ai changer d’avis, je devrais aller nager</p>
-
-<p>On peut écouter si il y a du changement dans une collection (ajout suppression modification) :</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">TodosCollection.on("add", function(model) {
-</span><span class="line">  console.log("Ajouté " + model.get('title'));
-</span><span class="line">});
-</span><span class="line">TodosCollection.on("remove", function(model) {
-</span><span class="line">  console.log("Supprimé " + model.get('title'));
-</span><span class="line">});
-</span><span class="line">
-</span><span class="line">TodosCollection.on("change:completed", function(model) {
-</span><span class="line">  console.log("Changement de l'attribute completed " + model.get('title'));
-</span><span class="line">});
-</span><span class="line">TodosCollection.set([
-</span><span class="line">    { id: 1, title: 'go to Jamaica.', completed: true },
-</span><span class="line">    { id: 2, title: 'go to China.', completed: false },
-</span><span class="line">    { id: 4, title: 'go to Disney World.', completed: false }
-</span><span class="line">]);</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Vider une Collection : <code>myCollection.reset()</code></p>
-
-<p>Ecouter le vidage d’une Collection : myCollection.on(“reset”, function)</p>
-
-<p>Faire un <code>set()</code> d’une Collection peut provoquer des <code>remove()</code> ou <code>add()</code> en fonction de ce qui est setté</p>
-
-<p>Fonctionnalités hérité d’Underscore :
-- <code>forEach</code>
-- <code>sortBy</code>
-- <code>map</code>
-- <code>min/max</code> :
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">Todos.max(function(model){
-</span><span class="line">  return model.id;
-</span><span class="line">}).id;</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;
-- <code>pluck</code></p>
-
-<p><code>chain()</code> permet de chainer l’appel de fonction sur une Collection</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var collection = new Backbone.Collection([
-</span><span class="line">  { name: 'Tim', age: 5 },
-</span><span class="line">  { name: 'Ida', age: 26 },
-</span><span class="line">  { name: 'Rob', age: 55 }
-</span><span class="line">]);
-</span><span class="line">
-</span><span class="line">var filteredNames = collection.chain() // start chain, returns wrapper around collection's models
-</span><span class="line">  .filter(function(item) { return item.get('age') &gt; 10; }) // returns wrapped array excluding Tim
-</span><span class="line">  .map(function(item) { return item.get('name'); }) // returns wrapped array containing remaining names
-</span><span class="line">  .value(); // terminates the chain and returns the resulting array
-</span><span class="line">
-</span><span class="line">console.log(filteredNames); // logs: ['Ida', 'Rob']</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h2 id="persistence-restful">Persistence RESTful</h2>
-
-<h3 id="rcuprr-un-model-du-serveur">Récupérér un Model du serveur</h3>
-
-<p><code>Collection.fetch()</code> retrouve un ensemble de Models du server sous la form d’un tableau JSON en envoyant une requête HTTP GET vers l’URL spécifié par la propriété <code>url</code> de la Collection. Quand les données sont récupérées, la fonction <code>set()</code> va être exécuté pour mettre à jour la Collection.</p>
-
-<h3 id="sauvegarder-un-model-sur-le-serveur">Sauvegarder un Model sur le serveur</h3>
-
-<p>On utilise la méthode <code>save()</code> du Model que l’on veut sauvegarder.
-- Quand <code>save()</code> est appelé sur un Model qui a été récupérer du serveur avec la méthode <code>fetch()</code>, un requête HTTP PUT est envoyée.
-- Si le Model est une nouvelle instance, une requête HTTP POST est envoyé à l’URL de la Collection.</p>
-
-<h3 id="supprimer-un-model-du-serveur">Supprimer un Model du serveur</h3>
-
-<p>Avec <code>destroy()</code> : envoie une requête HTTP DELETE</p>
-
-<h3 id="options">Options</h3>
-
-<p>Il est possible de passer seulement les choses que l’on veut mettre à jour dans un Model et pas forcememnt tout le Model (requête HTTP PATCH). Par exemple :
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">// Sauvegarde partielle avec PATCH
-</span><span class="line">model.clear().set({id: 1, a: 1, b: 2, c: 3, d: 4});
-</span><span class="line">model.save();
-</span><span class="line">model.save({b: 2, d: 4}, {patch: true});
-</span><span class="line">console.log(this.syncArgs.method);
-</span><span class="line">// 'patch'</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
-
-<h2 id="events">Events</h2>
-
-<h3 id="on-off-trigger">on() off() trigger()</h3>
-
-<p><code>Backbone.Events</code> peut donner à un objet la capacité de lié et déclencher des événements personnalisés.</p>
-
-<p><code>on()</code> lie une fonction callback à un objet. Le callback est appelé à chaque fois que l’événement est déclenché.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var myObject = {};
-</span><span class="line">
-</span><span class="line">// Mixin
-</span><span class="line">_.extend(myObject, Backbone.Events);
-</span><span class="line">
-</span><span class="line">// Ajouter un événement personnalisé
-</span><span class="line">myObject.on('dance', function(msg){
-</span><span class="line">  console.log('Déclenchement de ' + msg);
-</span><span class="line">});
-</span><span class="line">
-</span><span class="line">// Trigger the custom event
-</span><span class="line">myObject.trigger('dance', 'our event');</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p><code>off()</code> supprime toutes les fonctions de callback sur un objet</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">// Removes event bound to the object
-</span><span class="line">myObject.off("dance:tap");</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>Pour supprimer une callback en particulier :</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var ourObject = {};
-</span><span class="line">
-</span><span class="line">// Mixin
-</span><span class="line">_.extend(ourObject, Backbone.Events);
-</span><span class="line">
-</span><span class="line">function dancing (msg) { console.log("We are dancing. " + msg); }
-</span><span class="line">function jumping (msg) { console.log("We are jumping. " + msg); }
-</span><span class="line">
-</span><span class="line">// Add two listeners to the same event
-</span><span class="line">ourObject.on("move", dancing);
-</span><span class="line">ourObject.on("move", jumping);
-</span><span class="line">
-</span><span class="line">// Trigger the events. Both listeners are called.
-</span><span class="line">ourObject.trigger("move", "Yeah!");
-</span><span class="line">
-</span><span class="line">// Removes specified listener
-</span><span class="line">ourObject.off("move", dancing);
-</span><span class="line">
-</span><span class="line">// Trigger the events again. One listener left.
-</span><span class="line">ourObject.trigger("move", "Yeah, jump, jump!");</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p><code>trigger()</code> peut passer plusieurs arguments à une fonction callback</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var ourObject = {};
-</span><span class="line">
-</span><span class="line">// Mixin
-</span><span class="line">_.extend(ourObject, Backbone.Events);
-</span><span class="line">
-</span><span class="line">function doAction (action, duration) {
-</span><span class="line">  console.log("We are " + action + ' for ' + duration ); 
-</span><span class="line">}
-</span><span class="line">
-</span><span class="line">// Add event listeners
-</span><span class="line">ourObject.on("dance", doAction);
-</span><span class="line">ourObject.on("jump", doAction);
-</span><span class="line">ourObject.on("skip", doAction);
-</span><span class="line">
-</span><span class="line">// Passing multiple arguments to single event
-</span><span class="line">ourObject.trigger("dance", 'dancing', "5 minutes");
-</span><span class="line">
-</span><span class="line">// Passing multiple arguments to multiple events
-</span><span class="line">ourObject.trigger("dance jump skip", 'on fire', "15 minutes");</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p><code>listenTo()</code> et <code>stopListening()</code> permet à un objet {d’écouter/ arrêter d’écouter} les événements sur un autre objet.</p>
-
-<p><em>Chaque fois qu’on fait <code>on()</code> sur un objet on doit faire aussi <code>off()</code></em>, sinon quand on supprimer un Model il va rester en mémoire. <code>View.remove()</code> fait un appel à <code>stopListening()</code> afin de s’assurer que tous les écouteurs sont déliées.</p>
-
-<h3 id="events-et-views">Events et Views</h3>
-
-<p>2 types d’événements peuvent être lié à une View :
-- événements DOM (via jQuery.on() this va faire référence à l’objet DOM)
-- événements déclenché via une API Event (via la propriété events{} this fait référence à la View)</p>
-
-<h2 id="routers">Routers</h2>
-
-<p>Connecte des URLs à des parties de l’application. Nécessaire si tu veux que certaines parties de ton application soient : mise dans les favoris, partageable, si tu veux pouvoir faire un Back avec le bouton back du navigateur.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var TodoRouter = Backbone.Router.extend({
-</span><span class="line">	routes: {
-</span><span class="line">		"search/:query/p:page" : "searchTodos"
-</span><span class="line">		// http://example.com/#search/job/p1
-</span><span class="line">	}
-</span><span class="line">});
-</span><span class="line">var myTodoRouter = new TodoRouter();</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p><code>Backbone.history.start();</code> dit à Backbone qu’il fait observer tout changement de hash dans l’URL (d’où le /# hyper vitale)</p>
-
-</div>
-  	
-  	
-</div>
-
-
-
-	
-		
-		
-  
-  	<header class="index">
-  		<h1><a href="/blog/2014/01/30/4-questions-a-se-poser-avant-de-commencer-un-projet-backbone/">4 questions à se poser avant de commencer un projet Backbone</a></h1>
-  
-	<time>30 January 2014</time>
-  </header>
-
-
-<div class="index">
-  	<div class="entry-content"><p class="foreword">
-Vous avez choisi de développer votre dernière super application web avec Backbone. Avant de vous lancer tête baissée dans le développement, réfléchissez à ces 4 questions afin de savoir si Backbone est ce qu&#8217;il vous faut.
-</p>
-</div>
-  	
-  	
-    <footer>
-      <a rel="full-article" href="">Lire la suite &rarr;</a>
-    </footer>
-  	
-</div>
-
-
-
-	
-		
-		
-  
-  	<header class="index">
-  		<h1><a href="/blog/2013/10/10/une-juste-image-de-dieu/">Une juste image de Dieu</a></h1>
-  
-	<time>10 October 2013</time>
-  </header>
-
-
-<div class="index">
-  	<div class="entry-content"><p class="foreword">
-Premier chapitre du livre <em>Knowledge of the Holy</em> de A. W. Tozer. L&#8217;auteur argumente en faveur de l&#8217;importance cruciale d&#8217;une juste connaissance de Dieu.
-</p>
+<p>Faisons un parrallèle entre un MVC classique et un MVC Backbone.
 </div>
   	
   	

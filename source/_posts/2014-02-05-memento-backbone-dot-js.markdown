@@ -11,6 +11,7 @@ Backbone est un framework javascript MVC qui permet de construire des applicatio
 En vérité il s'agit plutôt d'un framework MV* car le Controller n'existe pas vraiment dans Backbone.
 
 Faisons un parrallèle entre un MVC classique et un MVC Backbone.
+<!-- more -->
 
 ## Models
 
@@ -41,19 +42,25 @@ Faisons un parrallèle entre un MVC classique et un MVC Backbone.
 - set : pour changer ou initialiser un attribut du Model `myModel.set('toto', 'un valeur');`
 - get : pour obtenir la valeur d'un attribut du Model `myModel.get('toto');`
 - validate : permet de valider le model ex :
-```
+
+~~~
 validate: function(attributes){
 	if(attributes.title === undefined){
 	    return "Remember to set a title for your todo.";
 	}
 },
-```
+~~~
+{:lang="js"}
+
 ### ecouter si le modèle change : 
-```
+
+~~~
 this.on('change', function(){ 
 	//faire quelquechose
 });
-```
+~~~
+{:lang="js"}
+
 ### ecouter si l'attribut toto du model change : `this.on('change:toto')`
 
 ## pense-bête pour la View
@@ -64,11 +71,12 @@ La méthode `render()` de la View peut être liée à la méthode `change()` du 
 
 Colle un template HTML a une vue.
 
-```
+~~~
 var view = new Backbone.View;
 view.setElement('<p><a><b>test</b></a></p>');
 view.el // <p><a><b>test</b></a></p>
-```
+~~~
+{:lang="js"}
 
 ### render()
 
@@ -80,13 +88,15 @@ A la fin de render() il est bien de faire `return this` car :
 ## pense-bête Collection
 
 ### Syntaxe
-```
+
+~~~
 var Todo = Backbone.Model.extend({});
 
 var TodosCollection = Backbone.Collection.extend({
   model: Todo
 });
-```
+~~~
+{:lang="js"}
 
 ### Ajout suppression de Models
 
@@ -96,11 +106,12 @@ Une fois la Collection créée, on peut supprimer ou ajouter des Models à la Co
 
 `Collection.get(id)` avec id l'id du Model
 
-```
+~~~
 var myTodo = new Todo({title:'Read the whole book', id: 2});
 var todos = new TodosCollection([myTodo]);
 var todo2 = todos.get(2);
-```
+~~~
+{:lang="js"}
 
 Afin d'intentifier le Model récupéré on peut utiliser : `id` `cid` `idAttribute`
 
@@ -109,7 +120,7 @@ Chaque Model a un `id` qui est unique (type Integer ou String)
 
 ### Ecouter des événements
 
-```
+~~~
 var TodosCollection = new Backbone.Collection();
 TodosCollection.on("change:title", function(model) {
     console.log("J'ai changer d'avis, je devrais " + model.get('title'));
@@ -119,13 +130,14 @@ TodosCollection.add([
 ]);
 var myTodo = TodosCollection.get(3);
 myTodo.set('title', 'aller nager');
-```
+~~~
+{:lang="js"}
 
 Va afficher : J'ai changer d'avis, je devrais aller nager
 
 On peut écouter si il y a du changement dans une collection (ajout suppression modification) :
 
-```
+~~~
 TodosCollection.on("add", function(model) {
   console.log("Ajouté " + model.get('title'));
 });
@@ -141,7 +153,8 @@ TodosCollection.set([
     { id: 2, title: 'go to China.', completed: false },
     { id: 4, title: 'go to Disney World.', completed: false }
 ]);
-```
+~~~
+{:lang="js"}
 
 Vider une Collection : `myCollection.reset()`
 
@@ -154,16 +167,19 @@ Fonctionnalités hérité d'Underscore :
 - `sortBy`
 - `map`
 - `min/max` :
-```
+
+~~~
 Todos.max(function(model){
   return model.id;
 }).id;
-```
+~~~
+{:lang="js"}
+
 - `pluck`
 
 `chain()` permet de chainer l'appel de fonction sur une Collection
 
-```
+~~~
 var collection = new Backbone.Collection([
   { name: 'Tim', age: 5 },
   { name: 'Ida', age: 26 },
@@ -176,7 +192,8 @@ var filteredNames = collection.chain() // start chain, returns wrapper around co
   .value(); // terminates the chain and returns the resulting array
 
 console.log(filteredNames); // logs: ['Ida', 'Rob']
-```
+~~~
+{:lang="js"}
 
 ## Persistence RESTful
 
@@ -197,14 +214,16 @@ Avec `destroy()` : envoie une requête HTTP DELETE
 ### Options
 
 Il est possible de passer seulement les choses que l'on veut mettre à jour dans un Model et pas forcememnt tout le Model (requête HTTP PATCH). Par exemple :
-```
+
+~~~
 // Sauvegarde partielle avec PATCH
 model.clear().set({id: 1, a: 1, b: 2, c: 3, d: 4});
 model.save();
 model.save({b: 2, d: 4}, {patch: true});
 console.log(this.syncArgs.method);
 // 'patch'
-```
+~~~
+{:lang="js"}
 
 ## Events
 
@@ -214,7 +233,7 @@ console.log(this.syncArgs.method);
 
 `on()` lie une fonction callback à un objet. Le callback est appelé à chaque fois que l'événement est déclenché.
 
-```
+~~~
 var myObject = {};
 
 // Mixin
@@ -227,18 +246,21 @@ myObject.on('dance', function(msg){
 
 // Trigger the custom event
 myObject.trigger('dance', 'our event');
-```
+~~~
+{:lang="js"}
+
 
 `off()` supprime toutes les fonctions de callback sur un objet
 
-```
+~~~
 // Removes event bound to the object
 myObject.off("dance:tap");
-```
+~~~
+{:lang="js"}
 
 Pour supprimer une callback en particulier :
 
-```
+~~~
 var ourObject = {};
 
 // Mixin
@@ -259,11 +281,12 @@ ourObject.off("move", dancing);
 
 // Trigger the events again. One listener left.
 ourObject.trigger("move", "Yeah, jump, jump!");
-```
+~~~
+{:lang="js"}
 
 `trigger()` peut passer plusieurs arguments à une fonction callback
 
-```
+~~~
 var ourObject = {};
 
 // Mixin
@@ -283,7 +306,8 @@ ourObject.trigger("dance", 'dancing', "5 minutes");
 
 // Passing multiple arguments to multiple events
 ourObject.trigger("dance jump skip", 'on fire', "15 minutes");
-```
+~~~
+{:lang="js"}
 
 `listenTo()` et `stopListening()` permet à un objet {d'écouter/ arrêter d'écouter} les événements sur un autre objet.
 
@@ -299,7 +323,7 @@ ourObject.trigger("dance jump skip", 'on fire', "15 minutes");
 
 Connecte des URLs à des parties de l'application. Nécessaire si tu veux que certaines parties de ton application soient : mise dans les favoris, partageable, si tu veux pouvoir faire un Back avec le bouton back du navigateur.
 
-```
+~~~
 var TodoRouter = Backbone.Router.extend({
 	routes: {
 		"search/:query/p:page" : "searchTodos"
@@ -307,7 +331,9 @@ var TodoRouter = Backbone.Router.extend({
 	}
 });
 var myTodoRouter = new TodoRouter();
-```
+~~~
+{:lang="js"}
+
 `Backbone.history.start();` dit à Backbone qu'il fait observer tout changement de hash dans l'URL (d'où le /# hyper vitale)
 
 

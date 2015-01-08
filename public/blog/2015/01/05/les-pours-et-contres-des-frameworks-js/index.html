@@ -1,0 +1,201 @@
+
+<!doctype html>
+<!-- START OF _layouts/default.html test -->
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" >
+		<meta content="width=device-width,initial-scale=1" name="viewport">
+		<meta content="" name="description">
+		<meta content="Gorille Gris" name="author">
+		
+		<title>Les pours et contres des frameworks JS &mdash; Gorille Gris</title>
+		
+		<!-- Styles -->
+		<link href="/stylesheets/main.css" rel="stylesheet">
+		<!-- Google web fonts -->
+		<link href='http://fonts.googleapis.com/css?family=Lobster|Goudy+Bookletter+1911|Oswald:700' rel='stylesheet' type='text/css'>
+		<link href="/stylesheets/prettify-hemisu.css" type="text/css" rel="stylesheet" />
+		
+		<!--<link href="http://feeds.feedburner.com/turkeltaub" rel="alternate" title="Gorille Gris" type="application/rss+xml" />-->
+		
+	</head>
+	<body onload="prettyPrint()">
+	
+		<div class="wrap">
+	
+			<header>
+				<div class="title"><a href="">Gorille Gris</a></div>
+				<div class="navi">
+					<ul>
+						<li><a href="/blog/categories/dev">Dév</a></li>
+						<li><a href="/blog/categories/theologie">Théologie</a></li>
+						<li><a href="/blog/categories/lectures">Lectures</a></li>
+						<li><a href="/a-propos.html">&Agrave; propos</a></li>
+					<ul>
+				</div> <!-- // .navi -->
+			</header>
+		
+				<!-- START OF _layouts/post.html -->
+
+
+  
+  	<header>
+  		<h1>Les pours et contres des frameworks JS</h1>
+  
+	<time>05 January 2015</time>
+  </header>
+
+
+<div class="entry-content"><p class="foreword">
+Les pours et les contres des framework BackboneJS, AngularJS, EXTJS, EmberJS : pour t&#8217;aider à choisir dans cette jungle.
+</p>
+<!-- more -->
+
+<h2 id="backbonejs">Backbone.js</h2>
+
+<p>Pours :</p>
+
+<ul>
+  <li>
+    <p>Simplicité - seulement 4 composants (Collection, Model, View, Router).</p>
+  </li>
+  <li>
+    <p>Très grosse communauté et beaucoup de solutions sur Stackoverflow.</p>
+  </li>
+  <li>
+    <p>Couche supérieures codés intelligemment comme Marionnette et Vertebae.</p>
+  </li>
+  <li>
+    <p>L’architecture de ton application peut être personnalisée.</p>
+  </li>
+  <li>
+    <p>Léger et mis à jour régulièrement. S’entend bien avec Underscore, jQuery/Zepto - des librairies très répendues.</p>
+  </li>
+  <li>
+    <p>Fourni un niveau d’ abstraction suffisant avec prise de position raisonnable, permettant une adapation au plus proche des besoins du projet.</p>
+  </li>
+  <li>
+    <p>Facile à prendre en main, offrant un bon tremplin pour les framework MV* Javascript.</p>
+  </li>
+  <li>
+    <p>Compatibilité avec d’anciens navigateurs : IE7, 8 t même 6 (on osera tout de même pas aller jusque là).</p>
+  </li>
+</ul>
+
+<p>Contres :</p>
+
+<ul>
+  <li>
+    <p>La méthode extend copie le contenu de l’objet parent dans une nouvel objet. Bénéficier de l’héritage prototypal aurait été préférable.</p>
+  </li>
+  <li>
+    <p>Manque de cas réel d’utilisation dans la documentation</p>
+  </li>
+  <li>
+    <p>L’application TODO met le pied à l’étrier mais il y a encore beaucoup à apprendre après pour construire de grosses applications.</p>
+  </li>
+  <li>
+    <p>La quantité de didacticiels sur comment faire les choses avec Backbone n’est pas cohérente et décrivrent des choses à différentes périodes de la vie de Backbone. Dand une équipe, des développeurs peuvent coder les choses à la façcon Backbone 0.3 alors que nous en sommes à une version antérieur à 1.</p>
+  </li>
+  <li>
+    <p>Quelques reserves sur Backbone.sync qui pose contient dans son code des hypothèses concernant les communications typique HTTP déclenché par un clien. Ca ne s’adapte pas bien à la nature des WebSockets.</p>
+  </li>
+  <li>
+    <p>Il n’y a pas, par défaut, de binding de view. Un re-rendu de la view alors qu’une simple propriété change semble être un peu du gâchi.</p>
+  </li>
+</ul>
+
+<h2 id="angularjs">Angular.js</h2>
+
+<p>Pours : </p>
+
+<ul>
+  <li>
+    <p>Two-way data binding (système de liaison des données en deux sens) est extremement puissant. On pense donc d’avantage au model et à son état qu’à une série d’événements à déclencher. Le model est la seul source de vérité.</p>
+  </li>
+  <li>
+    <p>Performance. AngularJS coûte peu en téléchargement. Son moteur de template utilise les noeuds du DOM au lieu de convertir des String en noeud. Ce qui doit améliorer les performances.</p>
+  </li>
+  <li>
+    <p>Si tu cibles les navigateurs récents et que tu ne te soucis pas, ou peu, des anciens navigateurs, tu peux supprimer jQuery de tes dépendances.</p>
+  </li>
+  <li>
+    <p>Intuitif, excellente documentation. Système de liaison des données ingénieux : Vue (view) HTML, portées (scope) imbriquées.</p>
+  </li>
+  <li>
+    <p>Une extension Chrome, Batarang, qui fourni un accès en direct aux structures de données Angular.</p>
+  </li>
+  <li>
+    <p>Minimisation du code de réutilisable (boilerplate code). Permet la réutilisation du code grâce à des composants. Etend la syntaxe HTML de sorte que de nombreuses fonctionnalités complexes finissent par êre aussi simple que la mise en place d’une directive (attribut) dans le code HTML. </p>
+  </li>
+  <li>
+    <p>Très facilement testable grâce au système d’injection de dépendance.</p>
+  </li>
+  <li>
+    <p>Ecrire une application complexe dans jQuery qui manipule le DOM : c’est déjà un petit exploit.</p>
+  </li>
+</ul>
+
+<p>Contres :</p>
+
+<ul>
+  <li>
+    <p>On ne peut pas, d’une manière simplement déclarative, spécifier une transition pour un changement d’UI qui vient d’un changement dans le model.</p>
+  </li>
+  <li>
+    <p>Courbe d’apprentissage plus raide que Backbone, mais le gain est appréciable. </p>
+  </li>
+  <li>
+    <p>La documentation pourrait être améliorée.</p>
+  </li>
+</ul>
+
+<p>Largement inspiré de l’article de Smashing Magazine : 
+<a href="http://www.smashingmagazine.com/2012/07/27/journey-through-the-javascript-mvc-jungle/">Journey Through The JavaScript MVC Jungle</a></p>
+</div>
+
+
+
+
+<!-- END OF _/layouts/post.html -->
+
+
+			<footer>
+				Copyright &copy; 2015
+
+	Grégory Pelletey
+
+
+			</footer>
+			
+		</div> <!-- // .wrap -->
+	</body>
+	<!-- jQuery and plugins -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  	<script>!window.jQuery && document.write(unescape('%3Cscript src="/js/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  	<script src="/js/octopress.js" type="text/javascript"></script>
+	<script src="/js/jquery.zclip.min.js"></script>
+	<!-- Syntax highlighter -->
+	<script type="text/javascript" src="/js/prettify.js"></script>
+	<script>
+		$(document).ready(function() {
+			// Prettify code
+			$('code').addClass('prettyprint');
+			$('pre code').addClass('linenums');
+			
+			// Copy to clipboard with button
+			$('pre:has(code)').prepend(function(){
+				return '<div class="clip-btn">copy to clipboard</div>';
+			});
+			$('.clip-btn').zclip({
+				path:'/js/ZeroClipboard.swf',
+				copy: $(this).next('code').text(),
+				afterCopy: function(){
+					$(this).replaceWith('<div class="clip-btn">copied!');
+					}
+			});
+		});
+	</script>
+</html>
+<!-- END OF _layouts/default.html -->

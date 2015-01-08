@@ -10,7 +10,6 @@ categories: [Dev]
 Vous avez choisi de développer votre dernière super application web avec Backbone. Avant de vous lancer tête baissée dans le développement, réfléchissez à ces 4 questions afin de savoir si Backbone est ce qu'il vous faut.
 </p>
 <!-- more -->
-- - -
 
 Question 1 : Comment vais-je structurer les vues et les controlleurs imbriquées ?
 

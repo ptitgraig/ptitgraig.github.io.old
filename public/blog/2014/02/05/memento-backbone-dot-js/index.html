@@ -14,7 +14,7 @@
 		<!-- Styles -->
 		<link href="/stylesheets/main.css" rel="stylesheet">
 		<!-- Google web fonts -->
-		<link href='http://fonts.googleapis.com/css?family=Lobster|Goudy+Bookletter+1911|Oswald:300' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Lobster|Goudy+Bookletter+1911|Oswald:700' rel='stylesheet' type='text/css'>
 		<link href="/stylesheets/prettify-hemisu.css" type="text/css" rel="stylesheet" />
 		
 		<!--<link href="http://feeds.feedburner.com/turkeltaub" rel="alternate" title="Gorille Gris" type="application/rss+xml" />-->
@@ -51,7 +51,8 @@
 
 <p>En vérité il s’agit plutôt d’un framework MV* car le Controller n’existe pas vraiment dans Backbone.</p>
 
-<p>Faisons un parrallèle entre un MVC classique et un MVC Backbone.</p>
+<p>Faisons un parrallèle entre un MVC classique et un MVC Backbone.
+<!-- more --></p>
 
 <h2 id="models">Models</h2>
 
@@ -87,26 +88,30 @@
 <ul>
   <li>set : pour changer ou initialiser un attribut du Model <code>myModel.set('toto', 'un valeur');</code></li>
   <li>get : pour obtenir la valeur d’un attribut du Model <code>myModel.get('toto');</code></li>
-  <li>validate : permet de valider le model ex :
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span></figure></notextile></li>
+  <li>validate : permet de valider le model ex :</li>
 </ul>
-<p>&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">validate: function(attributes){
-</span><span class="line">	if(attributes.title === undefined){
-</span><span class="line">	    return "Remember to set a title for your todo.";
-</span><span class="line">	}
-</span><span class="line">},</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;&lt;/notextile&gt;&lt;/div&gt;
-### ecouter si le modèle change : 
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">this.on('change', function(){ 
-</span><span class="line">	//faire quelquechose
-</span><span class="line">});</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;
-### ecouter si l’attribut toto du model change : <code>this.on('change:toto')</code></p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="function">validate</span>: <span class="keyword">function</span>(attributes){
+    <span class="keyword">if</span>(attributes.title === <span class="predefined-constant">undefined</span>){
+        <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Remember to set a title for your todo.</span><span class="delimiter">&quot;</span></span>;
+    }
+},
+</pre></div>
+</div>
+</div>
+
+<h3 id="ecouter-si-le-modle-change-">ecouter si le modèle change :</h3>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="local-variable">this</span>.on(<span class="string"><span class="delimiter">'</span><span class="content">change</span><span class="delimiter">'</span></span>, <span class="keyword">function</span>(){ 
+    <span class="comment">//faire quelquechose</span>
+});
+</pre></div>
+</div>
+</div>
+
+<h3 id="ecouter-si-lattribut-toto-du-model-change--thisonchangetoto">ecouter si l’attribut toto du model change : <code>this.on('change:toto')</code></h3>
 
 <h2 id="pense-bte-pour-la-view">pense-bête pour la View</h2>
 
@@ -116,12 +121,13 @@
 
 <p>Colle un template HTML a une vue.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var view = new Backbone.View;
-</span><span class="line">view.setElement('&lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;');
-</span><span class="line">view.el // &lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> view = <span class="keyword">new</span> Backbone.View;
+view.setElement(<span class="string"><span class="delimiter">'</span><span class="content">&lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;</span><span class="delimiter">'</span></span>);
+view.el <span class="comment">// &lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;</span>
+</pre></div>
+</div>
+</div>
 
 <h3 id="render">render()</h3>
 
@@ -135,16 +141,16 @@
 <h2 id="pense-bte-collection">pense-bête Collection</h2>
 
 <h3 id="syntaxe">Syntaxe</h3>
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var Todo = Backbone.Model.extend({});
-</span><span class="line">
-</span><span class="line">var TodosCollection = Backbone.Collection.extend({
-</span><span class="line">  model: Todo
-</span><span class="line">});</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> Todo = Backbone.Model.extend({});
+
+<span class="keyword">var</span> TodosCollection = Backbone.Collection.extend({
+  <span class="key">model</span>: Todo
+});
+</pre></div>
+</div>
+</div>
 
 <h3 id="ajout-suppression-de-models">Ajout suppression de Models</h3>
 
@@ -154,12 +160,13 @@
 
 <p><code>Collection.get(id)</code> avec id l’id du Model</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var myTodo = new Todo({title:'Read the whole book', id: 2});
-</span><span class="line">var todos = new TodosCollection([myTodo]);
-</span><span class="line">var todo2 = todos.get(2);</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> myTodo = <span class="keyword">new</span> Todo({<span class="key">title</span>:<span class="string"><span class="delimiter">'</span><span class="content">Read the whole book</span><span class="delimiter">'</span></span>, <span class="key">id</span>: <span class="integer">2</span>});
+<span class="keyword">var</span> todos = <span class="keyword">new</span> TodosCollection([myTodo]);
+<span class="keyword">var</span> todo2 = todos.get(<span class="integer">2</span>);
+</pre></div>
+</div>
+</div>
 
 <p>Afin d’intentifier le Model récupéré on peut utiliser : <code>id</code> <code>cid</code> <code>idAttribute</code></p>
 
@@ -168,59 +175,43 @@
 
 <h3 id="ecouter-des-vnements">Ecouter des événements</h3>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var TodosCollection = new Backbone.Collection();
-</span><span class="line">TodosCollection.on("change:title", function(model) {
-</span><span class="line">    console.log("J'ai changer d'avis, je devrais " + model.get('title'));
-</span><span class="line">});
-</span><span class="line">TodosCollection.add([
-</span><span class="line">  { title: 'go to Jamaica.', completed: false, id: 3 },
-</span><span class="line">]);
-</span><span class="line">var myTodo = TodosCollection.get(3);
-</span><span class="line">myTodo.set('title', 'aller nager');</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> TodosCollection = <span class="keyword">new</span> Backbone.Collection();
+TodosCollection.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">change:title</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>(model) {
+    console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">J'ai changer d'avis, je devrais </span><span class="delimiter">&quot;</span></span> + model.get(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>));
+});
+TodosCollection.add([
+  { <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">go to Jamaica.</span><span class="delimiter">'</span></span>, <span class="key">completed</span>: <span class="predefined-constant">false</span>, <span class="key">id</span>: <span class="integer">3</span> },
+]);
+<span class="keyword">var</span> myTodo = TodosCollection.get(<span class="integer">3</span>);
+myTodo.set(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">aller nager</span><span class="delimiter">'</span></span>);
+</pre></div>
+</div>
+</div>
 
 <p>Va afficher : J’ai changer d’avis, je devrais aller nager</p>
 
 <p>On peut écouter si il y a du changement dans une collection (ajout suppression modification) :</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">TodosCollection.on("add", function(model) {
-</span><span class="line">  console.log("Ajouté " + model.get('title'));
-</span><span class="line">});
-</span><span class="line">TodosCollection.on("remove", function(model) {
-</span><span class="line">  console.log("Supprimé " + model.get('title'));
-</span><span class="line">});
-</span><span class="line">
-</span><span class="line">TodosCollection.on("change:completed", function(model) {
-</span><span class="line">  console.log("Changement de l'attribute completed " + model.get('title'));
-</span><span class="line">});
-</span><span class="line">TodosCollection.set([
-</span><span class="line">    { id: 1, title: 'go to Jamaica.', completed: true },
-</span><span class="line">    { id: 2, title: 'go to China.', completed: false },
-</span><span class="line">    { id: 4, title: 'go to Disney World.', completed: false }
-</span><span class="line">]);</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre>TodosCollection.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">add</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>(model) {
+  console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">Ajouté </span><span class="delimiter">&quot;</span></span> + model.get(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>));
+});
+TodosCollection.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">remove</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>(model) {
+  console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">Supprimé </span><span class="delimiter">&quot;</span></span> + model.get(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>));
+});
+
+TodosCollection.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">change:completed</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>(model) {
+  console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">Changement de l'attribute completed </span><span class="delimiter">&quot;</span></span> + model.get(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>));
+});
+TodosCollection.set([
+    { <span class="key">id</span>: <span class="integer">1</span>, <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">go to Jamaica.</span><span class="delimiter">'</span></span>, <span class="key">completed</span>: <span class="predefined-constant">true</span> },
+    { <span class="key">id</span>: <span class="integer">2</span>, <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">go to China.</span><span class="delimiter">'</span></span>, <span class="key">completed</span>: <span class="predefined-constant">false</span> },
+    { <span class="key">id</span>: <span class="integer">4</span>, <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">go to Disney World.</span><span class="delimiter">'</span></span>, <span class="key">completed</span>: <span class="predefined-constant">false</span> }
+]);
+</pre></div>
+</div>
+</div>
 
 <p>Vider une Collection : <code>myCollection.reset()</code></p>
 
@@ -232,41 +223,38 @@
 - <code>forEach</code>
 - <code>sortBy</code>
 - <code>map</code>
-- <code>min/max</code> :
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">Todos.max(function(model){
-</span><span class="line">  return model.id;
-</span><span class="line">}).id;</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;
-- <code>pluck</code></p>
+- <code>min/max</code> :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre>Todos.max(<span class="keyword">function</span>(model){
+  <span class="keyword">return</span> model.id;
+}).id;
+</pre></div>
+</div>
+</div>
+
+<ul>
+  <li><code>pluck</code></li>
+</ul>
 
 <p><code>chain()</code> permet de chainer l’appel de fonction sur une Collection</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var collection = new Backbone.Collection([
-</span><span class="line">  { name: 'Tim', age: 5 },
-</span><span class="line">  { name: 'Ida', age: 26 },
-</span><span class="line">  { name: 'Rob', age: 55 }
-</span><span class="line">]);
-</span><span class="line">
-</span><span class="line">var filteredNames = collection.chain() // start chain, returns wrapper around collection's models
-</span><span class="line">  .filter(function(item) { return item.get('age') &gt; 10; }) // returns wrapped array excluding Tim
-</span><span class="line">  .map(function(item) { return item.get('name'); }) // returns wrapped array containing remaining names
-</span><span class="line">  .value(); // terminates the chain and returns the resulting array
-</span><span class="line">
-</span><span class="line">console.log(filteredNames); // logs: ['Ida', 'Rob']</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> collection = <span class="keyword">new</span> Backbone.Collection([
+  { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Tim</span><span class="delimiter">'</span></span>, <span class="key">age</span>: <span class="integer">5</span> },
+  { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Ida</span><span class="delimiter">'</span></span>, <span class="key">age</span>: <span class="integer">26</span> },
+  { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Rob</span><span class="delimiter">'</span></span>, <span class="key">age</span>: <span class="integer">55</span> }
+]);
+
+<span class="keyword">var</span> filteredNames = collection.chain() <span class="comment">// start chain, returns wrapper around collection's models</span>
+  .filter(<span class="keyword">function</span>(item) { <span class="keyword">return</span> item.get(<span class="string"><span class="delimiter">'</span><span class="content">age</span><span class="delimiter">'</span></span>) &gt; <span class="integer">10</span>; }) <span class="comment">// returns wrapped array excluding Tim</span>
+  .map(<span class="keyword">function</span>(item) { <span class="keyword">return</span> item.get(<span class="string"><span class="delimiter">'</span><span class="content">name</span><span class="delimiter">'</span></span>); }) <span class="comment">// returns wrapped array containing remaining names</span>
+  .value(); <span class="comment">// terminates the chain and returns the resulting array</span>
+
+console.log(filteredNames); <span class="comment">// logs: ['Ida', 'Rob']</span>
+</pre></div>
+</div>
+</div>
 
 <h2 id="persistence-restful">Persistence RESTful</h2>
 
@@ -286,19 +274,18 @@
 
 <h3 id="options">Options</h3>
 
-<p>Il est possible de passer seulement les choses que l’on veut mettre à jour dans un Model et pas forcememnt tout le Model (requête HTTP PATCH). Par exemple :
-&lt;div class=&#8217;bogus-wrapper&#8217;&gt;<notextile><figure class="code">&lt;div class=&#8221;highlight&#8221;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#8221;gutter&#8221;&gt;&lt;pre class=&#8221;line-numbers&#8221;&gt;<span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217;&gt;&lt;pre&gt;<code class=""><span class="line">// Sauvegarde partielle avec PATCH
-</span><span class="line">model.clear().set({id: 1, a: 1, b: 2, c: 3, d: 4});
-</span><span class="line">model.save();
-</span><span class="line">model.save({b: 2, d: 4}, {patch: true});
-</span><span class="line">console.log(this.syncArgs.method);
-</span><span class="line">// 'patch'</span></code>&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;</figure></notextile>&lt;/div&gt;</p>
+<p>Il est possible de passer seulement les choses que l’on veut mettre à jour dans un Model et pas forcememnt tout le Model (requête HTTP PATCH). Par exemple :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="comment">// Sauvegarde partielle avec PATCH</span>
+model.clear().set({<span class="key">id</span>: <span class="integer">1</span>, <span class="key">a</span>: <span class="integer">1</span>, <span class="key">b</span>: <span class="integer">2</span>, <span class="key">c</span>: <span class="integer">3</span>, <span class="key">d</span>: <span class="integer">4</span>});
+model.save();
+model.save({<span class="key">b</span>: <span class="integer">2</span>, <span class="key">d</span>: <span class="integer">4</span>}, {<span class="key">patch</span>: <span class="predefined-constant">true</span>});
+console.log(<span class="local-variable">this</span>.syncArgs.method);
+<span class="comment">// 'patch'</span>
+</pre></div>
+</div>
+</div>
 
 <h2 id="events">Events</h2>
 
@@ -308,121 +295,84 @@
 
 <p><code>on()</code> lie une fonction callback à un objet. Le callback est appelé à chaque fois que l’événement est déclenché.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var myObject = {};
-</span><span class="line">
-</span><span class="line">// Mixin
-</span><span class="line">_.extend(myObject, Backbone.Events);
-</span><span class="line">
-</span><span class="line">// Ajouter un événement personnalisé
-</span><span class="line">myObject.on('dance', function(msg){
-</span><span class="line">  console.log('Déclenchement de ' + msg);
-</span><span class="line">});
-</span><span class="line">
-</span><span class="line">// Trigger the custom event
-</span><span class="line">myObject.trigger('dance', 'our event');</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> myObject = {};
+
+<span class="comment">// Mixin</span>
+_.extend(myObject, Backbone.Events);
+
+<span class="comment">// Ajouter un événement personnalisé</span>
+myObject.on(<span class="string"><span class="delimiter">'</span><span class="content">dance</span><span class="delimiter">'</span></span>, <span class="keyword">function</span>(msg){
+  console.log(<span class="string"><span class="delimiter">'</span><span class="content">Déclenchement de </span><span class="delimiter">'</span></span> + msg);
+});
+
+<span class="comment">// Trigger the custom event</span>
+myObject.trigger(<span class="string"><span class="delimiter">'</span><span class="content">dance</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">our event</span><span class="delimiter">'</span></span>);
+</pre></div>
+</div>
+</div>
 
 <p><code>off()</code> supprime toutes les fonctions de callback sur un objet</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">// Removes event bound to the object
-</span><span class="line">myObject.off("dance:tap");</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="comment">// Removes event bound to the object</span>
+myObject.off(<span class="string"><span class="delimiter">&quot;</span><span class="content">dance:tap</span><span class="delimiter">&quot;</span></span>);
+</pre></div>
+</div>
+</div>
 
 <p>Pour supprimer une callback en particulier :</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var ourObject = {};
-</span><span class="line">
-</span><span class="line">// Mixin
-</span><span class="line">_.extend(ourObject, Backbone.Events);
-</span><span class="line">
-</span><span class="line">function dancing (msg) { console.log("We are dancing. " + msg); }
-</span><span class="line">function jumping (msg) { console.log("We are jumping. " + msg); }
-</span><span class="line">
-</span><span class="line">// Add two listeners to the same event
-</span><span class="line">ourObject.on("move", dancing);
-</span><span class="line">ourObject.on("move", jumping);
-</span><span class="line">
-</span><span class="line">// Trigger the events. Both listeners are called.
-</span><span class="line">ourObject.trigger("move", "Yeah!");
-</span><span class="line">
-</span><span class="line">// Removes specified listener
-</span><span class="line">ourObject.off("move", dancing);
-</span><span class="line">
-</span><span class="line">// Trigger the events again. One listener left.
-</span><span class="line">ourObject.trigger("move", "Yeah, jump, jump!");</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> ourObject = {};
+
+<span class="comment">// Mixin</span>
+_.extend(ourObject, Backbone.Events);
+
+<span class="keyword">function</span> <span class="function">dancing</span> (msg) { console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">We are dancing. </span><span class="delimiter">&quot;</span></span> + msg); }
+<span class="keyword">function</span> <span class="function">jumping</span> (msg) { console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">We are jumping. </span><span class="delimiter">&quot;</span></span> + msg); }
+
+<span class="comment">// Add two listeners to the same event</span>
+ourObject.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">move</span><span class="delimiter">&quot;</span></span>, dancing);
+ourObject.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">move</span><span class="delimiter">&quot;</span></span>, jumping);
+
+<span class="comment">// Trigger the events. Both listeners are called.</span>
+ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><span class="content">move</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Yeah!</span><span class="delimiter">&quot;</span></span>);
+
+<span class="comment">// Removes specified listener</span>
+ourObject.off(<span class="string"><span class="delimiter">&quot;</span><span class="content">move</span><span class="delimiter">&quot;</span></span>, dancing);
+
+<span class="comment">// Trigger the events again. One listener left.</span>
+ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><span class="content">move</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Yeah, jump, jump!</span><span class="delimiter">&quot;</span></span>);
+</pre></div>
+</div>
+</div>
 
 <p><code>trigger()</code> peut passer plusieurs arguments à une fonction callback</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var ourObject = {};
-</span><span class="line">
-</span><span class="line">// Mixin
-</span><span class="line">_.extend(ourObject, Backbone.Events);
-</span><span class="line">
-</span><span class="line">function doAction (action, duration) {
-</span><span class="line">  console.log("We are " + action + ' for ' + duration ); 
-</span><span class="line">}
-</span><span class="line">
-</span><span class="line">// Add event listeners
-</span><span class="line">ourObject.on("dance", doAction);
-</span><span class="line">ourObject.on("jump", doAction);
-</span><span class="line">ourObject.on("skip", doAction);
-</span><span class="line">
-</span><span class="line">// Passing multiple arguments to single event
-</span><span class="line">ourObject.trigger("dance", 'dancing', "5 minutes");
-</span><span class="line">
-</span><span class="line">// Passing multiple arguments to multiple events
-</span><span class="line">ourObject.trigger("dance jump skip", 'on fire', "15 minutes");</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> ourObject = {};
+
+<span class="comment">// Mixin</span>
+_.extend(ourObject, Backbone.Events);
+
+<span class="keyword">function</span> <span class="function">doAction</span> (action, duration) {
+  console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">We are </span><span class="delimiter">&quot;</span></span> + action + <span class="string"><span class="delimiter">'</span><span class="content"> for </span><span class="delimiter">'</span></span> + duration ); 
+}
+
+<span class="comment">// Add event listeners</span>
+ourObject.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">dance</span><span class="delimiter">&quot;</span></span>, doAction);
+ourObject.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">jump</span><span class="delimiter">&quot;</span></span>, doAction);
+ourObject.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">skip</span><span class="delimiter">&quot;</span></span>, doAction);
+
+<span class="comment">// Passing multiple arguments to single event</span>
+ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><span class="content">dance</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">dancing</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">5 minutes</span><span class="delimiter">&quot;</span></span>);
+
+<span class="comment">// Passing multiple arguments to multiple events</span>
+ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><span class="content">dance jump skip</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">on fire</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">15 minutes</span><span class="delimiter">&quot;</span></span>);
+</pre></div>
+</div>
+</div>
 
 <p><code>listenTo()</code> et <code>stopListening()</code> permet à un objet {d’écouter/ arrêter d’écouter} les événements sur un autre objet.</p>
 
@@ -438,20 +388,18 @@
 
 <p>Connecte des URLs à des parties de l’application. Nécessaire si tu veux que certaines parties de ton application soient : mise dans les favoris, partageable, si tu veux pouvoir faire un Back avec le bouton back du navigateur.</p>
 
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">var TodoRouter = Backbone.Router.extend({
-</span><span class="line">	routes: {
-</span><span class="line">		"search/:query/p:page" : "searchTodos"
-</span><span class="line">		// http://example.com/#search/job/p1
-</span><span class="line">	}
-</span><span class="line">});
-</span><span class="line">var myTodoRouter = new TodoRouter();</span></code></pre></td></tr></table></div></figure></notextile></div>
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> TodoRouter = Backbone.Router.extend({
+    <span class="key">routes</span>: {
+        <span class="key"><span class="delimiter">&quot;</span><span class="content">search/:query/p:page</span><span class="delimiter">&quot;</span></span> : <span class="string"><span class="delimiter">&quot;</span><span class="content">searchTodos</span><span class="delimiter">&quot;</span></span>
+        <span class="comment">// http://example.com/#search/job/p1</span>
+    }
+});
+<span class="keyword">var</span> myTodoRouter = <span class="keyword">new</span> TodoRouter();
+</pre></div>
+</div>
+</div>
+
 <p><code>Backbone.history.start();</code> dit à Backbone qu’il fait observer tout changement de hash dans l’URL (d’où le /# hyper vitale)</p>
 
 </div>

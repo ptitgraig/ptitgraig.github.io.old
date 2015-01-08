@@ -28,7 +28,7 @@ body {
 	color: $main-color;
 	
 	@media only screen and (max-width: 1000px) {
-		font-size: 0.9em;
+		font-size: 1.15em;
 		}
 	}
 	
@@ -36,10 +36,9 @@ em {
 	font-style: italic;
 	}
 
-h1, h2 {
-	font-family: $heading-font-family;
+h1, h2, h3 {
 	color:$main-color;
-}
+    }
 
 h1 {
 	margin-top: $heading-top-spacing;
@@ -47,15 +46,30 @@ h1 {
 	font-weight: $heading-font-weight;
 	font-style: $heading-font-style;
 	text-align: $page-title-align;
+    font-family: $heading-font-family;
 	}
 	
 h2 {
 	margin-top: $subheading-top-spacing;
+    margin-bottom: $subheading-top-spacing;
 	font-size: $subheading-font-size;
 	font-weight: $subheading-font-weight;
 	font-style: $subheading-font-style;
+    font-family: $subheading-font-family;
 	}
-		
+
+h3 {
+    font-family:$subheading-font-family;
+    }
+
+ p {
+    @include clearfix;
+    }
+
+li p:after, li p:before {
+    display:none;
+    }
+
 .wrap {
 	margin: 0 auto;
 	width: $content-width;
@@ -171,6 +185,14 @@ blockquote {
 	font-size: $blockquote-font-size;
 	font-style:italic;
 	}
+
+.footnotes {
+    font-style:italic;
+    font-size: $blockquote-font-size;
+    p {
+        margin:0;
+        }
+    }
 	
 article {
 	margin-bottom: $space-between-posts*1em;
@@ -289,13 +311,15 @@ article {
 /* utilities */
 .left {
 	float:left;
-	margin-right:20px;
+	margin-right:35px;
 }
 .photo {
 	padding:0;
 	border:0;
-	@include border-radius(8px);
+	@include border-radius(100%);
 	@include box-shadow(0);
+    shape-outside: circle();
+    shape-margin: 10px;
 }
 .bordered {
 	border-bottom:2px solid $fourth-color;
@@ -305,6 +329,7 @@ article {
 	padding:5px 20px;
 	@include border-radius(8px);
 	background-color:$light-light-gray;
+    font-size:$foreword-font-size;
 }
 .disclaimer {
 	font-size:.8em;
