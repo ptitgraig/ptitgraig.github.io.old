@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Dev | Gorille Gris]]></title>
   <link href="http://ptitgraig.github.io/blog/categories/dev/atom.xml" rel="self"/>
   <link href="http://ptitgraig.github.io/"/>
-  <updated>2015-01-13T17:56:51+01:00</updated>
+  <updated>2015-01-13T18:01:51+01:00</updated>
   <id>http://ptitgraig.github.io/</id>
   <author>
     <name><![CDATA[Grégory Pelletey]]></name>
@@ -640,7 +640,7 @@ QUnit a beaucoup à offrir : test de code asynchrone tel que les <code>timeouts<
 
 <p class="disclaimer">
 Cet article est traduit de l'anglais à partir d'un article paru sur Smashing Magazine. J'ai donc tâché de rester fidèle à l'opinion de l'auteur. Par moments, les formulations ont du être tournée autrement afin de faciliter la lecture et la compréhension. Pour toute amélioration ou suggestion, n'hésitez pas à me contacter.<br />
-Tout le code est accessible et vérifiable sur mon <a href="http://ptitgraig.git">github</a>
+<strong>Tout le code est accessible et vérifiable sur <a href="https://github.com/ptitgraig/first-step-unit-js-tests">github</a></strong>
 </p>
 
 <div class="footnotes">
