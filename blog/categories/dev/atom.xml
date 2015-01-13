@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Dev | Gorille Gris]]></title>
   <link href="http://ptitgraig.github.io/blog/categories/dev/atom.xml" rel="self"/>
   <link href="http://ptitgraig.github.io/"/>
-  <updated>2015-01-13T18:02:15+01:00</updated>
+  <updated>2015-01-13T18:05:25+01:00</updated>
   <id>http://ptitgraig.github.io/</id>
   <author>
     <name><![CDATA[Grégory Pelletey]]></name>
@@ -22,6 +22,10 @@
 Traduction de l'article du Smashing Magazine : Introduction To JavaScript Unit Testing, écrit par Jörn Zaefferer en Juillet 2012.
 </p>
 <!-- more -->
+
+<p class="disclaimer">
+<a href="https://github.com/ptitgraig/first-step-unit-js-tests">Le code étape par étape est disponible sur GitHub.</a>
+</p>
 
 <p>Vous savez probablement que le test est une bonne chose, mais le premier obstacle à surmonter en essayant d’écrire des tests unitaires pour du code client est le manque de toutes les unités; le code JavaScript est écrit pour chaque page d’un site Web ou chaque module d’une application et est étroitement mélangés avec la logique back-end et le HTML correspondant. Dans le pire des cas, le code est complètement mélangé avec le langage HTML, comme les gestionnaires d’événements directement dans le markup.</p>
 
@@ -640,7 +644,6 @@ QUnit a beaucoup à offrir : test de code asynchrone tel que les <code>timeouts<
 
 <p class="disclaimer">
 Cet article est traduit de l'anglais à partir d'un article paru sur Smashing Magazine. J'ai donc tâché de rester fidèle à l'opinion de l'auteur. Par moments, les formulations ont du être tournée autrement afin de faciliter la lecture et la compréhension. Pour toute amélioration ou suggestion, n'hésitez pas à me contacter.<br />
-<strong>Tout le code est accessible et vérifiable sur <a href="https://github.com/ptitgraig/first-step-unit-js-tests">github</a></strong>
 </p>
 
 <div class="footnotes">
