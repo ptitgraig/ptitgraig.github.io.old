@@ -62,8 +62,12 @@ h3 {
     font-family:$subheading-font-family;
     }
 
- p {
+p {
     @include clearfix;
+    }
+
+code {
+    background-color:$code-bg-color;
     }
 
 li p:after, li p:before {
@@ -334,11 +338,19 @@ article {
 .disclaimer {
 	font-size:.8em;
 	padding:5px 20px;
-	@include border-radius(5px);
-	border:3px solid $third-color;
+	border-left:7px solid $third-color;
+    font-style:italic;
+    margin-top:3em;
+    a {
+        color:$third-color;
+        text-decoration:underline;
+        &:hover, &:focus {
+            text-decoration:none;
+        }
+    }
 }
 .disclaimer:before {
-	content:"Démenti";
+	content:"Note importante";
 	display:block;
 	font-size:1.2em;
 }

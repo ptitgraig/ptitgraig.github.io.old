@@ -15,7 +15,7 @@
 		<link href="/stylesheets/main.css" rel="stylesheet">
 		<!-- Google web fonts -->
 		<link href='http://fonts.googleapis.com/css?family=Lobster|Goudy+Bookletter+1911|Oswald:700' rel='stylesheet' type='text/css'>
-		<link href="/stylesheets/prettify-hemisu.css" type="text/css" rel="stylesheet" />
+		<!-- <link href="/stylesheets/prettify-hemisu.css" type="text/css" rel="stylesheet" /> -->
 		
 		<!--<link href="http://feeds.feedburner.com/turkeltaub" rel="alternate" title="Gorille Gris" type="application/rss+xml" />-->
 		
@@ -59,7 +59,7 @@
 <ul>
   <li>C’est là ou se fait la validation des données.</li>
   <li>Sont persistés soit par du localStorage ou bien par synchronisation avec une base de données.</li>
-  <li>Plusieurs Views peuvent observer des changements sur un Model. Une View, en effet, regarde un Model et peut ainsi savoir quand un Model a changé et afficher les infos à jour du Model.</li>
+  <li>Plusieurs Views peuvent observer des changements sur un Model. Une View, en effet, regarde un Model et peut ainsi savoir quand un   Model a changé et afficher les infos à jour du Model.</li>
   <li>Un ensemble de Models est appelé une Collection. Dès qu’un Model dans cette Collection change, la View attachée à ce Model est notifiée.</li>
 </ul>
 
@@ -81,17 +81,17 @@
   <li>Quand un utilisateur clique dans la View, c’est normalement le Controller qui s’occupe du traitement a effectuer, mais comme on l’a vu, il n’y a pas de Controller dans Backbone. Les évenements sont gérés dans la View grâce à un objet <code>event : {}</code></li>
 </ul>
 
-<h2 id="pense-bte-pour-le-model">pense-bête pour le Model</h2>
+<h2 id="pense-bte-pour-le-model">Pense-bête pour le Model</h2>
 
 <h3 id="mthodes-native--backbone">Méthodes native à Backbone</h3>
 
 <ul>
-  <li>set : pour changer ou initialiser un attribut du Model <code>myModel.set('toto', 'un valeur');</code></li>
-  <li>get : pour obtenir la valeur d’un attribut du Model <code>myModel.get('toto');</code></li>
-  <li>validate : permet de valider le model ex :</li>
-</ul>
+  <li><code>set</code> : pour changer ou initialiser un attribut du Model <code>myModel.set('toto', 'un valeur');</code></li>
+  <li><code>get</code> : pour obtenir la valeur d’un attribut du Model <code>myModel.get('toto');</code></li>
+  <li>
+    <p><code>validate</code> : permet de valider le model :</p>
 
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre><span class="function">validate</span>: <span class="keyword">function</span>(attributes){
     <span class="keyword">if</span>(attributes.title === <span class="predefined-constant">undefined</span>){
         <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Remember to set a title for your todo.</span><span class="delimiter">&quot;</span></span>;
@@ -99,21 +99,36 @@
 },
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+</ul>
 
-<h3 id="ecouter-si-le-modle-change-">ecouter si le modèle change :</h3>
+<h3 id="ecoute-sur-un-model">Ecoute sur un Model</h3>
 
-<div><div class="CodeRay">
+<ul>
+  <li>
+    <p>Ecouter si un Model change :</p>
+
+    <div><div class="CodeRay">
   <div class="code"><pre><span class="local-variable">this</span>.on(<span class="string"><span class="delimiter">'</span><span class="content">change</span><span class="delimiter">'</span></span>, <span class="keyword">function</span>(){ 
     <span class="comment">//faire quelquechose</span>
 });
 </pre></div>
 </div>
+    </div>
+  </li>
+  <li>
+    <p>Ecouter si l’attribut toto du model change   </p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre><span class="local-variable">this</span>.on(<span class="string"><span class="delimiter">'</span><span class="content">change:toto</span><span class="delimiter">'</span></span>)
+</pre></div>
 </div>
+    </div>
+  </li>
+</ul>
 
-<h3 id="ecouter-si-lattribut-toto-du-model-change--thisonchangetoto">ecouter si l’attribut toto du model change : <code>this.on('change:toto')</code></h3>
-
-<h2 id="pense-bte-pour-la-view">pense-bête pour la View</h2>
+<h2 id="pense-bte-pour-la-view">Pense-bête pour la View</h2>
 
 <p>La méthode <code>render()</code> de la View peut être liée à la méthode <code>change()</code> du Model. Ainsi dès qu’il y a un changement dans le Model, la View refléte immédiatement ces changements.</p>
 
@@ -138,7 +153,7 @@ view.el <span class="comment">// &lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a
   <li>Créer une liste d’éléments sans repeindre chacun individuellement, l’élément est déssiné une fois par le navigateur et la liste entière est remplie en données (sens peu claire)</li>
 </ul>
 
-<h2 id="pense-bte-collection">pense-bête Collection</h2>
+<h2 id="pense-bte-collection">Pense-bête Collection</h2>
 
 <h3 id="syntaxe">Syntaxe</h3>
 
@@ -189,11 +204,13 @@ myTodo.set(<span class="string"><span class="delimiter">'</span><span class="con
 </div>
 </div>
 
-<p>Va afficher : J’ai changer d’avis, je devrais aller nager</p>
+<p>Va afficher : <code>J'ai changer d'avis, je devrais aller nager</code></p>
 
-<p>On peut écouter si il y a du changement dans une collection (ajout suppression modification) :</p>
+<ul>
+  <li>
+    <p>Ecouter si il y a du changement dans une collection (ajout suppression modification) :</p>
 
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>TodosCollection.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">add</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>(model) {
   console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">Ajouté </span><span class="delimiter">&quot;</span></span> + model.get(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>));
 });
@@ -211,35 +228,55 @@ TodosCollection.set([
 ]);
 </pre></div>
 </div>
+    </div>
+  </li>
+  <li>
+    <p>Vider une Collection :</p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre>myCollection.reset()
+</pre></div>
 </div>
+    </div>
+  </li>
+  <li>
+    <p>Ecouter le vidage d’une Collection : </p>
 
-<p>Vider une Collection : <code>myCollection.reset()</code></p>
+    <div><div class="CodeRay">
+  <div class="code"><pre>myCollection.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">reset</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>)
+</pre></div>
+</div>
+    </div>
+  </li>
+  <li>
+    <p>Attention : faire un <code>set()</code> d’une Collection peut provoquer des <code>remove()</code> ou <code>add()</code> en fonction de ce qui est setté</p>
+  </li>
+</ul>
 
-<p>Ecouter le vidage d’une Collection : myCollection.on(“reset”, function)</p>
+<h3 id="fonctionnalits-hrites-dunderscore">Fonctionnalités héritées d’Underscore</h3>
 
-<p>Faire un <code>set()</code> d’une Collection peut provoquer des <code>remove()</code> ou <code>add()</code> en fonction de ce qui est setté</p>
+<ul>
+  <li><code>forEach</code></li>
+  <li><code>sortBy</code></li>
+  <li><code>map</code></li>
+  <li>
+    <p><code>min/max</code> :</p>
 
-<p>Fonctionnalités hérité d’Underscore :
-- <code>forEach</code>
-- <code>sortBy</code>
-- <code>map</code>
-- <code>min/max</code> :</p>
-
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>Todos.max(<span class="keyword">function</span>(model){
   <span class="keyword">return</span> model.id;
 }).id;
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+  <li>
+    <p><code>pluck</code></p>
+  </li>
+  <li>
+    <p><code>chain</code> permet de chainer l’appel de fonction sur une Collection</p>
 
-<ul>
-  <li><code>pluck</code></li>
-</ul>
-
-<p><code>chain()</code> permet de chainer l’appel de fonction sur une Collection</p>
-
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre><span class="keyword">var</span> collection = <span class="keyword">new</span> Backbone.Collection([
   { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Tim</span><span class="delimiter">'</span></span>, <span class="key">age</span>: <span class="integer">5</span> },
   { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Ida</span><span class="delimiter">'</span></span>, <span class="key">age</span>: <span class="integer">26</span> },
@@ -254,7 +291,9 @@ TodosCollection.set([
 console.log(filteredNames); <span class="comment">// logs: ['Ida', 'Rob']</span>
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+</ul>
 
 <h2 id="persistence-restful">Persistence RESTful</h2>
 
@@ -380,9 +419,12 @@ ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><spa
 
 <h3 id="events-et-views">Events et Views</h3>
 
-<p>2 types d’événements peuvent être lié à une View :
-- événements DOM (via jQuery.on() this va faire référence à l’objet DOM)
-- événements déclenché via une API Event (via la propriété events{} this fait référence à la View)</p>
+<p>2 types d’événements peuvent être lié à une View :</p>
+
+<ul>
+  <li>événements DOM (via <code>jQuery.on()</code> this va faire référence à l’objet DOM)</li>
+  <li>événements déclenché via une API Event (via la propriété <code>events{}</code>,  <code>this</code> fait référence à la View)</li>
+</ul>
 
 <h2 id="routers">Routers</h2>
 
@@ -424,8 +466,8 @@ ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><spa
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   	<script>!window.jQuery && document.write(unescape('%3Cscript src="/js/lib/jquery.min.js"%3E%3C/script%3E'))</script>
   	<script src="/js/octopress.js" type="text/javascript"></script>
-	<script src="/js/jquery.zclip.min.js"></script>
-	<!-- Syntax highlighter -->
+	<!--<script src="/js/jquery.zclip.min.js"></script>-->
+	<!-- Syntax highlighter 
 	<script type="text/javascript" src="/js/prettify.js"></script>
 	<script>
 		$(document).ready(function() {
@@ -445,6 +487,6 @@ ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><spa
 					}
 			});
 		});
-	</script>
+	</script>-->
 </html>
 <!-- END OF _layouts/default.html -->

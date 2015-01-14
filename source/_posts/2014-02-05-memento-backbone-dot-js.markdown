@@ -15,55 +15,62 @@ Faisons un parrallèle entre un MVC classique et un MVC Backbone.
 
 ## Models
 
-- C'est là ou se fait la validation des données.
-- Sont persistés soit par du localStorage ou bien par synchronisation avec une base de données.
-- Plusieurs Views peuvent observer des changements sur un Model. Une View, en effet, regarde un Model et peut ainsi savoir quand un Model a changé et afficher les infos à jour du Model.
-- Un ensemble de Models est appelé une Collection. Dès qu'un Model dans cette Collection change, la View attachée à ce Model est notifiée.
+*   C'est là ou se fait la validation des données.
+*   Sont persistés soit par du localStorage ou bien par synchronisation avec une base de données.
+*   Plusieurs Views peuvent observer des changements sur un Model. Une View, en effet, regarde un Model et peut ainsi savoir quand un   Model a changé et afficher les infos à jour du Model.
+*   Un ensemble de Models est appelé une Collection. Dès qu'un Model dans cette Collection change, la View attachée à ce Model est notifiée.
 
 ## Controllers
 
-- N'existe pas. La View joue le rôle de Controller.
-- Gérer les changements effectués dans la vue par l'utilisateur
-- Mettre à jour le Model quand un utilisateur a terminé ses actions
+*   N'existe pas. La View joue le rôle de Controller.
+*   Gérer les changements effectués dans la vue par l'utilisateur
+*   Mettre à jour le Model quand un utilisateur a terminé ses actions
 
 ## Views
 
-- C'est là que les utilisateurs cliquent et font mumuse.
-- Donc c'est là qu'on lit / edite / supprime les données d'un Model.
-- Il y a une fonction `render()` qui doit s'occuper d'afficher le contenu du Model (ça utilise le moteur de template de Underscore.js). On l'utilise en callback afin de notifier la View de potentiels changements sur le Model.
-- Dans le code, on fait référence à la vue avec `this.el`
-- Quand un utilisateur clique dans la View, c'est normalement le Controller qui s'occupe du traitement a effectuer, mais comme on l'a vu, il n'y a pas de Controller dans Backbone. Les évenements sont gérés dans la View grâce à un objet `event : {}`
+*   C'est là que les utilisateurs cliquent et font mumuse.
+*   Donc c'est là qu'on lit / edite / supprime les données d'un Model.
+*   Il y a une fonction `render()` qui doit s'occuper d'afficher le contenu du Model (ça utilise le moteur de template de Underscore.js). On l'utilise en callback afin de notifier la View de potentiels changements sur le Model.
+*   Dans le code, on fait référence à la vue avec `this.el`
+*   Quand un utilisateur clique dans la View, c'est normalement le Controller qui s'occupe du traitement a effectuer, mais comme on l'a vu, il n'y a pas de Controller dans Backbone. Les évenements sont gérés dans la View grâce à un objet `event : {}`
 
 
-## pense-bête pour le Model
+## Pense-bête pour le Model
 
 ### Méthodes native à Backbone 
 
-- set : pour changer ou initialiser un attribut du Model `myModel.set('toto', 'un valeur');`
-- get : pour obtenir la valeur d'un attribut du Model `myModel.get('toto');`
-- validate : permet de valider le model ex :
+*   ```set``` : pour changer ou initialiser un attribut du Model `myModel.set('toto', 'un valeur');`
+*   ```get``` : pour obtenir la valeur d'un attribut du Model `myModel.get('toto');`
+*   ```validate``` : permet de valider le model :
 
-~~~
-validate: function(attributes){
-	if(attributes.title === undefined){
-	    return "Remember to set a title for your todo.";
-	}
-},
-~~~
-{:lang="js"}
+    ~~~
+    validate: function(attributes){
+    	if(attributes.title === undefined){
+    	    return "Remember to set a title for your todo.";
+    	}
+    },
+    ~~~
+    {:lang="js"}
 
-### ecouter si le modèle change : 
+### Ecoute sur un Model
 
-~~~
-this.on('change', function(){ 
-	//faire quelquechose
-});
-~~~
-{:lang="js"}
+*   Ecouter si un Model change :
 
-### ecouter si l'attribut toto du model change : `this.on('change:toto')`
+    ~~~
+    this.on('change', function(){ 
+    	//faire quelquechose
+    });
+    ~~~
+    {:lang="js"}
 
-## pense-bête pour la View
+*   Ecouter si l'attribut toto du model change   
+
+    ~~~
+    this.on('change:toto')
+    ~~~
+    {:lang="js"}
+
+## Pense-bête pour la View
 
 La méthode `render()` de la View peut être liée à la méthode `change()` du Model. Ainsi dès qu'il y a un changement dans le Model, la View refléte immédiatement ces changements.
 
@@ -85,7 +92,7 @@ A la fin de render() il est bien de faire `return this` car :
 - la View peut être réutiliser par des View parent
 - Créer une liste d'éléments sans repeindre chacun individuellement, l'élément est déssiné une fois par le navigateur et la liste entière est remplie en données (sens peu claire)
 
-## pense-bête Collection
+## Pense-bête Collection
 
 ### Syntaxe
 
@@ -133,67 +140,79 @@ myTodo.set('title', 'aller nager');
 ~~~
 {:lang="js"}
 
-Va afficher : J'ai changer d'avis, je devrais aller nager
+Va afficher : `J'ai changer d'avis, je devrais aller nager`
+    
+*   Ecouter si il y a du changement dans une collection (ajout suppression modification) :
 
-On peut écouter si il y a du changement dans une collection (ajout suppression modification) :
+    ~~~
+    TodosCollection.on("add", function(model) {
+      console.log("Ajouté " + model.get('title'));
+    });
+    TodosCollection.on("remove", function(model) {
+      console.log("Supprimé " + model.get('title'));
+    });
 
-~~~
-TodosCollection.on("add", function(model) {
-  console.log("Ajouté " + model.get('title'));
-});
-TodosCollection.on("remove", function(model) {
-  console.log("Supprimé " + model.get('title'));
-});
+    TodosCollection.on("change:completed", function(model) {
+      console.log("Changement de l'attribute completed " + model.get('title'));
+    });
+    TodosCollection.set([
+        { id: 1, title: 'go to Jamaica.', completed: true },
+        { id: 2, title: 'go to China.', completed: false },
+        { id: 4, title: 'go to Disney World.', completed: false }
+    ]);
+    ~~~
+    {:lang="js"}
 
-TodosCollection.on("change:completed", function(model) {
-  console.log("Changement de l'attribute completed " + model.get('title'));
-});
-TodosCollection.set([
-    { id: 1, title: 'go to Jamaica.', completed: true },
-    { id: 2, title: 'go to China.', completed: false },
-    { id: 4, title: 'go to Disney World.', completed: false }
-]);
-~~~
-{:lang="js"}
+*   Vider une Collection :
 
-Vider une Collection : `myCollection.reset()`
+    ~~~
+    myCollection.reset()
+    ~~~
+    {:lang="js"}
 
-Ecouter le vidage d'une Collection : myCollection.on("reset", function)
+*   Ecouter le vidage d'une Collection : 
 
-Faire un `set()` d'une Collection peut provoquer des `remove()` ou `add()` en fonction de ce qui est setté
+    ~~~
+    myCollection.on("reset", function)
+    ~~~
+    {:lang="js"}
 
-Fonctionnalités hérité d'Underscore :
-- `forEach`
-- `sortBy`
-- `map`
-- `min/max` :
 
-~~~
-Todos.max(function(model){
-  return model.id;
-}).id;
-~~~
-{:lang="js"}
+*   Attention : faire un `set()` d'une Collection peut provoquer des `remove()` ou `add()` en fonction de ce qui est setté
 
-- `pluck`
+### Fonctionnalités héritées d'Underscore
 
-`chain()` permet de chainer l'appel de fonction sur une Collection
+*   `forEach`
+*    `sortBy`
+*   `map`
+*   `min/max` :
 
-~~~
-var collection = new Backbone.Collection([
-  { name: 'Tim', age: 5 },
-  { name: 'Ida', age: 26 },
-  { name: 'Rob', age: 55 }
-]);
+    ~~~
+    Todos.max(function(model){
+      return model.id;
+    }).id;
+    ~~~
+    {:lang="js"}
 
-var filteredNames = collection.chain() // start chain, returns wrapper around collection's models
-  .filter(function(item) { return item.get('age') > 10; }) // returns wrapped array excluding Tim
-  .map(function(item) { return item.get('name'); }) // returns wrapped array containing remaining names
-  .value(); // terminates the chain and returns the resulting array
+*   `pluck`
 
-console.log(filteredNames); // logs: ['Ida', 'Rob']
-~~~
-{:lang="js"}
+*   `chain` permet de chainer l'appel de fonction sur une Collection
+
+    ~~~
+    var collection = new Backbone.Collection([
+      { name: 'Tim', age: 5 },
+      { name: 'Ida', age: 26 },
+      { name: 'Rob', age: 55 }
+    ]);
+
+    var filteredNames = collection.chain() // start chain, returns wrapper around collection's models
+      .filter(function(item) { return item.get('age') > 10; }) // returns wrapped array excluding Tim
+      .map(function(item) { return item.get('name'); }) // returns wrapped array containing remaining names
+      .value(); // terminates the chain and returns the resulting array
+
+    console.log(filteredNames); // logs: ['Ida', 'Rob']
+    ~~~
+    {:lang="js"}
 
 ## Persistence RESTful
 
@@ -316,8 +335,9 @@ ourObject.trigger("dance jump skip", 'on fire', "15 minutes");
 ### Events et Views
 
 2 types d'événements peuvent être lié à une View :
-- événements DOM (via jQuery.on() this va faire référence à l'objet DOM)
-- événements déclenché via une API Event (via la propriété events{} this fait référence à la View)
+
+*   événements DOM (via `jQuery.on()` this va faire référence à l'objet DOM)
+*   événements déclenché via une API Event (via la propriété `events{}`,  `this` fait référence à la View)
 
 ## Routers
 
@@ -335,21 +355,5 @@ var myTodoRouter = new TodoRouter();
 {:lang="js"}
 
 `Backbone.history.start();` dit à Backbone qu'il fait observer tout changement de hash dans l'URL (d'où le /# hyper vitale)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

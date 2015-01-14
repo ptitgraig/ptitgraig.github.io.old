@@ -4,7 +4,7 @@
 	<title><![CDATA[Gorille Gris]]></title>
 	<link href="http://ptitgraig.github.io/atom.xml" rel="self"/>
 	<link href="http://ptitgraig.github.io/"/>
-	<updated>2015-01-08T14:18:45+01:00</updated>
+	<updated>2015-01-14T15:21:16+01:00</updated>
 	<id>http://ptitgraig.github.io/</id>
 	<author>
 		<name><![CDATA[Grégory Pelletey]]></name>
@@ -12,6 +12,661 @@
 	</author>
 	<generator uri="http://octopress.org/">Octopress</generator>
 
+	
+	<entry>
+		
+			<title type="html"><![CDATA[Introduction au test unitaire JavaScript]]></title>
+		
+		<link href="http://ptitgraig.github.io/blog/2015/01/08/introduction-au-test-unitaire-javascript/"/>
+		<updated>2015-01-08T17:46:00+01:00</updated>
+		<id>http://ptitgraig.github.io/blog/2015/01/08/introduction-au-test-unitaire-javascript</id>
+		<content type="html">
+			<![CDATA[
+				
+					<p></p>
+				
+			]]>
+			<![CDATA[<p class="foreword">
+Traduction de l&#8217;article du Smashing Magazine : Introduction To JavaScript Unit Testing, écrit par Jörn Zaefferer en Juillet 2012.
+</p>
+<!-- more -->
+
+<p class="disclaimer">
+<a href="https://github.com/ptitgraig/first-step-unit-js-tests">Le code étape par étape est disponible sur GitHub.</a>
+</p>
+
+<p>Vous savez probablement que le test est une bonne chose, mais le premier obstacle à surmonter en essayant d’écrire des tests unitaires pour du code client est le manque de toutes les unités; le code JavaScript est écrit pour chaque page d’un site Web ou chaque module d’une application et est étroitement mélangés avec la logique back-end et le HTML correspondant. Dans le pire des cas, le code est complètement mélangé avec le langage HTML, comme les gestionnaires d’événements directement dans le markup.</p>
+
+<p>Ce est probablement le cas lorsqu’on utilise aucune bibliothèque JavaScript, qui permettrait une abstraction du DOM; l’écriture de gestionnaires d’événements directement dans le markup est beaucoup plus facile que d’utiliser les API DOM pour lier ces événements.
+De plus en plus de développeurs choisissent une bibliothèque comme jQuery pour gérer l’abstraction du DOM. Ceci leur permet de déplacer la gestion des ces événements dans un script distinct, soit sur ​​la même page ou dans un fichier JavaScript à part. Toutefois, mettre le code dans des fichiers séparés ne signifie pas qu’il est prêt à être testé unitairement.</p>
+
+<p>Qu’est ce qu’une unité de toute façon? Dans le meilleur des cas, c’est une fonction que vous pouvez gérer de différentes façon - une fonction qui vous donne toujours le même résultat pour une entrée donnée. C’est ce qui rend les tests unitaires assez facile, mais la plupart du temps il faut gérer les effets secondaires, entre autre : la manipulations du DOM. Il est utile de trouver quelles sont ces unités qui permettront la structure de notre code et de construire les tests unitaire en conséquence.</p>
+
+<h2 id="construire-des-tests-unitaires">Construire des tests unitaires</h2>
+
+<p>Cela étant dit, commencer avec les tests unitaires est bien plus facile quand on commence de rien. Mais cet article ne parle pas de ce cas là. Cet article est là pour vous aider sur le problème le plus difficile : partir sur du code existant, en tester les parties importantes et éventuellement en corriger les bugs.</p>
+
+<p>Le processus d’extraction de code et de son changement de forme, sans en modifier son comportement, est appelé refactorisation. C’est une excellente méthode pour améliorer la manière dont le code est conçu un programme. Et puisque la moindre modification peut potentiellement changer le comportement du programme, il est plus sûr de le faire quand les tests unitaires sont en place.</p>
+
+<p>Cela veut dire que pour ajouter des tests unitaire, vous devez prendre le risque de casser des choses : c’est le problème de l’oeuf et de la poule (qui est venu le premier ?). Donc, avant que vous ayez une bonne couverture de test unitaire, vous devez continuer à tester manuellement pour minimiser le risque de régression.</p>
+
+<p>Assez de théorie ! Passons à la pratique : tester du code JavaScript mélangé au HTML et relié à une page. Ce code a pour but de chercher tous les liens qui possède un attribut <code>title</code>. Ces attributs <code>title</code> sont utilisés pour afficher, quand quelque chose a été posté, une date relative du genre <em>il y a 5 jours</em> :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="tag">&lt;html&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attribute-name">http-equiv</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Content-Type</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">content</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text/html; charset=UTF-8</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Test unitaire sur date<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;script&gt;</span>
+<span class="inline">    <span class="keyword">function</span> <span class="function">prettyDate</span>(time){
+        <span class="keyword">var</span> date = <span class="keyword">new</span> Date(time || <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>),
+            diff = ((<span class="keyword">new</span> Date().getTime() - date.getTime()) / <span class="integer">1000</span>),
+            day_diff = Math.floor(diff / <span class="integer">86400</span>);
+
+        <span class="keyword">if</span> (isNaN(day_diff) || day_diff &lt; <span class="integer">0</span> || day_diff &gt;= <span class="integer">31</span>) {
+            <span class="keyword">return</span>;
+        }
+
+        <span class="keyword">return</span> day_diff == <span class="integer">0</span> &amp;&amp; (
+                diff &lt; <span class="integer">60</span> &amp;&amp; <span class="string"><span class="delimiter">&quot;</span><span class="content">à l'instant</span><span class="delimiter">&quot;</span></span> ||
+                diff &lt; <span class="integer">120</span> &amp;&amp; <span class="string"><span class="delimiter">&quot;</span><span class="content">1 minute</span><span class="delimiter">&quot;</span></span> ||
+                diff &lt; <span class="integer">3600</span> &amp;&amp; Math.floor( diff / <span class="integer">60</span> ) + <span class="string"><span class="delimiter">&quot;</span><span class="content"> minutes</span><span class="delimiter">&quot;</span></span> ||
+                diff &lt; <span class="integer">7200</span> &amp;&amp; <span class="string"><span class="delimiter">&quot;</span><span class="content">1 heure</span><span class="delimiter">&quot;</span></span> ||
+                diff &lt; <span class="integer">86400</span> &amp;&amp; Math.floor( diff / <span class="integer">3600</span> ) + <span class="string"><span class="delimiter">&quot;</span><span class="content"> heures</span><span class="delimiter">&quot;</span></span>) ||
+            day_diff == <span class="integer">1</span> &amp;&amp; <span class="string"><span class="delimiter">&quot;</span><span class="content">Hier</span><span class="delimiter">&quot;</span></span> ||
+            day_diff &lt; <span class="integer">7</span> &amp;&amp; day_diff + <span class="string"><span class="delimiter">&quot;</span><span class="content"> days ago</span><span class="delimiter">&quot;</span></span> ||
+            day_diff &lt; <span class="integer">31</span> &amp;&amp; Math.ceil( day_diff / <span class="integer">7</span> ) + <span class="string"><span class="delimiter">&quot;</span><span class="content"> semaines</span><span class="delimiter">&quot;</span></span>;
+    }
+    window.<span class="function">onload</span> = <span class="keyword">function</span>(){
+        <span class="keyword">var</span> links = document.getElementsByTagName(<span class="string"><span class="delimiter">&quot;</span><span class="content">a</span><span class="delimiter">&quot;</span></span>);
+        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="integer">0</span>; i &lt; links.length; i++) {
+            <span class="keyword">if</span> (links[i].title) {
+                <span class="keyword">var</span> date = prettyDate(links[i].title);
+                <span class="keyword">if</span> (date) {
+                    links[i].innerHTML = date;
+                }
+            }
+        }
+    };</span>
+    <span class="tag">&lt;/script&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+
+<span class="tag">&lt;ul&gt;</span>
+<span class="tag">&lt;li</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entry</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">post57</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;p&gt;</span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur dignissim quis libero eu lobortis. <span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;small</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">extra</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        Posté il y a <span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/2008/01/blah/57/</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">title</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-28T21:24:17Z</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>January 28th, 2008<span class="tag">&lt;/a&gt;</span>
+        par <span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/john/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>John Resig<span class="tag">&lt;/a&gt;</span>
+    <span class="tag">&lt;/small&gt;</span>
+<span class="tag">&lt;/li&gt;</span>
+<span class="comment">&lt;!-- more list items --&gt;</span>
+<span class="tag">&lt;/ul&gt;</span>
+
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</div>
+
+<p>Si vous exécuter cet exemple dans une navigateur, vous remarquerez un problème : aucune date n’est remplacée. Le code fonctionne cependant correctement. Il boucle bien sur tous les liens de la page et vérifie, pour chacun, si l’attribut <code>title</code> est présent. Si il y en a bien un, il passe dans la fonction <code>prettyDate</code>. Si <code>prettyDate</code> renvoie un résultat, le innerHTML du lien est mis à jour avec ce résultat.</p>
+
+<h2 id="rendre-le-code-testable">Rendre le code testable</h2>
+
+<p>Le problème est que pour toute date antérieure à 31 jours, <code>prettyDate</code> renvoie juste <code>undefined</code> (implicitement, avec <code>return</code>), laissant ainsi tel quel le texte du lien. Donc, pour voir ce qui est censé se produire, on doit en dur une date actuelle :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="tag">&lt;html&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attribute-name">http-equiv</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Content-Type</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">content</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text/html; charset=UTF-8</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Test unitaire sur date<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;script&gt;</span>
+<span class="inline">    <span class="keyword">function</span> <span class="function">prettyDate</span>(now, time){
+        <span class="keyword">var</span> date = <span class="keyword">new</span> Date(time || <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>),
+            diff = (((<span class="keyword">new</span> Date(now)).getTime() - date.getTime()) / <span class="integer">1000</span>),
+            day_diff = Math.floor(diff / <span class="integer">86400</span>);
+
+        <span class="keyword">if</span> (isNaN(day_diff) || day_diff &lt; <span class="integer">0</span> || day_diff &gt;= <span class="integer">31</span>) {
+            <span class="keyword">return</span>;
+        }
+
+        <span class="keyword">return</span> day_diff == <span class="integer">0</span> &amp;&amp; (
+                diff &lt; <span class="integer">60</span> &amp;&amp; <span class="string"><span class="delimiter">&quot;</span><span class="content">à l'instant</span><span class="delimiter">&quot;</span></span> ||
+                diff &lt; <span class="integer">120</span> &amp;&amp; <span class="string"><span class="delimiter">&quot;</span><span class="content">1 minute</span><span class="delimiter">&quot;</span></span> ||
+                diff &lt; <span class="integer">3600</span> &amp;&amp; Math.floor( diff / <span class="integer">60</span> ) + <span class="string"><span class="delimiter">&quot;</span><span class="content"> minutes</span><span class="delimiter">&quot;</span></span> ||
+                diff &lt; <span class="integer">7200</span> &amp;&amp; <span class="string"><span class="delimiter">&quot;</span><span class="content">1 heure</span><span class="delimiter">&quot;</span></span> ||
+                diff &lt; <span class="integer">86400</span> &amp;&amp; Math.floor( diff / <span class="integer">3600</span> ) + <span class="string"><span class="delimiter">&quot;</span><span class="content"> heures</span><span class="delimiter">&quot;</span></span>) ||
+            day_diff == <span class="integer">1</span> &amp;&amp; <span class="string"><span class="delimiter">&quot;</span><span class="content">Hier</span><span class="delimiter">&quot;</span></span> ||
+            day_diff &lt; <span class="integer">7</span> &amp;&amp; day_diff + <span class="string"><span class="delimiter">&quot;</span><span class="content"> jours</span><span class="delimiter">&quot;</span></span> ||
+            day_diff &lt; <span class="integer">31</span> &amp;&amp; Math.ceil( day_diff / <span class="integer">7</span> ) + <span class="string"><span class="delimiter">&quot;</span><span class="content"> semaines</span><span class="delimiter">&quot;</span></span>;
+    }
+    window.<span class="function">onload</span> = <span class="keyword">function</span>(){
+        <span class="keyword">var</span> links = document.getElementsByTagName(<span class="string"><span class="delimiter">&quot;</span><span class="content">a</span><span class="delimiter">&quot;</span></span>);
+        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="integer">0</span>; i &lt; links.length; i++) {
+            <span class="keyword">if</span> (links[i].title) {
+                <span class="keyword">var</span> date = prettyDate(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-28T22:25:00Z</span><span class="delimiter">&quot;</span></span>, links[i].title);
+                <span class="keyword">if</span> (date) {
+                    links[i].innerHTML = date;
+                }
+            }
+        }
+    };</span>
+    <span class="tag">&lt;/script&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+
+<span class="tag">&lt;ul&gt;</span>
+<span class="tag">&lt;li</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entry</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">post57</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;p&gt;</span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur dignissim quis libero eu lobortis.<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;small</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">extra</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        Posté il y a <span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/2008/01/blah/57/</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">title</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-28T21:24:17Z</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>January 28th, 2008<span class="tag">&lt;/a&gt;</span>
+        par <span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/john/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>John Resig<span class="tag">&lt;/a&gt;</span>
+    <span class="tag">&lt;/small&gt;</span>
+<span class="tag">&lt;/li&gt;</span>
+<span class="comment">&lt;!-- more list items --&gt;</span>
+<span class="tag">&lt;/ul&gt;</span>
+
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</div>
+
+<p>Maintenant, les liens devraient avoir comme valeur : “à l’instant”, “il y a 2 heures”, “hier” etc… C’est un départ, mais ce n’est pas encore une unité testable. Donc, tout ce que nous pouvons faire, sans changer le code d’avantage, c’est tester les changements qui se sont produits dans DOM. Mais, même si cela fonctionne, le moindre changement dans le HTML pourrait faire échouer le test. Ce qui aurait quand même un très mauvais rapport coût/bénéfice pour un test comme celui-là.</p>
+
+<h2 id="refactorisation-tape-0">Refactorisation, étape 0</h2>
+
+<p>Au lieu de tester le HTML, refactorisons juste assez le code pour avoir quelque chose qui se test unitairement.</p>
+
+<p>Pour cela, nous avons besoin d’effectuer deux changements : passer la date actuelle en paramètre à la fonction <code>prettyDate</code> en utilisant <code>new Date</code> au lieu de l’écrire en dur, puis déplacer la fonction dans un fichier à part afin que nous puissions inclure le code sur une page séparée et effectuer nos tests unitaires.</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="tag">&lt;html&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attribute-name">http-equiv</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Content-Type</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">content</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text/html; charset=UTF-8</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Refactored date examples<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;script</span> <span class="attribute-name">src</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">prettydate.js</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/script&gt;</span>
+    <span class="tag">&lt;script&gt;</span>
+<span class="inline">    window.<span class="function">onload</span> = <span class="keyword">function</span>() {
+        <span class="keyword">var</span> links = document.getElementsByTagName(<span class="string"><span class="delimiter">&quot;</span><span class="content">a</span><span class="delimiter">&quot;</span></span>);
+        <span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="integer">0</span>; i &lt; links.length; i++ ) {
+            <span class="keyword">if</span> (links[i].title) {
+                <span class="keyword">var</span> date = prettyDate(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-28T22:25:00Z</span><span class="delimiter">&quot;</span></span>, links[i].title);
+                <span class="keyword">if</span> (date) {
+                    links[i].innerHTML = date;
+                }
+            }
+        }
+    };</span>
+    <span class="tag">&lt;/script&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+
+<span class="tag">&lt;ul&gt;</span>
+<span class="tag">&lt;li</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entry</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">post57</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;p&gt;</span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur dignissim quis libero eu lobortis.<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;small</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">extra</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        Posted <span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/2008/01/blah/57/</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">title</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-28T20:24:17Z</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>January 28th, 2008<span class="tag">&lt;/a&gt;</span>
+        by <span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/john/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>John Resig<span class="tag">&lt;/a&gt;</span>
+    <span class="tag">&lt;/small&gt;</span>
+<span class="tag">&lt;/li&gt;</span>
+<span class="comment">&lt;!-- more list items --&gt;</span>
+<span class="tag">&lt;/ul&gt;</span>
+
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</div>
+
+<p>Et voici le contenu de <code>prettydate.js</code> :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">function</span> <span class="function">prettyDate</span>(now, time){
+    <span class="keyword">var</span> date = <span class="keyword">new</span> Date(time || <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>),
+        diff = (((<span class="keyword">new</span> Date(now)).getTime() - date.getTime()) / <span class="integer">1000</span>),
+        day_diff = Math.floor(diff / <span class="integer">86400</span>);
+
+    <span class="keyword">if</span> (isNaN(day_diff) || day_diff &lt; <span class="integer">0</span> || day_diff &gt;= <span class="integer">31</span>) {
+        <span class="keyword">return</span>;
+    }
+
+    <span class="keyword">return</span> day_diff == <span class="integer">0</span> &amp;&amp; (
+            diff &lt; <span class="integer">60</span> &amp;&amp; <span class="string"><span class="delimiter">&quot;</span><span class="content">à l'instant</span><span class="delimiter">&quot;</span></span> ||
+            diff &lt; <span class="integer">120</span> &amp;&amp; <span class="string"><span class="delimiter">&quot;</span><span class="content">1 minute</span><span class="delimiter">&quot;</span></span> ||
+            diff &lt; <span class="integer">3600</span> &amp;&amp; Math.floor( diff / <span class="integer">60</span> ) + <span class="string"><span class="delimiter">&quot;</span><span class="content"> minutes</span><span class="delimiter">&quot;</span></span> ||
+            diff &lt; <span class="integer">7200</span> &amp;&amp; <span class="string"><span class="delimiter">&quot;</span><span class="content">1 heure</span><span class="delimiter">&quot;</span></span> ||
+            diff &lt; <span class="integer">86400</span> &amp;&amp; Math.floor( diff / <span class="integer">3600</span> ) + <span class="string"><span class="delimiter">&quot;</span><span class="content"> heures</span><span class="delimiter">&quot;</span></span>) ||
+        day_diff == <span class="integer">1</span> &amp;&amp; <span class="string"><span class="delimiter">&quot;</span><span class="content">Hier</span><span class="delimiter">&quot;</span></span> ||
+        day_diff &lt; <span class="integer">7</span> &amp;&amp; day_diff + <span class="string"><span class="delimiter">&quot;</span><span class="content"> jours</span><span class="delimiter">&quot;</span></span> ||
+        day_diff &lt; <span class="integer">31</span> &amp;&amp; Math.ceil( day_diff / <span class="integer">7</span> ) + <span class="string"><span class="delimiter">&quot;</span><span class="content"> semaines</span><span class="delimiter">&quot;</span></span>;
+}
+</pre></div>
+</div>
+</div>
+
+<p>Maintenant que nous avons quelque chose à tester, écrivons de vrais tests unitaires :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="tag">&lt;html&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attribute-name">http-equiv</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Content-Type</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">content</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text/html; charset=UTF-8</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Refactored date examples<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;script</span> <span class="attribute-name">src</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">prettydate.js</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/script&gt;</span>
+    <span class="tag">&lt;script&gt;</span>
+<span class="inline">    <span class="keyword">function</span> <span class="function">test</span>(then, expected) {
+        results.total++;
+        <span class="keyword">var</span> result = prettyDate(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-28T22:25:00</span><span class="delimiter">&quot;</span></span>, then);
+        <span class="keyword">if</span> (result !== expected) {
+            results.bad++;
+            console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">Attendu </span><span class="delimiter">&quot;</span></span> + expected + <span class="string"><span class="delimiter">&quot;</span><span class="content">, mais obtenu </span><span class="delimiter">&quot;</span></span> + result);
+        }
+    }
+    <span class="keyword">var</span> results = {
+        <span class="key">total</span>: <span class="integer">0</span>,
+        <span class="key">bad</span>: <span class="integer">0</span>
+    };
+    test(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-28T22:24:30</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">à l'instant</span><span class="delimiter">&quot;</span></span>);
+    test(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-28T22:23:30</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">1 minute</span><span class="delimiter">&quot;</span></span>);
+    test(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-28T21:23:30</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">1 heure</span><span class="delimiter">&quot;</span></span>);
+    test(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-27T22:23:30</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Hier</span><span class="delimiter">&quot;</span></span>);
+    test(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-26T22:23:30</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">2 jours</span><span class="delimiter">&quot;</span></span>);
+    test(<span class="string"><span class="delimiter">&quot;</span><span class="content">2007-01-26T22:23:30</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">undefined</span>);
+    console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">De </span><span class="delimiter">&quot;</span></span> + results.total + <span class="string"><span class="delimiter">&quot;</span><span class="content"> tests, </span><span class="delimiter">&quot;</span></span> + results.bad + <span class="string"><span class="delimiter">&quot;</span><span class="content"> ont échoué, </span><span class="delimiter">&quot;</span></span>
+        + (results.total - results.bad) + <span class="string"><span class="delimiter">&quot;</span><span class="content"> ont réussi.</span><span class="delimiter">&quot;</span></span>);</span>
+    <span class="tag">&lt;/script&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</div>
+
+<p>Nous avons un framework de test adapté, utilisant la console pour afficher les résultats. Il n’y a aucune dépendance au DOM, par conséquent, vous pouvez simplement l’exécuter dans un environnement JavaScript hors navigateur, tel que Node.js ou Rhino, en déplaçant le code de la balise script dans un fichier à part.</p>
+
+<p>Si un test échoue, le résultat du test attendu ainsi que le résultat obtenu vont être affichés. Au final, un résumé du nombre de test en échec et réussis est aussi affiché.</p>
+
+<p>Si tous les tests réussissent, comme ils le devraient, vous devriez voir la chose suivante dans la console :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre>De 6 tests, 0 ont échoué, 6 ont réussi.
+</pre></div>
+</div>
+</div>
+
+<p>Pour voir ce qu’est une assertion <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> erronée, nous pouvons changer quelque chose afin que le test échoue :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre>Attendu 2 jours, mais obtenu 2 jour.
+De 6 tests, 1 ont échoué, 5 ont réussi.
+</pre></div>
+</div>
+</div>
+
+<p>Bien que cette approche adaptée est intéressant en POC <sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> (on peut vraiment écrire un exécuteur de test en quelque lignes de code), il est bien plus pratique de d’utiliser un framework de test existant, qui fourni un meilleur affichage des résultats et plus d’infrastructure pour écrire et organiser les tests.</p>
+
+<h2 id="qunit--un-outil-de-test-javascript">Qunit : un outil de test JavaScript</h2>
+
+<p>Le choix d’un framework est principalement affaire de goût. Pour le reste de cet article, nous utiliseront QUnit (prononcé “q-unit”), car son style de description des tests est proche du framework de test que nous venons de créer.</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="tag">&lt;html&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attribute-name">http-equiv</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Content-Type</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">content</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text/html; charset=UTF-8</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Refactorisation date<span class="tag">&lt;/title&gt;</span>
+
+    <span class="tag">&lt;link</span> <span class="attribute-name">rel</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">stylesheet</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">//code.jquery.com/qunit/qunit-1.16.0.css</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;script</span> <span class="attribute-name">src</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">//code.jquery.com/qunit/qunit-1.16.0.js</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/script&gt;</span>
+    <span class="tag">&lt;script</span> <span class="attribute-name">src</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">prettydate.js</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/script&gt;</span>
+
+    <span class="tag">&lt;script&gt;</span>
+<span class="inline">    test(<span class="string"><span class="delimiter">&quot;</span><span class="content">prettydate basics</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>() {
+        <span class="keyword">var</span> now = <span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/28 22:25:00</span><span class="delimiter">&quot;</span></span>;
+        equal(prettyDate(now, <span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/28 22:24:30</span><span class="delimiter">&quot;</span></span>), <span class="string"><span class="delimiter">&quot;</span><span class="content">à l'instant</span><span class="delimiter">&quot;</span></span>);
+        equal(prettyDate(now, <span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/28 22:23:30</span><span class="delimiter">&quot;</span></span>), <span class="string"><span class="delimiter">&quot;</span><span class="content">1 minute</span><span class="delimiter">&quot;</span></span>);
+        equal(prettyDate(now, <span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/28 21:23:30</span><span class="delimiter">&quot;</span></span>), <span class="string"><span class="delimiter">&quot;</span><span class="content">1 heure</span><span class="delimiter">&quot;</span></span>);
+        equal(prettyDate(now, <span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/27 22:23:30</span><span class="delimiter">&quot;</span></span>), <span class="string"><span class="delimiter">&quot;</span><span class="content">Hier</span><span class="delimiter">&quot;</span></span>);
+        equal(prettyDate(now, <span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/26 22:23:30</span><span class="delimiter">&quot;</span></span>), <span class="string"><span class="delimiter">&quot;</span><span class="content">2 jours</span><span class="delimiter">&quot;</span></span>);
+        equal(prettyDate(now, <span class="string"><span class="delimiter">&quot;</span><span class="content">2007/01/26 22:23:30</span><span class="delimiter">&quot;</span></span>), <span class="predefined-constant">undefined</span>);
+    });</span>
+    <span class="tag">&lt;/script&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">qunit</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</div>
+
+<p>Trois sections méritent que nous y portions attention. En dehors de l’habituel HTML boilerplate, nous avons trois fichiers inclus : deux fichiers pour QUnit (<code>qunit-1.16.0.css</code> et <code>qunit-1.16.0.js</code>) et notre script précédent <code>prettydate.js</code></p>
+
+<p>Ensuite, il y a un autre bloc de script avec les tests à exécuter. La fonction de test <code>test()</code>, appelée une seule fois, reçoit une chaîne de caractère comme premier paramètre (qui donne un nom à la suite de tests) et une fonction comme deuxième paramètre (qui va effectivement exécuter le code pour ce test). Le code initialise une variable <code>now</code>, qui est réutilisée plus bas, puis apelle plusieurs fois la fonction <code>equal</code> avec variété de paramètres. La fonction <code>equal</code> est une assertion que QUnit fourni parmi tant d’autres. Le premier paramètre est le résultat d’un appel à la fonction prettyDate, avec maintenant la variable <code>now</code> en premier paramètre et une date en second. Le second paramètre est le resultat qui est attendu. Si les deux paramètres ont la même valeur à la fin, le test va passer, sinon il échoue.</p>
+
+<p>Enfin, on peut voir dans le <code>body</code> quelques éléments spécifiques à QUnit (<code>&lt;div id="qunit"&gt;&lt;/div&gt;</code>). Ces éléments sont optionnels et permettent seulement d’afficher le résultat des tests.</p>
+
+<p>Voici le résultat :</p>
+
+<iframe style="width: 100%; height: 300px" src="http://jsfiddle.net/sdnthswp/embedded/result/light/"></iframe>
+
+<p>Avec un test en échec, nous avons :</p>
+
+<iframe style="width: 100%; height: 300px" src="http://jsfiddle.net/dw0meLxh/embedded/result/light/"></iframe>
+
+<p>Puisque le test contient une assertion en échec, QUnit ne cache pas les résultats du test, et nous pouvons voir immédiatement ce qui s’est mal passé. Nous obtenons à la fois un affichage des résultats attendus et ceux obtenus, et un diff entre les deux. Ce qui est utile pour comparer des chaînes de caractères plus longue. Dans le cas présent, ce qui s’est mal passé est évident.</p>
+
+<h2 id="refactorisation-tape-1">Refactorisation, étape 1</h2>
+
+<p>Les assertions sont quelque peu incomplètes car nous ne testons pas la variante “n semaines”. Avant de l’ajouter, nous devons considérer une refonte du code. Aujourd’hui, on fait appel à <code>prettyDate</code> pour chaque assertion et on lui passe le paramètre <code>now</code>. Nous pourions facilement refactoriser cela en une fonction d’assertion personnalisée :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre>test(<span class="string"><span class="delimiter">&quot;</span><span class="content">prettydate basics</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>() {
+    <span class="keyword">function</span> <span class="function">date</span>(then, expected) {
+        equal(prettyDate(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/28 22:25:00</span><span class="delimiter">&quot;</span></span>, then), expected);
+    }
+    date(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/28 22:24:30</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">à l'instant</span><span class="delimiter">&quot;</span></span>);
+    date(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/28 22:23:30</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">1 minute</span><span class="delimiter">&quot;</span></span>);
+    date(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/28 21:23:30</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">1 heure</span><span class="delimiter">&quot;</span></span>);
+    date(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/27 22:23:30</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Hier</span><span class="delimiter">&quot;</span></span>);
+    date(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/26 22:23:30</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">2 jours</span><span class="delimiter">&quot;</span></span>);
+    date(<span class="string"><span class="delimiter">&quot;</span><span class="content">2007/01/26 22:23:30</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">undefined</span>);
+});
+</pre></div>
+</div>
+</div>
+
+<p>Ici nous avons déplacé l’appel à <code>prettyDate</code> dans une fonction <code>date</code>, en insérant la variable <code>now</code> directement dans la fonction. Nous obtenons alors des données pertinentes pour chaque assertion, plus faciles à lire, tout en gardant un niveau d’abstraction assez évident.</p>
+
+<h2 id="tester-la-manipulation-du-dom">Tester la manipulation du DOM</h2>
+
+<p>Maintenant que la fonction <code>prettyDate</code> est suffisamment bien testée, retournons à notre exemple de départ. En plus de la fonction <code>prettyDate</code>, le code sélectionne quelques éléments du DOM et les mets à jour, tout cela au sein d’un événement <code>window.load</code>. En appliquant les mêmes principes qu’avant, nous devrions être capable de refactoriser ce code et de le tester. Ajouter à cela, nous présenterons un module pour ces deux fonctions qui permettra d’éviter la pollution de la scope globale et qui permettra aussi de donner un nom qui a plus de sens à ces deux fonctions.</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="tag">&lt;html&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attribute-name">http-equiv</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Content-Type</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">content</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text/html; charset=UTF-8</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Refactored date examples<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;link</span> <span class="attribute-name">rel</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">stylesheet</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">//code.jquery.com/qunit/qunit-1.16.0.css</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;script</span> <span class="attribute-name">src</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">//code.jquery.com/qunit/qunit-1.16.0.js</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/script&gt;</span>
+    <span class="tag">&lt;script</span> <span class="attribute-name">src</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">prettydate2.js</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/script&gt;</span>
+    <span class="tag">&lt;script&gt;</span>
+<span class="inline">    test(<span class="string"><span class="delimiter">&quot;</span><span class="content">prettydate.format</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>() {
+        <span class="keyword">function</span> <span class="function">date</span>(then, expected) {
+            equal(prettyDate.format(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/28 22:25:00</span><span class="delimiter">&quot;</span></span>, then), expected);
+        }
+        date(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/28 22:24:30</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">à l'instant</span><span class="delimiter">&quot;</span></span>);
+        date(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/28 22:23:30</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">1 minute</span><span class="delimiter">&quot;</span></span>);
+        date(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/28 21:23:30</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">1 heure</span><span class="delimiter">&quot;</span></span>);
+        date(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/27 22:23:30</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Hier</span><span class="delimiter">&quot;</span></span>);
+        date(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/26 22:23:30</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">2 jours</span><span class="delimiter">&quot;</span></span>);
+        date(<span class="string"><span class="delimiter">&quot;</span><span class="content">2007/01/26 22:23:30</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">undefined</span>);
+    });
+
+    test(<span class="string"><span class="delimiter">&quot;</span><span class="content">prettyDate.update</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>() {
+        <span class="keyword">var</span> links = document.getElementById(<span class="string"><span class="delimiter">&quot;</span><span class="content">qunit-fixture</span><span class="delimiter">&quot;</span></span>).getElementsByTagName(<span class="string"><span class="delimiter">&quot;</span><span class="content">a</span><span class="delimiter">&quot;</span></span>);
+        equal(links[<span class="integer">0</span>].innerHTML, <span class="string"><span class="delimiter">&quot;</span><span class="content">January 28th, 2008</span><span class="delimiter">&quot;</span></span>);
+        equal(links[<span class="integer">2</span>].innerHTML, <span class="string"><span class="delimiter">&quot;</span><span class="content">January 27th, 2008</span><span class="delimiter">&quot;</span></span>);
+        prettyDate.update(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-28T22:25:00Z</span><span class="delimiter">&quot;</span></span>);
+        equal(links[<span class="integer">0</span>].innerHTML, <span class="string"><span class="delimiter">&quot;</span><span class="content">2 heures</span><span class="delimiter">&quot;</span></span>);
+        equal(links[<span class="integer">2</span>].innerHTML, <span class="string"><span class="delimiter">&quot;</span><span class="content">Hier</span><span class="delimiter">&quot;</span></span>);
+    });
+
+    test(<span class="string"><span class="delimiter">&quot;</span><span class="content">prettyDate.update, un jour plus tard</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>() {
+        <span class="keyword">var</span> links = document.getElementById(<span class="string"><span class="delimiter">&quot;</span><span class="content">qunit-fixture</span><span class="delimiter">&quot;</span></span>).getElementsByTagName(<span class="string"><span class="delimiter">&quot;</span><span class="content">a</span><span class="delimiter">&quot;</span></span>);
+        equal(links[<span class="integer">0</span>].innerHTML, <span class="string"><span class="delimiter">&quot;</span><span class="content">January 28th, 2008</span><span class="delimiter">&quot;</span></span>);
+        equal(links[<span class="integer">2</span>].innerHTML, <span class="string"><span class="delimiter">&quot;</span><span class="content">January 27th, 2008</span><span class="delimiter">&quot;</span></span>);
+        prettyDate.update(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-29T22:25:00Z</span><span class="delimiter">&quot;</span></span>);
+        equal(links[<span class="integer">0</span>].innerHTML, <span class="string"><span class="delimiter">&quot;</span><span class="content">Hier</span><span class="delimiter">&quot;</span></span>);
+        equal(links[<span class="integer">2</span>].innerHTML, <span class="string"><span class="delimiter">&quot;</span><span class="content">2 jours</span><span class="delimiter">&quot;</span></span>);
+    });</span>
+    <span class="tag">&lt;/script&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">qunit</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">qunit-fixture</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;ul&gt;</span>
+            <span class="tag">&lt;li</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entry</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">post57</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;p&gt;</span>Lorem ipsum<span class="tag">&lt;/p&gt;</span>
+                <span class="tag">&lt;small</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">extra</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                    Posté il y a <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">time</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/2008/01/blah/57/</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">title</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-28T20:24:17Z</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>January 28th, 2008<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+                    par <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">author</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/john/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>John Resig<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+                <span class="tag">&lt;/small&gt;</span>
+            <span class="tag">&lt;/li&gt;</span>
+            <span class="tag">&lt;li</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entry</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">post57</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;p&gt;</span>Lorem ipsum<span class="tag">&lt;/p&gt;</span>
+                <span class="tag">&lt;small</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">extra</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                    Posté il y a <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">time</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/2008/01/blah/57/</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">title</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-27T22:24:17Z</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>January 27th, 2008<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+                    par <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">author</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/john/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>John Resig<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+                <span class="tag">&lt;/small&gt;</span>
+            <span class="tag">&lt;/li&gt;</span>
+        <span class="tag">&lt;/ul&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</div>
+
+<p>Voici le contenu de <code>prettydate2.js</code> :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> prettyDate = {
+    <span class="function">format</span>: <span class="keyword">function</span>(now, time){
+        <span class="keyword">var</span> date = <span class="keyword">new</span> Date(time || <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>),
+            diff = (((<span class="keyword">new</span> Date(now)).getTime() - date.getTime()) / <span class="integer">1000</span>),
+            day_diff = Math.floor(diff / <span class="integer">86400</span>);
+
+        <span class="keyword">if</span> (isNaN(day_diff) || day_diff &lt; <span class="integer">0</span> || day_diff &gt;= <span class="integer">31</span>) {
+            <span class="keyword">return</span>;
+        }
+
+        <span class="keyword">return</span> day_diff === <span class="integer">0</span> &amp;&amp; (
+                diff &lt; <span class="integer">60</span> &amp;&amp; <span class="string"><span class="delimiter">&quot;</span><span class="content">à l'instant</span><span class="delimiter">&quot;</span></span> ||
+                diff &lt; <span class="integer">120</span> &amp;&amp; <span class="string"><span class="delimiter">&quot;</span><span class="content">1 minute</span><span class="delimiter">&quot;</span></span> ||
+                diff &lt; <span class="integer">3600</span> &amp;&amp; Math.floor( diff / <span class="integer">60</span> ) + <span class="string"><span class="delimiter">&quot;</span><span class="content"> minutes</span><span class="delimiter">&quot;</span></span> ||
+                diff &lt; <span class="integer">7200</span> &amp;&amp; <span class="string"><span class="delimiter">&quot;</span><span class="content">1 heure</span><span class="delimiter">&quot;</span></span> ||
+                diff &lt; <span class="integer">86400</span> &amp;&amp; Math.floor( diff / <span class="integer">3600</span> ) + <span class="string"><span class="delimiter">&quot;</span><span class="content"> heures</span><span class="delimiter">&quot;</span></span>) ||
+            day_diff === <span class="integer">1</span> &amp;&amp; <span class="string"><span class="delimiter">&quot;</span><span class="content">Hier</span><span class="delimiter">&quot;</span></span> ||
+            day_diff &lt; <span class="integer">7</span> &amp;&amp; day_diff + <span class="string"><span class="delimiter">&quot;</span><span class="content"> jours</span><span class="delimiter">&quot;</span></span> ||
+            day_diff &lt; <span class="integer">31</span> &amp;&amp; Math.ceil( day_diff / <span class="integer">7</span> ) + <span class="string"><span class="delimiter">&quot;</span><span class="content"> semaines</span><span class="delimiter">&quot;</span></span>;
+    },
+
+    <span class="function">update</span>: <span class="keyword">function</span>(now) {
+        <span class="keyword">var</span> links = document.getElementsByTagName(<span class="string"><span class="delimiter">&quot;</span><span class="content">a</span><span class="delimiter">&quot;</span></span>);
+        <span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="integer">0</span>; i &lt; links.length; i++ ) {
+            <span class="keyword">if</span> (links[i].title) {
+                <span class="keyword">var</span> date = prettyDate.format(now, links[i].title);
+                <span class="keyword">if</span> (date) {
+                    links[i].innerHTML = date;
+                }
+            }
+        }
+    }
+};
+</pre></div>
+</div>
+</div>
+
+<p>La nouvelle fonction <code>prettyDate.update</code> est un extrait de l’exemple initial mais avec le paramètre <code>now</code> que nous passons à la fonction <code>prettyDate.format</code>. Le test de base de QUnit pour cette fonction commence par selectionner tous les éléments au sein de l’élément <code>#qunit-fixture</code>. <code>&lt;div id="qunit-fixture"&gt;&lt;/div&gt;</code> est un nouvel élément dans le <code>body</code>. Il contient un extrait du markup de notre exemple initial, suffisamment conséquent pour être éprouver par des tests. En le placant dans l’élément <code>#qunit-fixture</code>, nous n’avons pas à nous inquiéter d’éventuels changements de DOM suite à l’execution d’un test précédent, car QUNit va automatiquement ré-initialiser le markup après chaque test.</p>
+
+<p>Regardons au premier test effectué pour <code>prettyDate.update</code>. Après avoir sélectionné les liens, deux assertions vérifient que ceux-ci ont bien leurs valeurs initiales. Après quoi, <code>prettyDate.update</code> est appelée, en lui passant une date donnée (identique à celle des tests précédents). Ensuite, deux assertions sont exécutées, vérifiant que le innerHTML de ces éléments ont la date au bon format “2 heures” et “Hier”.</p>
+
+<h2 id="refactorisation-tape-2">Refactorisation, étape 2</h2>
+
+<p>Le test suivant, <code>prettyDate.update, un jour plus tard</code> fait à peu près la même chose, hormis qu’il passe une date différente à <code>prettyDate.update</code> et ainsi attend un résultat différent pour les deux liens. Voyons si nous pouvons refactoriser ces tests pour supprimer le code dupliqué.</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="tag">&lt;html&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attribute-name">http-equiv</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Content-Type</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">content</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text/html; charset=UTF-8</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Refactored date examples<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;link</span> <span class="attribute-name">rel</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">stylesheet</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">//code.jquery.com/qunit/qunit-1.16.0.css</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;script</span> <span class="attribute-name">src</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">//code.jquery.com/qunit/qunit-1.16.0.js</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/script&gt;</span>
+    <span class="tag">&lt;script</span> <span class="attribute-name">src</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">prettydate2.js</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/script&gt;</span>
+    <span class="tag">&lt;script&gt;</span>
+<span class="inline">    test(<span class="string"><span class="delimiter">&quot;</span><span class="content">prettydate.format</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>() {
+        <span class="keyword">function</span> <span class="function">date</span>(then, expected) {
+            equal(prettyDate.format(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/28 22:25:00</span><span class="delimiter">&quot;</span></span>, then), expected);
+        }
+        date(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/28 22:24:30</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">à l'instant</span><span class="delimiter">&quot;</span></span>);
+        date(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/28 22:23:30</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">1 minute</span><span class="delimiter">&quot;</span></span>);
+        date(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/28 21:23:30</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">1 heure</span><span class="delimiter">&quot;</span></span>);
+        date(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/27 22:23:30</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Hier</span><span class="delimiter">&quot;</span></span>);
+        date(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/26 22:23:30</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">2 jours</span><span class="delimiter">&quot;</span></span>);
+        date(<span class="string"><span class="delimiter">&quot;</span><span class="content">2007/01/26 22:23:30</span><span class="delimiter">&quot;</span></span>, <span class="predefined-constant">undefined</span>);
+    });
+
+    <span class="keyword">function</span> <span class="function">domtest</span>(name, now, first, second) {
+        test(name, <span class="keyword">function</span>() {
+            <span class="keyword">var</span> links = document.getElementById(<span class="string"><span class="delimiter">&quot;</span><span class="content">qunit-fixture</span><span class="delimiter">&quot;</span></span>).getElementsByTagName(<span class="string"><span class="delimiter">&quot;</span><span class="content">a</span><span class="delimiter">&quot;</span></span>);
+            equal(links[<span class="integer">0</span>].innerHTML, <span class="string"><span class="delimiter">&quot;</span><span class="content">January 28th, 2008</span><span class="delimiter">&quot;</span></span>);
+            equal(links[<span class="integer">2</span>].innerHTML, <span class="string"><span class="delimiter">&quot;</span><span class="content">January 27th, 2008</span><span class="delimiter">&quot;</span></span>);
+            prettyDate.update(now);
+            equal(links[<span class="integer">0</span>].innerHTML, first);
+            equal(links[<span class="integer">2</span>].innerHTML, second);
+        });
+    }
+    domtest(<span class="string"><span class="delimiter">&quot;</span><span class="content">prettyDate.update</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/28 22:25:00</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">2 heures</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Hier</span><span class="delimiter">&quot;</span></span>);
+    domtest(<span class="string"><span class="delimiter">&quot;</span><span class="content">prettyDate.update, one day later</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/29 22:25:00</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">Hier</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">2 jours</span><span class="delimiter">&quot;</span></span>);</span>
+    <span class="tag">&lt;/script&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">qunit</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">qunit-fixture</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        <span class="tag">&lt;ul&gt;</span>
+            <span class="tag">&lt;li</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entry</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">post57</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;p&gt;</span>blah blah blah…<span class="tag">&lt;/p&gt;</span>
+                <span class="tag">&lt;small</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">extra</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                    Posted <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">time</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/2008/01/blah/57/</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">title</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/28 20:24:17</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>January 28th, 2008<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+                    by <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">author</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/john/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>John Resig<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+                <span class="tag">&lt;/small&gt;</span>
+            <span class="tag">&lt;/li&gt;</span>
+            <span class="tag">&lt;li</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entry</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">post57</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                <span class="tag">&lt;p&gt;</span>blah blah blah…<span class="tag">&lt;/p&gt;</span>
+                <span class="tag">&lt;small</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">extra</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+                    Posted <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">time</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/2008/01/blah/57/</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">title</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">2008/01/27 22:24:17</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>January 27th, 2008<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+                    by <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">author</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/john/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>John Resig<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+                <span class="tag">&lt;/small&gt;</span>
+            <span class="tag">&lt;/li&gt;</span>
+        <span class="tag">&lt;/ul&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</div>
+
+<p>Nous avons une nouvelle fonction <code>domtest</code>, qui encapsule la logique des deux tests précédents, avec comme paramètre le nom du test, la date et les deux chaînes de caractères attendues. Elle est donc appelée deux fois.</p>
+
+<h2 id="retour-au-dpart">Retour au départ</h2>
+
+<p>Ces choses en place, retournons à notre exemple de départ et regardons à quoi ça ressemble suite à la refactorisation.</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="tag">&lt;html&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attribute-name">http-equiv</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">Content-Type</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">content</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">text/html; charset=UTF-8</span><span class="delimiter">&quot;</span></span> <span class="tag">/&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Final date examples<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;script</span> <span class="attribute-name">src</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">prettydate2.js</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;/script&gt;</span>
+    <span class="tag">&lt;script&gt;</span>
+<span class="inline">    window.<span class="function">onload</span> = <span class="keyword">function</span>() {
+        prettyDate.update(<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-28T22:25:00Z</span><span class="delimiter">&quot;</span></span>);
+    };</span>
+    <span class="tag">&lt;/script&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+
+<span class="tag">&lt;ul&gt;</span>
+<span class="tag">&lt;li</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entry</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">post57</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;p&gt;</span>Lorem ipsum<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;small</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">extra</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        Posté il y a <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">time</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/2008/01/blah/57/</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">title</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-28T20:24:17Z</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;span&gt;</span>January 28th, 2008<span class="tag">&lt;/span&gt;</span><span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+        par <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">author</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/john/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>John Resig<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/small&gt;</span>
+<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;li</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entry</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">post57</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;p&gt;</span>Lorem ipsum<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;small</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">extra</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        Posté il y a <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">time</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/2008/01/blah/57/</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">title</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-27T22:24:17Z</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;span&gt;</span>January 27th, 2008<span class="tag">&lt;/span&gt;</span><span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+        par <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">author</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/john/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>John Resig<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/small&gt;</span>
+<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;li</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entry</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">post57</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;p&gt;</span>Lorem ipsum<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;small</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">extra</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        Posté il y a <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">time</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/2008/01/blah/57/</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">title</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-26T22:24:17Z</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;span&gt;</span>January 26th, 2008<span class="tag">&lt;/span&gt;</span><span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+        par <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">author</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/john/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>John Resig<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/small&gt;</span>
+<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;li</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entry</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">post57</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;p&gt;</span>Lorem ipsum<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;small</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">extra</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        Posté il y a <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">time</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/2008/01/blah/57/</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">title</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-25T22:24:17Z</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;span&gt;</span>January 25th, 2008<span class="tag">&lt;/span&gt;</span><span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+        par <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">author</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/john/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>John Resig<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/small&gt;</span>
+<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;li</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entry</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">post57</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;p&gt;</span>Lorem ipsum<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;small</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">extra</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        Posté il y a <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">time</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/2008/01/blah/57/</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">title</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-24T22:24:17Z</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;span&gt;</span>January 24th, 2008<span class="tag">&lt;/span&gt;</span><span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+        par <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">author</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/john/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>John Resig<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+
+    <span class="tag">&lt;/small&gt;</span>
+<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;li</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entry</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">post57</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;p&gt;</span>Lorem ipsum<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;small</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">extra</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        Posté il y a <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">time</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/2008/01/blah/57/</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">title</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-14T22:24:17Z</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;span&gt;</span>January 14th, 2008<span class="tag">&lt;/span&gt;</span><span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+        par <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">author</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/john/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>John Resig<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/small&gt;</span>
+<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;li</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entry</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">post57</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;p&gt;</span>Lorem ipsum<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;small</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">extra</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        Posté il y a <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">time</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/2008/01/blah/57/</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">title</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">2008-01-04T22:24:17Z</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;span&gt;</span>January 4th, 2008<span class="tag">&lt;/span&gt;</span><span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+        par <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">author</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/john/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>John Resig<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/small&gt;</span>
+<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;li</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">entry</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">id</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">post57</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+    <span class="tag">&lt;p&gt;</span>Lorem ipsum<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;small</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">extra</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
+        Posté il y a <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">time</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/2008/01/blah/57/</span><span class="delimiter">&quot;</span></span> <span class="attribute-name">title</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">2007-12-15T22:24:17Z</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;span&gt;</span>December 15th, 2008<span class="tag">&lt;/span&gt;</span><span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+        par <span class="tag">&lt;span</span> <span class="attribute-name">class</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">author</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span><span class="tag">&lt;a</span> <span class="attribute-name">href</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">/john/</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>John Resig<span class="tag">&lt;/a&gt;</span><span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/small&gt;</span>
+<span class="tag">&lt;/li&gt;</span>
+<span class="tag">&lt;/ul&gt;</span>
+
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span>
+</pre></div>
+</div>
+</div>
+
+<p>Dans un exemple non statique, on supprimerait le paramètre de <code>prettyDate.update</code>. Globalement, la refactorisation est une énorme amélioration par rapport à l’exemple initiale. Grâce au module <code>prettyDate</code> que nous avons conçu, nos pouvons même y ajouter d’avantage de fonctionnalités sans polluer la scope globale.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Le test JavaScript n’est pas seulement une affaire d’utiliser un exécuteur de test et écrire quelques tests; cela demande habituellement des changements structurel assez lourds quand il s’agit de code qui n’a été testé auparavant que manuellement. Nous avons suivi pas à pas un exemple de comment changer la structure du code d’un module existant pour exécuter des tests dessus, en utilisant un framework de test adapté. Puis nous avons remplacer ce framework par un autre qui possède plus de fonctionnalités et nous donne des retours visuels.
+QUnit a beaucoup à offrir : test de code asynchrone tel que les <code>timeouts</code>, AJAX et les événements. Son exécuteur de test visuel nous aide à débugger le code en rendant facile la ré-exécution de tests spécifique et en fournissant des piles de traces pour les assertions qui ont échoués et les exceptions qui ont été attrapées. Pour aller plus loin, lisez le livre QUnit Cookbook.</p>
+
+<p class="disclaimer">
+Cet article est traduit de l&#8217;anglais à partir d&#8217;un article paru sur Smashing Magazine. J&#8217;ai donc tâché de rester fidèle à l&#8217;opinion de l&#8217;auteur. Par moments, les formulations ont du être tournée autrement afin de faciliter la lecture et la compréhension. Pour toute amélioration ou suggestion, n&#8217;hésitez pas à me contacter.<br />
+</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>Un assertion est un énoncé considéré comme vrai, ou une affirmation.<a href="#fnref:1" rel="reference">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>Proof-Of-Concept est un moyen d’éprouver une solution. En génie logiciel, généralement, on crée un petit programme pour éprouver qu’une idée est viable.<a href="#fnref:2" rel="reference">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]>
+		</content>
+	</entry>
 	
 	<entry>
 		
@@ -570,7 +1225,7 @@ Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le c
 <ul>
   <li>C’est là ou se fait la validation des données.</li>
   <li>Sont persistés soit par du localStorage ou bien par synchronisation avec une base de données.</li>
-  <li>Plusieurs Views peuvent observer des changements sur un Model. Une View, en effet, regarde un Model et peut ainsi savoir quand un Model a changé et afficher les infos à jour du Model.</li>
+  <li>Plusieurs Views peuvent observer des changements sur un Model. Une View, en effet, regarde un Model et peut ainsi savoir quand un   Model a changé et afficher les infos à jour du Model.</li>
   <li>Un ensemble de Models est appelé une Collection. Dès qu’un Model dans cette Collection change, la View attachée à ce Model est notifiée.</li>
 </ul>
 
@@ -592,17 +1247,17 @@ Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le c
   <li>Quand un utilisateur clique dans la View, c’est normalement le Controller qui s’occupe du traitement a effectuer, mais comme on l’a vu, il n’y a pas de Controller dans Backbone. Les évenements sont gérés dans la View grâce à un objet <code>event : {}</code></li>
 </ul>
 
-<h2 id="pense-bte-pour-le-model">pense-bête pour le Model</h2>
+<h2 id="pense-bte-pour-le-model">Pense-bête pour le Model</h2>
 
 <h3 id="mthodes-native--backbone">Méthodes native à Backbone</h3>
 
 <ul>
-  <li>set : pour changer ou initialiser un attribut du Model <code>myModel.set('toto', 'un valeur');</code></li>
-  <li>get : pour obtenir la valeur d’un attribut du Model <code>myModel.get('toto');</code></li>
-  <li>validate : permet de valider le model ex :</li>
-</ul>
+  <li><code>set</code> : pour changer ou initialiser un attribut du Model <code>myModel.set('toto', 'un valeur');</code></li>
+  <li><code>get</code> : pour obtenir la valeur d’un attribut du Model <code>myModel.get('toto');</code></li>
+  <li>
+    <p><code>validate</code> : permet de valider le model :</p>
 
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre><span class="function">validate</span>: <span class="keyword">function</span>(attributes){
     <span class="keyword">if</span>(attributes.title === <span class="predefined-constant">undefined</span>){
         <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Remember to set a title for your todo.</span><span class="delimiter">&quot;</span></span>;
@@ -610,21 +1265,36 @@ Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le c
 },
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+</ul>
 
-<h3 id="ecouter-si-le-modle-change-">ecouter si le modèle change :</h3>
+<h3 id="ecoute-sur-un-model">Ecoute sur un Model</h3>
 
-<div><div class="CodeRay">
+<ul>
+  <li>
+    <p>Ecouter si un Model change :</p>
+
+    <div><div class="CodeRay">
   <div class="code"><pre><span class="local-variable">this</span>.on(<span class="string"><span class="delimiter">'</span><span class="content">change</span><span class="delimiter">'</span></span>, <span class="keyword">function</span>(){ 
     <span class="comment">//faire quelquechose</span>
 });
 </pre></div>
 </div>
+    </div>
+  </li>
+  <li>
+    <p>Ecouter si l’attribut toto du model change   </p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre><span class="local-variable">this</span>.on(<span class="string"><span class="delimiter">'</span><span class="content">change:toto</span><span class="delimiter">'</span></span>)
+</pre></div>
 </div>
+    </div>
+  </li>
+</ul>
 
-<h3 id="ecouter-si-lattribut-toto-du-model-change--thisonchangetoto">ecouter si l’attribut toto du model change : <code>this.on('change:toto')</code></h3>
-
-<h2 id="pense-bte-pour-la-view">pense-bête pour la View</h2>
+<h2 id="pense-bte-pour-la-view">Pense-bête pour la View</h2>
 
 <p>La méthode <code>render()</code> de la View peut être liée à la méthode <code>change()</code> du Model. Ainsi dès qu’il y a un changement dans le Model, la View refléte immédiatement ces changements.</p>
 
@@ -649,7 +1319,7 @@ view.el <span class="comment">// &lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a
   <li>Créer une liste d’éléments sans repeindre chacun individuellement, l’élément est déssiné une fois par le navigateur et la liste entière est remplie en données (sens peu claire)</li>
 </ul>
 
-<h2 id="pense-bte-collection">pense-bête Collection</h2>
+<h2 id="pense-bte-collection">Pense-bête Collection</h2>
 
 <h3 id="syntaxe">Syntaxe</h3>
 
@@ -700,11 +1370,13 @@ myTodo.set(<span class="string"><span class="delimiter">'</span><span class="con
 </div>
 </div>
 
-<p>Va afficher : J’ai changer d’avis, je devrais aller nager</p>
+<p>Va afficher : <code>J'ai changer d'avis, je devrais aller nager</code></p>
 
-<p>On peut écouter si il y a du changement dans une collection (ajout suppression modification) :</p>
+<ul>
+  <li>
+    <p>Ecouter si il y a du changement dans une collection (ajout suppression modification) :</p>
 
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>TodosCollection.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">add</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>(model) {
   console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">Ajouté </span><span class="delimiter">&quot;</span></span> + model.get(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>));
 });
@@ -722,35 +1394,55 @@ TodosCollection.set([
 ]);
 </pre></div>
 </div>
+    </div>
+  </li>
+  <li>
+    <p>Vider une Collection :</p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre>myCollection.reset()
+</pre></div>
 </div>
+    </div>
+  </li>
+  <li>
+    <p>Ecouter le vidage d’une Collection : </p>
 
-<p>Vider une Collection : <code>myCollection.reset()</code></p>
+    <div><div class="CodeRay">
+  <div class="code"><pre>myCollection.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">reset</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>)
+</pre></div>
+</div>
+    </div>
+  </li>
+  <li>
+    <p>Attention : faire un <code>set()</code> d’une Collection peut provoquer des <code>remove()</code> ou <code>add()</code> en fonction de ce qui est setté</p>
+  </li>
+</ul>
 
-<p>Ecouter le vidage d’une Collection : myCollection.on(“reset”, function)</p>
+<h3 id="fonctionnalits-hrites-dunderscore">Fonctionnalités héritées d’Underscore</h3>
 
-<p>Faire un <code>set()</code> d’une Collection peut provoquer des <code>remove()</code> ou <code>add()</code> en fonction de ce qui est setté</p>
+<ul>
+  <li><code>forEach</code></li>
+  <li><code>sortBy</code></li>
+  <li><code>map</code></li>
+  <li>
+    <p><code>min/max</code> :</p>
 
-<p>Fonctionnalités hérité d’Underscore :
-- <code>forEach</code>
-- <code>sortBy</code>
-- <code>map</code>
-- <code>min/max</code> :</p>
-
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>Todos.max(<span class="keyword">function</span>(model){
   <span class="keyword">return</span> model.id;
 }).id;
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+  <li>
+    <p><code>pluck</code></p>
+  </li>
+  <li>
+    <p><code>chain</code> permet de chainer l’appel de fonction sur une Collection</p>
 
-<ul>
-  <li><code>pluck</code></li>
-</ul>
-
-<p><code>chain()</code> permet de chainer l’appel de fonction sur une Collection</p>
-
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre><span class="keyword">var</span> collection = <span class="keyword">new</span> Backbone.Collection([
   { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Tim</span><span class="delimiter">'</span></span>, <span class="key">age</span>: <span class="integer">5</span> },
   { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Ida</span><span class="delimiter">'</span></span>, <span class="key">age</span>: <span class="integer">26</span> },
@@ -765,7 +1457,9 @@ TodosCollection.set([
 console.log(filteredNames); <span class="comment">// logs: ['Ida', 'Rob']</span>
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+</ul>
 
 <h2 id="persistence-restful">Persistence RESTful</h2>
 
@@ -891,9 +1585,12 @@ ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><spa
 
 <h3 id="events-et-views">Events et Views</h3>
 
-<p>2 types d’événements peuvent être lié à une View :
-- événements DOM (via jQuery.on() this va faire référence à l’objet DOM)
-- événements déclenché via une API Event (via la propriété events{} this fait référence à la View)</p>
+<p>2 types d’événements peuvent être lié à une View :</p>
+
+<ul>
+  <li>événements DOM (via <code>jQuery.on()</code> this va faire référence à l’objet DOM)</li>
+  <li>événements déclenché via une API Event (via la propriété <code>events{}</code>,  <code>this</code> fait référence à la View)</li>
+</ul>
 
 <h2 id="routers">Routers</h2>
 
@@ -919,11 +1616,11 @@ ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><spa
 	
 	<entry>
 		
-			<title type="html"><![CDATA[4 questions à se poser avant de commencer un projet Backbone]]></title>
+			<title type="html"><![CDATA[Les fondamentaux de Marionette]]></title>
 		
-		<link href="http://ptitgraig.github.io/blog/2014/01/30/4-questions-a-se-poser-avant-de-commencer-un-projet-backbone/"/>
+		<link href="http://ptitgraig.github.io/blog/2014/01/30/4-les-fondamentaux-de-marionette/"/>
 		<updated>2014-01-30T10:45:00+01:00</updated>
-		<id>http://ptitgraig.github.io/blog/2014/01/30/4-questions-a-se-poser-avant-de-commencer-un-projet-backbone</id>
+		<id>http://ptitgraig.github.io/blog/2014/01/30/4-les-fondamentaux-de-marionette</id>
 		<content type="html">
 			<![CDATA[
 				
@@ -931,25 +1628,309 @@ ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><spa
 				
 			]]>
 			<![CDATA[<p class="foreword">
-Vous avez choisi de développer votre dernière super application web avec Backbone. Avant de vous lancer tête baissée dans le développement, réfléchissez à ces 4 questions afin de savoir si Backbone est ce qu&#8217;il vous faut.
+Tu as choisi de développer ta dernière super application web avec Backbone. 
+Marionette.js simplifie ton application en te fournissant du code robuste et en adressant certaines lacunes de Backbone.
+Voici les fondamentaux de Marionette pour te mettre le pied à l&#8217;étrier.
 </p>
 <!-- more -->
 
-<p>Question 1 : Comment vais-je structurer les vues et les controlleurs imbriquées ?</p>
+<h2 id="pourquoi-marionette-">Pourquoi Marionette ?</h2>
 
-<p>Malheureusement il ne semble pas y avoir de bonne pratique dans ce domaine et cela semble bien dépendre des cas d’utilisation.</p>
+<p>Pourquoi utiliser Marionette ? Il est en effet tout à fait possible d’écrire ton application Backbone sans Marionette.
+Cependant je t’invite à regarder d’un peu plus près la distribution du code dans Backbone afin de voir là où il peut exister de potentielles lacunes.</p>
 
-<p>Question 2 : Comment vais-je tester les vues ?</p>
+<p>Distribution du code dans Backbone :</p>
 
-<p>Backbone ne vient pas avec des outils de tests, il vous faudra les fabriquer vous même. Pour les vues, c’est difficile; si difficile que de nombreuses personnes ne se fatiguent pas avec ça.</p>
+<ul>
+  <li>Données : <code>Model</code> (53% du code)</li>
+  <li>Présentation : <code>Views</code> (9% du code)</li>
+  <li>Architecture : le reste qui fait la jointure entre données et présentation (<code>Routes</code> etc…) (38% du code).</li>
+</ul>
 
-<p>Question 3 : Pourquoi mon application a t-elle des fuites de mémoires ?</p>
+<p>A la vue de ces données, tu remarqueras que seulement 9% du code de Backbone est dédiée à la gestion des Views. C’est peu, mais caractéristique de Backbone.</p>
 
-<p>Dans les Single-Page-Webapp , les objets peuvent demeurer en mémoire un bon moment, plutôt que d’être recréer quand la page est rafraichie. C’est très utile mais vous devez vous assurez que ces objets sont bien utilisez et ne consomme pas inutilement de la mémoire.</p>
+<p>Je t’invite maintenant à regarder la distribution du code dans Marionette.</p>
 
-<p>Question 4 : Pourquoi est-ce que le rendu de mon application est si lent ?</p>
+<ul>
+  <li>Data : <code>Model</code> (0% du code)</li>
+  <li>Présentation : <code>Views</code> (67% du code)</li>
+  <li>Architecture : le reste (33% du code)</li>
+</ul>
 
-<p>Avec Backbone, il est vraiment facile de faire de petites mise à jour du DOM pour chaque interaction de l’utilisateur. Dès que vous traitez un large ensemble de données, l’expérience utilisateur est altérée.</p>
+<p>Tu remarques que 67% du code de Marionette est dédiée à la presentation. Ainsi, Marionette a pour principale objectif de combler le manque de gestion des Vues dans Backbone.</p>
+
+<h2 id="problme-avec-les-views-dans-backbone">Problème avec les Views dans Backbone</h2>
+
+<p>Les problèmes concernant les Views les plus fréquents sont souvent les suivants :</p>
+
+<ul>
+  <li>la gestion des vues imbriquées</li>
+  <li>la collection de vues</li>
+  <li>les évènements des vues</li>
+</ul>
+
+<p>Que propose donc Marionette ?</p>
+
+<h2 id="marionette-render">Marionette Render</h2>
+
+<p>Marionette vient avec une nouvelle implémentation de <code>Render</code>.
+Voici les différentes fonctionnalités du <code>Render</code> de Marionette.</p>
+
+<ol>
+  <li>
+    <p>Marionette Render sérialise model et collection (transforme en JSON)</p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre>person.get(<span class="string"><span class="delimiter">'</span><span class="content">prenom</span><span class="delimiter">'</span></span>);
+<span class="comment">// &gt;&gt; 'Grégory'</span>
+
+view.serializeData(person)
+<span class="comment">// {</span>
+<span class="comment">//     prenom: 'Grégory'</span>
+<span class="comment">//     nom: 'PELLETEY'</span>
+<span class="comment">// }</span>
+</pre></div>
+</div>
+    </div>
+  </li>
+  <li>
+    <p>Marionette Render te permet d’ajouter des datas à la vue avec le méthode <code>templateHelpers</code>. Comment ça marche :</p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre>MyView.prototype.<span class="function">templateHelpers</span> : <span class="keyword">function</span>(){
+    <span class="keyword">return</span> : <span class="local-variable">this</span>.model.get(<span class="string"><span class="delimiter">'</span><span class="content">prenom</span><span class="delimiter">'</span></span>) + 
+             <span class="local-variable">this</span>.model.get(<span class="string"><span class="delimiter">'</span><span class="content">nom</span><span class="delimiter">'</span></span>)
+}
+<span class="comment">// {</span>
+<span class="comment">//    prenom : 'Grégory'</span>
+<span class="comment">//    nom : 'PELLETEY'</span>
+<span class="comment">// }  </span>
+</pre></div>
+</div>
+    </div>
+  </li>
+  <li>
+    <p>Compile le template si besoin</p>
+  </li>
+  <li>
+    <p>Render le template</p>
+  </li>
+  <li>
+    <p>Place le HTML dans l’élèment de la Vue.</p>
+  </li>
+  <li>
+    <p>Retourne une instance de la Vue.</p>
+  </li>
+</ol>
+
+<h2 id="marionette-events">Marionette Events</h2>
+
+<p>Une pattern courante dans Backbone est un Vue qui veut écouter les évènements qui lui sont attachés.
+A chaque fois que je <code>render</code> la Vue <code>MyView</code>, un appel à la méthode <code>onRender</code> est fait.</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> MyView = Backbone.View.extend({
+    <span class="function">initialize</span>: <span class="keyword">function</span>() {
+        <span class="local-variable">this</span>.on(<span class="string"><span class="delimiter">'</span><span class="content">render</span><span class="delimiter">'</span></span>, <span class="local-variable">this</span>.onRender, <span class="local-variable">this</span>); 
+    },
+    <span class="function">onRender</span>: <span class="keyword">function</span>() {
+        console.log(<span class="string"><span class="delimiter">'</span><span class="content">rendered!!</span><span class="delimiter">'</span></span>);
+    }
+});
+
+<span class="comment">// j'appele la méthode render de la vue myView, le callback est déclenché</span>
+myView.trigger(<span class="string"><span class="delimiter">'</span><span class="content">render</span><span class="delimiter">'</span></span>); 
+</pre></div>
+</div>
+</div>
+
+<p>Avec Marionette, tu n’as plus à enregistrer l’évènement :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> MyView = Backbone.View.extend({
+    <span class="function">onRender</span>: <span class="keyword">function</span>() {
+        console.log(<span class="string"><span class="delimiter">'</span><span class="content">rendered!!</span><span class="delimiter">'</span></span>);
+    }
+});
+
+<span class="comment">// j'appele la méthode render de la vue myView</span>
+<span class="comment">// et aussi le callback qui y est attaché</span>
+myView.triggerMethod(<span class="string"><span class="delimiter">'</span><span class="content">render</span><span class="delimiter">'</span></span>); 
+</pre></div>
+</div>
+</div>
+
+<h2 id="marionette-region">Marionette Region</h2>
+
+<p>Une Region est un conteneur persistent pour un ensemble de child views. Ca te permet d’organiser ton code.</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> RootView = Mn.LayoutView.extend({
+    <span class="key">el</span>: <span class="string"><span class="delimiter">'</span><span class="content">body</span><span class="delimiter">'</span></span>,
+
+    <span class="key">regions</span>: {
+        <span class="key">sidebar</span> : <span class="string"><span class="delimiter">'</span><span class="content">.sidebar</span><span class="delimiter">'</span></span>,
+        <span class="key">main</span> : <span class="string"><span class="delimiter">'</span><span class="content">main</span><span class="delimiter">'</span></span>,
+        <span class="key">footer</span> : <span class="string"><span class="delimiter">'</span><span class="content">footer</span><span class="delimiter">'</span></span>
+    }
+});
+
+<span class="comment">// afficher une vie dans une partie de la Region</span>
+rootView.getRegion(<span class="string"><span class="delimiter">'</span><span class="content">main</span><span class="delimiter">'</span></span>).show(<span class="keyword">new</span> MainView()); 
+</pre></div>
+</div>
+</div>
+
+<p>Cas des Vues imbriquées</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre>rootView.getRegion(<span class="string"><span class="delimiter">'</span><span class="content">main</span><span class="delimiter">'</span></span>).show(<span class="keyword">new</span> MainView());
+
+<span class="keyword">var</span> MainView = Mn.LayoutView.extend({
+    <span class="key">template</span>: mainViewTemplate,
+
+    <span class="key">regions</span>: {
+        <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">.title</span><span class="delimiter">'</span></span>
+    },
+
+    <span class="comment">// methode éxécutée avant que la Vue Main soit affichée</span>
+    <span class="function">onBeforeShow</span>: <span class="keyword">function</span>() {
+        <span class="local-variable">this</span>.getRegion(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>).show(<span class="keyword">new</span> TitleView());
+    }
+});
+</pre></div>
+</div>
+</div>
+
+<h2 id="marionette-collectionview">Marionette CollectionView</h2>
+
+<p>CollectionView fourni un système de liaison de donnée dans un sens (1-way data binding) entre la collection et les vues.</p>
+
+<p>En Backbone, les collections permettent de faire plusieurs choses :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> users = <span class="keyword">new</span> UsersCollection(); <span class="comment">// créer une collection</span>
+
+users.length; <span class="comment">// connaître la taille d'une collection</span>
+
+<span class="comment">// extraire un model d'une collection</span>
+<span class="keyword">var</span> james = users.findWhere({ 
+    <span class="key">firstname</span>: <span class="string"><span class="delimiter">'</span><span class="content">james</span><span class="delimiter">'</span></span>
+});
+</pre></div>
+</div>
+</div>
+
+<p>Avec Marionette</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> UsersList = Mn.CollectionView.extend({
+    <span class="key">collection</span>: users,
+    <span class="key">childView</span>: UserView <span class="comment">// le type de vue que tu veux instancier pour chaque model de la vue !!</span>
+});
+
+<span class="comment">// j'affiche dans une Region ma Collection</span>
+myRegion.show(<span class="keyword">new</span> UsersList()); 
+
+<span class="comment">// puisque c'est 1-way-binding</span>
+<span class="comment">// la vue va se mettre à jour automatiquement dans le navigateur</span>
+users.remove(james); 
+</pre></div>
+</div>
+</div>
+
+<h2 id="rsum-sur-les-views">Résumé sur les Views</h2>
+
+<p>Au niveau des Views dans Backbone+Marionette, il y a des bonnes choses et aussi des moins bonnes.</p>
+
+<p>Quelques bonnes choses sont :</p>
+
+<ul>
+  <li>Tu ne te préoccupe pas du cablage des données;</li>
+  <li>Tu ne te préoccupe pas de quand est-ce que tu dois afficher ta View.</li>
+</ul>
+
+<p>D’autres choses sont moins top :</p>
+
+<ul>
+  <li>Maintenant il y 4 classes de View avec Marionette (Views, CollectionViews, LayoutViews etc..)</li>
+</ul>
+
+<h2 id="architecture">Architecture</h2>
+
+<p>Marionette.Object est une classe de base. Par exemple si tu veux créer un objet qui n’est pas une View ni une Collection ni quoi que ce soit de prédéfini dans Backbone, tu peux l’utiliser car il s’intégrera mieux dans le framework (plusieurs objet Marionette proviennent de Marionette.Object)</p>
+
+<p>Backbone.Radio propose un système d’évènement plus robuste.</p>
+
+<h2 id="marionette-routers">Marionette Routers</h2>
+
+<h3 id="problme-avec-le-router">Problème avec le Router</h3>
+
+<p>La philosophie de Backbone est que c’est le routage qui contrôle le flow de l’application. Une URI représente une action utilisateur.
+Un click sur un bouton ou un lien doit avec son équivalence dans l’URL.
+Ainsi cet exemple pose un “problème” car on est obligé de déclencher l’évènement au moment de la navigation :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> router = <span class="keyword">new</span> Backbone.Router({
+    <span class="key">routes</span> : {
+        <span class="key"><span class="delimiter">'</span><span class="content">book/:id</span><span class="delimiter">'</span></span>: <span class="keyword">function</span>() {
+            <span class="comment">// faire des trucs</span>
+        },
+        <span class="key"><span class="delimiter">'</span><span class="content">book/:bookId/chapter/:chapterId</span><span class="delimiter">'</span></span>: <span class="keyword">function</span>() {
+            <span class="comment">// faire d'autres trucs</span>
+        }
+    }
+});
+
+router.navigate(<span class="string"><span class="delimiter">'</span><span class="content">book/3</span><span class="delimiter">'</span></span>); <span class="comment">// par défaut le callback spécifié dans le Router n'est pas exécuté</span>
+router.navigate(<span class="string"><span class="delimiter">'</span><span class="content">book/3</span><span class="delimiter">'</span></span>, {<span class="key">trigger</span>: <span class="predefined-constant">true</span>}); <span class="comment">// déclenche le callback</span>
+</pre></div>
+</div>
+</div>
+
+<h3 id="state-router">State Router</h3>
+
+<p>Toutes les choses suivantes sont faisaible en Backbone mais ne sont pas parfaites.</p>
+
+<ul>
+  <li>authentification / autorisation</li>
+  <li>before / after callbacks</li>
+  <li>redirections</li>
+  <li>annulation</li>
+  <li>routers imbriquées</li>
+  <li>page 404</li>
+</ul>
+
+<p>Quelques solutions proposées par Marionette :</p>
+
+<ul>
+  <li>un objet peut être associé à une Route</li>
+  <li>un objet possède deux rôle principales :
+    1.  Récupérer les données
+    2.  Montrer les Vues</li>
+  <li>faciliter l’ajout de nouvelles actions à l’objet</li>
+  <li>une action est exécutée à chaque changement d’URI</li>
+</ul>
+
+<p>Cette ensemble est nommé le State Router.</p>
+
+<h3 id="base-router">Base Router</h3>
+
+<p>Que faire si le State Router ne te convient pas ?</p>
+
+<p>Marionette propose un Base Router. De base, Backbone fait des choix sur la manière de gérer les URIs. Par exemple, pour une Route donnée, une seule méthode va être appelée. Backbone Router analyse aussi les paramètres de la requête HTTP.</p>
+
+<p>Le Base Router de Marionette s’affranchi des ces choix là.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Pourquoi s’intéresser à Marionette ?
+Marionette est en actif développement et possède une vision pour l’avenir. L’équipe principale est assez conséquente ainsi que la communauté. Marionette te facilite le développement Backbone ajoutant des fonctionnalités utiles pour structurer le code, surtout au niveau des Views.</p>
+
+<p class="disclaimer">
+    Article écrit à partir de la vidéo <a href="https://www.youtube.com/watch?v=EvQnntaqVdE">Marionette - The Backbone Framework</a>.<br />
+    Une application Backbone + Marionette est disponible sur mon <a href="https://ptitgraig.github.com/first-steps-backbone-Marionette">GitHub</a> pour référence, qui utilise les principes fondamentaux présentés dans cet article.
+</p>
 ]]>
 		</content>
 	</entry>
@@ -1163,7 +2144,7 @@ Mais avant toutes ces choses, puisque nos contemporains sont méfiants à l’é
 					<p></p>
 				
 			]]>
-			<![CDATA[<p>Le mot Trinité, utilisé pour la première fois par Tertullien au IIème siècle, n’est pas employé dans la Bible. Tout d’abord présenté par Théophile d’Antioche sous le grec Triade (1), son enseignement est pourtant bien présent, en filigrane, tout au long des Ecritures. La 
+			<![CDATA[<p>Le mot Trinité, utilisé pour la première fois par Tertullien au IIème siècle, n’est pas employé dans la Bible. Tout d’abord présenté par Théophile d’Antioche sous le grec Triade, son enseignement est pourtant bien présent, en filigrane, tout au long des Ecritures. La 
 doctrine de la Trinité peut se définir en 3 points fondamentaux inséparables.
 <!-- more -->
 Il n’y a qu’un seul Dieu. Le Père est Dieu, le Fils est Dieu et le Saint-Esprit est Dieu; en Dieu il y a 3 Personnes distinctes et de même nature. La difficulté vient du fait qu’il faille articuler ces 3 vérités ensemble sans les simplifier, sous peine de concevoir une hérésie. Avant tout travail, il est important de rappeler que nous resterons modestes quant à la compréhension de cette réalité. En effet, qui peut comprendre pleinement la nature d’un Dieu transcendant qui se tient hors de l’espace et du temps ?
@@ -1208,12 +2189,6 @@ L’Ecriture, nous révèle, sans le dire de manière explicite que Dieu est uni
 			]]>
 			<![CDATA[<h2 id="introduction">Introduction</h2>
 
-<div><div class="CodeRay">
-  <div class="code"><pre>$ git clone git@github.com:imathis/octopress.git # fork octopress
-</pre></div>
-</div>
-</div>
-
 <p>Octopress est un moteur de blog statique. Qui dit statique, dit plusieurs avantages :</p>
 
 <ol>
@@ -1223,99 +2198,150 @@ L’Ecriture, nous révèle, sans le dire de manière explicite que Dieu est uni
   <li>Du coup c’est super rapide !!</li>
 </ol>
 
-<p>Si vous êtes débutant, cette page est pour vous. Dans 15 étapes, vous aurez votre blog statique prêt à l’emploi.</p>
+<p>Tu ne connais pas Ruby, XCode mais tu aimerais bien avoir un blog sympa et rapide. 
+Tu as trouvé Octopress après des recherches sur le net et tu t’es dit que tu voulais essayer. Cependant voilà, tu comprends pas bien l’anglais et quand tu suis les étapes sur le site officiel tu remarques qu’il manque plein de trucs sur ton Mac. Cette article est pour toi.
+Dans 15 étapes, tu auras ton blog statique prêt à l’emploi pour pas un rond.</p>
 
-<h2 id="installation-doctopress-sous-mac-osx-lion">Installation d’Octopress sous Mac OSX Lion</h2>
+<h2 id="installation-des-outils">Installation des outils</h2>
 
 <ol>
   <li>
-    <p>Ouvrir le terminal, puis saisir Terminal : Ctrl+espace, puis Terminal dans l’invite de recherche.</p>
+    <p>Ouvrir le terminal
+Ctrl+espace, puis “Terminal” dans l’invite de recherche.</p>
   </li>
   <li>
-    <p>Installer Xcode. Dans l’appStore, chercher xcode. Cliquer sur le bouton “gratuit” (oui c’est gratuit :).</p>
+    <p>Installer Xcode.
+Dans l’appStore, chercher xcode. Cliquer sur le bouton “gratuit” (oui c’est gratuit :).</p>
   </li>
   <li>
-    <p>Une fois installé, lancer Xcode</p>
+    <p>Installer l’outil ligne de commande Xcode
+Dans le menu de Xcode, <code>Xcode &gt; Préférences &gt; Downloads</code>, puis cliquer sur le bouton <code>install</code> en face de la ligne <code>Command Line Tool</code></p>
   </li>
   <li>
-    <p>Dans le menu, Xcode &gt; Préférences &gt; Downloads, puis cliquer sur le bouton “install” en face de la ligne “Command Line Tool”</p>
-  </li>
-  <li>
-    <p>Installer RVM. Dans le Terminal, lancer la commande suivante :</p>
-  </li>
-</ol>
+    <p>Installer RVM.
+Dans le Terminal, lancer la commande suivante :</p>
 
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>curl -L https://get.rvm.io | bash -s stable --ruby
 </pre></div>
 </div>
-</div>
+    </div>
 
-<ol>
-  <li>
-    <p>Suivre les instructions proposées</p>
+    <p>Puis suivre les instructions proposées</p>
   </li>
   <li>
-    <p>Installer Ruby 1.9.3</p>
-  </li>
-</ol>
+    <p>Installer Ruby 1.9.3
+Dans le terminal, lancer les commandes suivantes :</p>
 
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>rvm install 1.9.3
 rvm use 1.9.3
 rvm rubygems latest
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+  <li>
+    <p>Vérifier la version de Ruby</p>
 
-<ol>
-  <li>Dans le terminal, verifier que 1.9.3 est bien la dernière version, saisissez</li>
-</ol>
-
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>ruby --version
 </pre></div>
 </div>
-</div>
+    </div>
 
-<ol>
-  <li>Installer Octopress, dans le Terminal, saisissez les lignes suivantes dans le Terminal:</li>
+    <p>Le résultat doit contenir <code>ruby 1.9.3</code></p>
+  </li>
 </ol>
 
-<div><div class="CodeRay">
+<h2 id="installation-doctopress">Installation d’Octopress</h2>
+
+<ol>
+  <li>
+    <p>Se placer dans ton dossier de travail.</p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre>cd /chemin/vers/votre/dossier/de/travail
+</pre></div>
+</div>
+    </div>
+
+    <p>Personnellement je l’ai placé avec tous mes autres projets dans le dossier <code>/Applications/MAMP/htdocs</code></p>
+  </li>
+  <li>
+    <p>Récupérer Octopress</p>
+
+    <div><div class="CodeRay">
   <div class="code"><pre>git clone git://github.com/imathis/octopress.git octopress
 cd octopress    # Vous utilisez RVM, On vous demandera de faire confiance au fichier .rvmrc (dites oui en tappant y).
 ruby --version  # Ruby 1.9.3 devrait s'afficher
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+  <li>
+    <p>Installer les dépendances</p>
 
-<ol>
-  <li>Installer les dépendances: saisir les commandes suivantes dans le Terminal</li>
-</ol>
+    <p>Saisir les commandes suivantes dans le Terminal</p>
 
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>gem install bundler
-rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
+rbenv rehash    # Si tu utilies rbenv, rehash afin de pouvoir exécuter la commande bundle
 bundle install
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+  <li>
+    <p>Installer le thème d’Octopress par défaut</p>
 
-<ol>
-  <li>Installer le thème d’Octopress par défaut</li>
-</ol>
-
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>rake install
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+</ol>
+
+<h2 id="deployer-octopress-sur-internet-gratuitement">Deployer Octopress sur Internet gratuitement</h2>
 
 <ol>
-  <li>Installer Octopress avec les pages utilisateurs GitHub.<br />
-Se rendre sur <a href="http://www.github.com/">le site de GitHub</a> et créer un compte gratuitement. </li>
+  <li>
+    <p>Créer un compte GitHub
+Se rendre sur <a href="http://www.github.com/">le site de GitHub</a> et créer un compte gratuitement.</p>
+  </li>
+  <li>
+    <p>Créer un nouveau repository sur GitHub.
+Sur GitHub, se rendre sur l’onglet <code>Repositories</code> et cliquer sur le bouton vert <code>new</code>.
+Le nom que tu dois saisir doit être de la forme : <code>nom_du_blog.github.io</code>.</p>
+  </li>
+  <li>
+    <p>Dire à Octopress de que tu veux mettre ton blog sur les pages GitHub</p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre>rake setup_github_pages
+</pre></div>
+</div>
+    </div>
+
+    <p>On te demandera de saisir un truc. Copie-colle <code>git@github.com:ton_pseudo_github/nom_du_blog.github.io.git</code>.</p>
+  </li>
+  <li>
+    <p>Génère ton blog et publie-le ! Enfin.</p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre>rake generate
+rake deploy
+</pre></div>
+</div>
+    </div>
+  </li>
 </ol>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Ca y est ! Tu as ton blog maintenant disponible sur Internet et ça t’a pas coûté un kopeck. La vie est belle n’est-ce pas ?
+Tu peux aller maintenant sur <code>http://nom_du_blog.github.io</code> et admirer ton beau travail.</p>
 
 ]]>
 		</content>
