@@ -1,0 +1,399 @@
+
+<!doctype html>
+<!-- START OF _layouts/default.html test -->
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" >
+		<meta content="width=device-width,initial-scale=1" name="viewport">
+		<meta content="" name="description">
+		<meta content="Gorille Gris" name="author">
+		
+		<title>Les fondamentaux de Marionette &mdash; Gorille Gris</title>
+		
+		<!-- Styles -->
+		<link href="/stylesheets/main.css" rel="stylesheet">
+		<!-- Google web fonts -->
+		<link href='http://fonts.googleapis.com/css?family=Lobster|Goudy+Bookletter+1911|Oswald:700' rel='stylesheet' type='text/css'>
+		<!-- <link href="/stylesheets/prettify-hemisu.css" type="text/css" rel="stylesheet" /> -->
+		
+		<!--<link href="http://feeds.feedburner.com/turkeltaub" rel="alternate" title="Gorille Gris" type="application/rss+xml" />-->
+		
+	</head>
+	<body onload="prettyPrint()">
+	
+		<div class="wrap">
+	
+			<header>
+				<div class="title"><a href="">Gorille Gris</a></div>
+				<div class="navi">
+					<ul>
+						<li><a href="/blog/categories/dev">Dév</a></li>
+						<li><a href="/blog/categories/theologie">Théologie</a></li>
+						<li><a href="/blog/categories/lectures">Lectures</a></li>
+						<li><a href="/a-propos.html">&Agrave; propos</a></li>
+					<ul>
+				</div> <!-- // .navi -->
+			</header>
+		
+				<!-- START OF _layouts/post.html -->
+
+
+  
+  	<header>
+  		<h1>Les fondamentaux de Marionette</h1>
+  
+	<time>30 January 2014</time>
+  </header>
+
+
+<div class="entry-content"><p class="foreword">
+Tu as choisi de développer ta dernière super application web avec Backbone. 
+Marionette.js simplifie ton application en te fournissant du code robuste et en adressant certaines lacunes de Backbone.
+Voici les fondamentaux de Marionette pour te mettre le pied à l&#8217;étrier.
+</p>
+<!-- more -->
+
+<h2 id="pourquoi-marionette-">Pourquoi Marionette ?</h2>
+
+<p>Pourquoi utiliser Marionette ? Il est en effet tout à fait possible d’écrire ton application Backbone sans Marionette.
+Cependant je t’invite à regarder d’un peu plus près la distribution du code dans Backbone afin de voir là où il peut exister de potentielles lacunes.</p>
+
+<p>Distribution du code dans Backbone :</p>
+
+<ul>
+  <li>Données : <code>Model</code> (53% du code)</li>
+  <li>Présentation : <code>Views</code> (9% du code)</li>
+  <li>Architecture : le reste qui fait la jointure entre données et présentation (<code>Routes</code> etc…) (38% du code).</li>
+</ul>
+
+<p>A la vue de ces données, tu remarqueras que seulement 9% du code de Backbone est dédiée à la gestion des Views. C’est peu, mais caractéristique de Backbone.</p>
+
+<p>Je t’invite maintenant à regarder la distribution du code dans Marionette.</p>
+
+<ul>
+  <li>Data : <code>Model</code> (0% du code)</li>
+  <li>Présentation : <code>Views</code> (67% du code)</li>
+  <li>Architecture : le reste (33% du code)</li>
+</ul>
+
+<p>Tu remarques que 67% du code de Marionette est dédiée à la presentation. Ainsi, Marionette a pour principale objectif de combler le manque de gestion des Vues dans Backbone.</p>
+
+<h2 id="problme-avec-les-views-dans-backbone">Problème avec les Views dans Backbone</h2>
+
+<p>Les problèmes concernant les Views les plus fréquents sont souvent les suivants :</p>
+
+<ul>
+  <li>la gestion des vues imbriquées</li>
+  <li>la collection de vues</li>
+  <li>les évènements des vues</li>
+</ul>
+
+<p>Que propose donc Marionette ?</p>
+
+<h2 id="marionette-render">Marionette Render</h2>
+
+<p>Marionette vient avec une nouvelle implémentation de <code>Render</code>.
+Voici les différentes fonctionnalités du <code>Render</code> de Marionette.</p>
+
+<ol>
+  <li>
+    <p>Marionette Render sérialise model et collection (transforme en JSON)</p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre>person.get(<span class="string"><span class="delimiter">'</span><span class="content">prenom</span><span class="delimiter">'</span></span>);
+<span class="comment">// &gt;&gt; 'Grégory'</span>
+
+view.serializeData(person)
+<span class="comment">// {</span>
+<span class="comment">//     prenom: 'Grégory'</span>
+<span class="comment">//     nom: 'PELLETEY'</span>
+<span class="comment">// }</span>
+</pre></div>
+</div>
+    </div>
+  </li>
+  <li>
+    <p>Marionette Render te permet d’ajouter des datas à la vue avec le méthode <code>templateHelpers</code>. Comment ça marche :</p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre>MyView.prototype.<span class="function">templateHelpers</span> : <span class="keyword">function</span>(){
+    <span class="keyword">return</span> : <span class="local-variable">this</span>.model.get(<span class="string"><span class="delimiter">'</span><span class="content">prenom</span><span class="delimiter">'</span></span>) + 
+             <span class="local-variable">this</span>.model.get(<span class="string"><span class="delimiter">'</span><span class="content">nom</span><span class="delimiter">'</span></span>)
+}
+<span class="comment">// {</span>
+<span class="comment">//    prenom : 'Grégory'</span>
+<span class="comment">//    nom : 'PELLETEY'</span>
+<span class="comment">// }  </span>
+</pre></div>
+</div>
+    </div>
+  </li>
+  <li>
+    <p>Compile le template si besoin</p>
+  </li>
+  <li>
+    <p>Render le template</p>
+  </li>
+  <li>
+    <p>Place le HTML dans l’élèment de la Vue.</p>
+  </li>
+  <li>
+    <p>Retourne une instance de la Vue.</p>
+  </li>
+</ol>
+
+<h2 id="marionette-events">Marionette Events</h2>
+
+<p>Une pattern courante dans Backbone est un Vue qui veut écouter les évènements qui lui sont attachés.
+A chaque fois que je <code>render</code> la Vue <code>MyView</code>, un appel à la méthode <code>onRender</code> est fait.</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> MyView = Backbone.View.extend({
+    <span class="function">initialize</span>: <span class="keyword">function</span>() {
+        <span class="local-variable">this</span>.on(<span class="string"><span class="delimiter">'</span><span class="content">render</span><span class="delimiter">'</span></span>, <span class="local-variable">this</span>.onRender, <span class="local-variable">this</span>); 
+    },
+    <span class="function">onRender</span>: <span class="keyword">function</span>() {
+        console.log(<span class="string"><span class="delimiter">'</span><span class="content">rendered!!</span><span class="delimiter">'</span></span>);
+    }
+});
+
+<span class="comment">// j'appele la méthode render de la vue myView, le callback est déclenché</span>
+myView.trigger(<span class="string"><span class="delimiter">'</span><span class="content">render</span><span class="delimiter">'</span></span>); 
+</pre></div>
+</div>
+</div>
+
+<p>Avec Marionette, tu n’as plus à enregistrer l’évènement :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> MyView = Backbone.View.extend({
+    <span class="function">onRender</span>: <span class="keyword">function</span>() {
+        console.log(<span class="string"><span class="delimiter">'</span><span class="content">rendered!!</span><span class="delimiter">'</span></span>);
+    }
+});
+
+<span class="comment">// j'appele la méthode render de la vue myView</span>
+<span class="comment">// et aussi le callback qui y est attaché</span>
+myView.triggerMethod(<span class="string"><span class="delimiter">'</span><span class="content">render</span><span class="delimiter">'</span></span>); 
+</pre></div>
+</div>
+</div>
+
+<h2 id="marionette-region">Marionette Region</h2>
+
+<p>Une Region est un conteneur persistent pour un ensemble de child views. Ca te permet d’organiser ton code.</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> RootView = Mn.LayoutView.extend({
+    <span class="key">el</span>: <span class="string"><span class="delimiter">'</span><span class="content">body</span><span class="delimiter">'</span></span>,
+
+    <span class="key">regions</span>: {
+        <span class="key">sidebar</span> : <span class="string"><span class="delimiter">'</span><span class="content">.sidebar</span><span class="delimiter">'</span></span>,
+        <span class="key">main</span> : <span class="string"><span class="delimiter">'</span><span class="content">main</span><span class="delimiter">'</span></span>,
+        <span class="key">footer</span> : <span class="string"><span class="delimiter">'</span><span class="content">footer</span><span class="delimiter">'</span></span>
+    }
+});
+
+<span class="comment">// afficher une vie dans une partie de la Region</span>
+rootView.getRegion(<span class="string"><span class="delimiter">'</span><span class="content">main</span><span class="delimiter">'</span></span>).show(<span class="keyword">new</span> MainView()); 
+</pre></div>
+</div>
+</div>
+
+<p>Cas des Vues imbriquées</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre>rootView.getRegion(<span class="string"><span class="delimiter">'</span><span class="content">main</span><span class="delimiter">'</span></span>).show(<span class="keyword">new</span> MainView());
+
+<span class="keyword">var</span> MainView = Mn.LayoutView.extend({
+    <span class="key">template</span>: mainViewTemplate,
+
+    <span class="key">regions</span>: {
+        <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">.title</span><span class="delimiter">'</span></span>
+    },
+
+    <span class="comment">// methode éxécutée avant que la Vue Main soit affichée</span>
+    <span class="function">onBeforeShow</span>: <span class="keyword">function</span>() {
+        <span class="local-variable">this</span>.getRegion(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>).show(<span class="keyword">new</span> TitleView());
+    }
+});
+</pre></div>
+</div>
+</div>
+
+<h2 id="marionette-collectionview">Marionette CollectionView</h2>
+
+<p>CollectionView fourni un système de liaison de donnée dans un sens (1-way data binding) entre la collection et les vues.</p>
+
+<p>En Backbone, les collections permettent de faire plusieurs choses :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> users = <span class="keyword">new</span> UsersCollection(); <span class="comment">// créer une collection</span>
+
+users.length; <span class="comment">// connaître la taille d'une collection</span>
+
+<span class="comment">// extraire un model d'une collection</span>
+<span class="keyword">var</span> james = users.findWhere({ 
+    <span class="key">firstname</span>: <span class="string"><span class="delimiter">'</span><span class="content">james</span><span class="delimiter">'</span></span>
+});
+</pre></div>
+</div>
+</div>
+
+<p>Avec Marionette</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> UsersList = Mn.CollectionView.extend({
+    <span class="key">collection</span>: users,
+    <span class="key">childView</span>: UserView <span class="comment">// le type de vue que tu veux instancier pour chaque model de la vue !!</span>
+});
+
+<span class="comment">// j'affiche dans une Region ma Collection</span>
+myRegion.show(<span class="keyword">new</span> UsersList()); 
+
+<span class="comment">// puisque c'est 1-way-binding</span>
+<span class="comment">// la vue va se mettre à jour automatiquement dans le navigateur</span>
+users.remove(james); 
+</pre></div>
+</div>
+</div>
+
+<h2 id="rsum-sur-les-views">Résumé sur les Views</h2>
+
+<p>Au niveau des Views dans Backbone+Marionette, il y a des bonnes choses et aussi des moins bonnes.</p>
+
+<p>Quelques bonnes choses sont :</p>
+
+<ul>
+  <li>Tu ne te préoccupe pas du cablage des données;</li>
+  <li>Tu ne te préoccupe pas de quand est-ce que tu dois afficher ta View.</li>
+</ul>
+
+<p>D’autres choses sont moins top :</p>
+
+<ul>
+  <li>Maintenant il y 4 classes de View avec Marionette (Views, CollectionViews, LayoutViews etc..)</li>
+</ul>
+
+<h2 id="architecture">Architecture</h2>
+
+<p>Marionette.Object est une classe de base. Par exemple si tu veux créer un objet qui n’est pas une View ni une Collection ni quoi que ce soit de prédéfini dans Backbone, tu peux l’utiliser car il s’intégrera mieux dans le framework (plusieurs objet Marionette proviennent de Marionette.Object)</p>
+
+<p>Backbone.Radio propose un système d’évènement plus robuste.</p>
+
+<h2 id="marionette-routers">Marionette Routers</h2>
+
+<h3 id="problme-avec-le-router">Problème avec le Router</h3>
+
+<p>La philosophie de Backbone est que c’est le routage qui contrôle le flow de l’application. Une URI représente une action utilisateur.
+Un click sur un bouton ou un lien doit avec son équivalence dans l’URL.
+Ainsi cet exemple pose un “problème” car on est obligé de déclencher l’évènement au moment de la navigation :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> router = <span class="keyword">new</span> Backbone.Router({
+    <span class="key">routes</span> : {
+        <span class="key"><span class="delimiter">'</span><span class="content">book/:id</span><span class="delimiter">'</span></span>: <span class="keyword">function</span>() {
+            <span class="comment">// faire des trucs</span>
+        },
+        <span class="key"><span class="delimiter">'</span><span class="content">book/:bookId/chapter/:chapterId</span><span class="delimiter">'</span></span>: <span class="keyword">function</span>() {
+            <span class="comment">// faire d'autres trucs</span>
+        }
+    }
+});
+
+router.navigate(<span class="string"><span class="delimiter">'</span><span class="content">book/3</span><span class="delimiter">'</span></span>); <span class="comment">// par défaut le callback spécifié dans le Router n'est pas exécuté</span>
+router.navigate(<span class="string"><span class="delimiter">'</span><span class="content">book/3</span><span class="delimiter">'</span></span>, {<span class="key">trigger</span>: <span class="predefined-constant">true</span>}); <span class="comment">// déclenche le callback</span>
+</pre></div>
+</div>
+</div>
+
+<h3 id="state-router">State Router</h3>
+
+<p>Toutes les choses suivantes sont faisaible en Backbone mais ne sont pas parfaites.</p>
+
+<ul>
+  <li>authentification / autorisation</li>
+  <li>before / after callbacks</li>
+  <li>redirections</li>
+  <li>annulation</li>
+  <li>routers imbriquées</li>
+  <li>page 404</li>
+</ul>
+
+<p>Quelques solutions proposées par Marionette :</p>
+
+<ul>
+  <li>un objet peut être associé à une Route</li>
+  <li>un objet possède deux rôle principales :
+    1.  Récupérer les données
+    2.  Montrer les Vues</li>
+  <li>faciliter l’ajout de nouvelles actions à l’objet</li>
+  <li>une action est exécutée à chaque changement d’URI</li>
+</ul>
+
+<p>Cette ensemble est nommé le State Router.</p>
+
+<h3 id="base-router">Base Router</h3>
+
+<p>Que faire si le State Router ne te convient pas ?</p>
+
+<p>Marionette propose un Base Router. De base, Backbone fait des choix sur la manière de gérer les URIs. Par exemple, pour une Route donnée, une seule méthode va être appelée. Backbone Router analyse aussi les paramètres de la requête HTTP.</p>
+
+<p>Le Base Router de Marionette s’affranchi des ces choix là.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Pourquoi s’intéresser à Marionette ?
+Marionette est en actif développement et possède une vision pour l’avenir. L’équipe principale est assez conséquente ainsi que la communauté. Marionette te facilite le développement Backbone ajoutant des fonctionnalités utiles pour structurer le code, surtout au niveau des Views.</p>
+
+<p class="disclaimer">
+    Article écrit à partir de la vidéo <a href="https://www.youtube.com/watch?v=EvQnntaqVdE">Marionette - The Backbone Framework</a>.<br />
+    Une application Backbone + Marionette est disponible sur mon <a href="https://ptitgraig.github.com/first-steps-backbone-Marionette">GitHub</a> pour référence, qui utilise les principes fondamentaux présentés dans cet article.
+</p>
+</div>
+
+
+
+
+<!-- END OF _/layouts/post.html -->
+
+
+			<footer>
+				Copyright &copy; 2015
+
+	Grégory Pelletey
+
+
+			</footer>
+			
+		</div> <!-- // .wrap -->
+	</body>
+	<!-- jQuery and plugins -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  	<script>!window.jQuery && document.write(unescape('%3Cscript src="/js/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  	<script src="/js/octopress.js" type="text/javascript"></script>
+	<!--<script src="/js/jquery.zclip.min.js"></script>-->
+	<!-- Syntax highlighter 
+	<script type="text/javascript" src="/js/prettify.js"></script>
+	<script>
+		$(document).ready(function() {
+			// Prettify code
+			$('code').addClass('prettyprint');
+			$('pre code').addClass('linenums');
+			
+			// Copy to clipboard with button
+			$('pre:has(code)').prepend(function(){
+				return '<div class="clip-btn">copy to clipboard</div>';
+			});
+			$('.clip-btn').zclip({
+				path:'/js/ZeroClipboard.swf',
+				copy: $(this).next('code').text(),
+				afterCopy: function(){
+					$(this).replaceWith('<div class="clip-btn">copied!');
+					}
+			});
+		});
+	</script>-->
+</html>
+<!-- END OF _layouts/default.html -->

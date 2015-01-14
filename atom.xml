@@ -4,7 +4,7 @@
 	<title><![CDATA[Gorille Gris]]></title>
 	<link href="http://ptitgraig.github.io/atom.xml" rel="self"/>
 	<link href="http://ptitgraig.github.io/"/>
-	<updated>2015-01-13T18:05:25+01:00</updated>
+	<updated>2015-01-14T15:41:30+01:00</updated>
 	<id>http://ptitgraig.github.io/</id>
 	<author>
 		<name><![CDATA[Grégory Pelletey]]></name>
@@ -1225,7 +1225,7 @@ Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le c
 <ul>
   <li>C’est là ou se fait la validation des données.</li>
   <li>Sont persistés soit par du localStorage ou bien par synchronisation avec une base de données.</li>
-  <li>Plusieurs Views peuvent observer des changements sur un Model. Une View, en effet, regarde un Model et peut ainsi savoir quand un Model a changé et afficher les infos à jour du Model.</li>
+  <li>Plusieurs Views peuvent observer des changements sur un Model. Une View, en effet, regarde un Model et peut ainsi savoir quand un   Model a changé et afficher les infos à jour du Model.</li>
   <li>Un ensemble de Models est appelé une Collection. Dès qu’un Model dans cette Collection change, la View attachée à ce Model est notifiée.</li>
 </ul>
 
@@ -1247,17 +1247,17 @@ Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le c
   <li>Quand un utilisateur clique dans la View, c’est normalement le Controller qui s’occupe du traitement a effectuer, mais comme on l’a vu, il n’y a pas de Controller dans Backbone. Les évenements sont gérés dans la View grâce à un objet <code>event : {}</code></li>
 </ul>
 
-<h2 id="pense-bte-pour-le-model">pense-bête pour le Model</h2>
+<h2 id="pense-bte-pour-le-model">Pense-bête pour le Model</h2>
 
 <h3 id="mthodes-native--backbone">Méthodes native à Backbone</h3>
 
 <ul>
-  <li>set : pour changer ou initialiser un attribut du Model <code>myModel.set('toto', 'un valeur');</code></li>
-  <li>get : pour obtenir la valeur d’un attribut du Model <code>myModel.get('toto');</code></li>
-  <li>validate : permet de valider le model ex :</li>
-</ul>
+  <li><code>set</code> : pour changer ou initialiser un attribut du Model <code>myModel.set('toto', 'un valeur');</code></li>
+  <li><code>get</code> : pour obtenir la valeur d’un attribut du Model <code>myModel.get('toto');</code></li>
+  <li>
+    <p><code>validate</code> : permet de valider le model :</p>
 
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre><span class="function">validate</span>: <span class="keyword">function</span>(attributes){
     <span class="keyword">if</span>(attributes.title === <span class="predefined-constant">undefined</span>){
         <span class="keyword">return</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">Remember to set a title for your todo.</span><span class="delimiter">&quot;</span></span>;
@@ -1265,21 +1265,36 @@ Prenons un exemple. Parmi ces quelques déclarations, laquelle va remporter le c
 },
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+</ul>
 
-<h3 id="ecouter-si-le-modle-change-">ecouter si le modèle change :</h3>
+<h3 id="ecoute-sur-un-model">Ecoute sur un Model</h3>
 
-<div><div class="CodeRay">
+<ul>
+  <li>
+    <p>Ecouter si un Model change :</p>
+
+    <div><div class="CodeRay">
   <div class="code"><pre><span class="local-variable">this</span>.on(<span class="string"><span class="delimiter">'</span><span class="content">change</span><span class="delimiter">'</span></span>, <span class="keyword">function</span>(){ 
     <span class="comment">//faire quelquechose</span>
 });
 </pre></div>
 </div>
+    </div>
+  </li>
+  <li>
+    <p>Ecouter si l’attribut toto du model change   </p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre><span class="local-variable">this</span>.on(<span class="string"><span class="delimiter">'</span><span class="content">change:toto</span><span class="delimiter">'</span></span>)
+</pre></div>
 </div>
+    </div>
+  </li>
+</ul>
 
-<h3 id="ecouter-si-lattribut-toto-du-model-change--thisonchangetoto">ecouter si l’attribut toto du model change : <code>this.on('change:toto')</code></h3>
-
-<h2 id="pense-bte-pour-la-view">pense-bête pour la View</h2>
+<h2 id="pense-bte-pour-la-view">Pense-bête pour la View</h2>
 
 <p>La méthode <code>render()</code> de la View peut être liée à la méthode <code>change()</code> du Model. Ainsi dès qu’il y a un changement dans le Model, la View refléte immédiatement ces changements.</p>
 
@@ -1304,7 +1319,7 @@ view.el <span class="comment">// &lt;p&gt;&lt;a&gt;&lt;b&gt;test&lt;/b&gt;&lt;/a
   <li>Créer une liste d’éléments sans repeindre chacun individuellement, l’élément est déssiné une fois par le navigateur et la liste entière est remplie en données (sens peu claire)</li>
 </ul>
 
-<h2 id="pense-bte-collection">pense-bête Collection</h2>
+<h2 id="pense-bte-collection">Pense-bête Collection</h2>
 
 <h3 id="syntaxe">Syntaxe</h3>
 
@@ -1355,11 +1370,13 @@ myTodo.set(<span class="string"><span class="delimiter">'</span><span class="con
 </div>
 </div>
 
-<p>Va afficher : J’ai changer d’avis, je devrais aller nager</p>
+<p>Va afficher : <code>J'ai changer d'avis, je devrais aller nager</code></p>
 
-<p>On peut écouter si il y a du changement dans une collection (ajout suppression modification) :</p>
+<ul>
+  <li>
+    <p>Ecouter si il y a du changement dans une collection (ajout suppression modification) :</p>
 
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>TodosCollection.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">add</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>(model) {
   console.log(<span class="string"><span class="delimiter">&quot;</span><span class="content">Ajouté </span><span class="delimiter">&quot;</span></span> + model.get(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>));
 });
@@ -1377,35 +1394,55 @@ TodosCollection.set([
 ]);
 </pre></div>
 </div>
+    </div>
+  </li>
+  <li>
+    <p>Vider une Collection :</p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre>myCollection.reset()
+</pre></div>
 </div>
+    </div>
+  </li>
+  <li>
+    <p>Ecouter le vidage d’une Collection : </p>
 
-<p>Vider une Collection : <code>myCollection.reset()</code></p>
+    <div><div class="CodeRay">
+  <div class="code"><pre>myCollection.on(<span class="string"><span class="delimiter">&quot;</span><span class="content">reset</span><span class="delimiter">&quot;</span></span>, <span class="keyword">function</span>)
+</pre></div>
+</div>
+    </div>
+  </li>
+  <li>
+    <p>Attention : faire un <code>set()</code> d’une Collection peut provoquer des <code>remove()</code> ou <code>add()</code> en fonction de ce qui est setté</p>
+  </li>
+</ul>
 
-<p>Ecouter le vidage d’une Collection : myCollection.on(“reset”, function)</p>
+<h3 id="fonctionnalits-hrites-dunderscore">Fonctionnalités héritées d’Underscore</h3>
 
-<p>Faire un <code>set()</code> d’une Collection peut provoquer des <code>remove()</code> ou <code>add()</code> en fonction de ce qui est setté</p>
+<ul>
+  <li><code>forEach</code></li>
+  <li><code>sortBy</code></li>
+  <li><code>map</code></li>
+  <li>
+    <p><code>min/max</code> :</p>
 
-<p>Fonctionnalités hérité d’Underscore :
-- <code>forEach</code>
-- <code>sortBy</code>
-- <code>map</code>
-- <code>min/max</code> :</p>
-
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>Todos.max(<span class="keyword">function</span>(model){
   <span class="keyword">return</span> model.id;
 }).id;
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+  <li>
+    <p><code>pluck</code></p>
+  </li>
+  <li>
+    <p><code>chain</code> permet de chainer l’appel de fonction sur une Collection</p>
 
-<ul>
-  <li><code>pluck</code></li>
-</ul>
-
-<p><code>chain()</code> permet de chainer l’appel de fonction sur une Collection</p>
-
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre><span class="keyword">var</span> collection = <span class="keyword">new</span> Backbone.Collection([
   { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Tim</span><span class="delimiter">'</span></span>, <span class="key">age</span>: <span class="integer">5</span> },
   { <span class="key">name</span>: <span class="string"><span class="delimiter">'</span><span class="content">Ida</span><span class="delimiter">'</span></span>, <span class="key">age</span>: <span class="integer">26</span> },
@@ -1420,7 +1457,9 @@ TodosCollection.set([
 console.log(filteredNames); <span class="comment">// logs: ['Ida', 'Rob']</span>
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+</ul>
 
 <h2 id="persistence-restful">Persistence RESTful</h2>
 
@@ -1546,9 +1585,12 @@ ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><spa
 
 <h3 id="events-et-views">Events et Views</h3>
 
-<p>2 types d’événements peuvent être lié à une View :
-- événements DOM (via jQuery.on() this va faire référence à l’objet DOM)
-- événements déclenché via une API Event (via la propriété events{} this fait référence à la View)</p>
+<p>2 types d’événements peuvent être lié à une View :</p>
+
+<ul>
+  <li>événements DOM (via <code>jQuery.on()</code> this va faire référence à l’objet DOM)</li>
+  <li>événements déclenché via une API Event (via la propriété <code>events{}</code>,  <code>this</code> fait référence à la View)</li>
+</ul>
 
 <h2 id="routers">Routers</h2>
 
@@ -1574,11 +1616,11 @@ ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><spa
 	
 	<entry>
 		
-			<title type="html"><![CDATA[4 questions à se poser avant de commencer un projet Backbone]]></title>
+			<title type="html"><![CDATA[Les fondamentaux de Marionette]]></title>
 		
-		<link href="http://ptitgraig.github.io/blog/2014/01/30/4-questions-a-se-poser-avant-de-commencer-un-projet-backbone/"/>
+		<link href="http://ptitgraig.github.io/blog/2014/01/30/4-les-fondamentaux-de-marionette/"/>
 		<updated>2014-01-30T10:45:00+01:00</updated>
-		<id>http://ptitgraig.github.io/blog/2014/01/30/4-questions-a-se-poser-avant-de-commencer-un-projet-backbone</id>
+		<id>http://ptitgraig.github.io/blog/2014/01/30/4-les-fondamentaux-de-marionette</id>
 		<content type="html">
 			<![CDATA[
 				
@@ -1586,25 +1628,309 @@ ourObject.trigger(<span class="string"><span class="delimiter">&quot;</span><spa
 				
 			]]>
 			<![CDATA[<p class="foreword">
-Vous avez choisi de développer votre dernière super application web avec Backbone. Avant de vous lancer tête baissée dans le développement, réfléchissez à ces 4 questions afin de savoir si Backbone est ce qu&#8217;il vous faut.
+Tu as choisi de développer ta dernière super application web avec Backbone. 
+Marionette.js simplifie ton application en te fournissant du code robuste et en adressant certaines lacunes de Backbone.
+Voici les fondamentaux de Marionette pour te mettre le pied à l&#8217;étrier.
 </p>
 <!-- more -->
 
-<p>Question 1 : Comment vais-je structurer les vues et les controlleurs imbriquées ?</p>
+<h2 id="pourquoi-marionette-">Pourquoi Marionette ?</h2>
 
-<p>Malheureusement il ne semble pas y avoir de bonne pratique dans ce domaine et cela semble bien dépendre des cas d’utilisation.</p>
+<p>Pourquoi utiliser Marionette ? Il est en effet tout à fait possible d’écrire ton application Backbone sans Marionette.
+Cependant je t’invite à regarder d’un peu plus près la distribution du code dans Backbone afin de voir là où il peut exister de potentielles lacunes.</p>
 
-<p>Question 2 : Comment vais-je tester les vues ?</p>
+<p>Distribution du code dans Backbone :</p>
 
-<p>Backbone ne vient pas avec des outils de tests, il vous faudra les fabriquer vous même. Pour les vues, c’est difficile; si difficile que de nombreuses personnes ne se fatiguent pas avec ça.</p>
+<ul>
+  <li>Données : <code>Model</code> (53% du code)</li>
+  <li>Présentation : <code>Views</code> (9% du code)</li>
+  <li>Architecture : le reste qui fait la jointure entre données et présentation (<code>Routes</code> etc…) (38% du code).</li>
+</ul>
 
-<p>Question 3 : Pourquoi mon application a t-elle des fuites de mémoires ?</p>
+<p>A la vue de ces données, tu remarqueras que seulement 9% du code de Backbone est dédiée à la gestion des Views. C’est peu, mais caractéristique de Backbone.</p>
 
-<p>Dans les Single-Page-Webapp , les objets peuvent demeurer en mémoire un bon moment, plutôt que d’être recréer quand la page est rafraichie. C’est très utile mais vous devez vous assurez que ces objets sont bien utilisez et ne consomme pas inutilement de la mémoire.</p>
+<p>Je t’invite maintenant à regarder la distribution du code dans Marionette.</p>
 
-<p>Question 4 : Pourquoi est-ce que le rendu de mon application est si lent ?</p>
+<ul>
+  <li>Data : <code>Model</code> (0% du code)</li>
+  <li>Présentation : <code>Views</code> (67% du code)</li>
+  <li>Architecture : le reste (33% du code)</li>
+</ul>
 
-<p>Avec Backbone, il est vraiment facile de faire de petites mise à jour du DOM pour chaque interaction de l’utilisateur. Dès que vous traitez un large ensemble de données, l’expérience utilisateur est altérée.</p>
+<p>Tu remarques que 67% du code de Marionette est dédiée à la presentation. Ainsi, Marionette a pour principale objectif de combler le manque de gestion des Vues dans Backbone.</p>
+
+<h2 id="problme-avec-les-views-dans-backbone">Problème avec les Views dans Backbone</h2>
+
+<p>Les problèmes concernant les Views les plus fréquents sont souvent les suivants :</p>
+
+<ul>
+  <li>la gestion des vues imbriquées</li>
+  <li>la collection de vues</li>
+  <li>les évènements des vues</li>
+</ul>
+
+<p>Que propose donc Marionette ?</p>
+
+<h2 id="marionette-render">Marionette Render</h2>
+
+<p>Marionette vient avec une nouvelle implémentation de <code>Render</code>.
+Voici les différentes fonctionnalités du <code>Render</code> de Marionette.</p>
+
+<ol>
+  <li>
+    <p>Marionette Render sérialise model et collection (transforme en JSON)</p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre>person.get(<span class="string"><span class="delimiter">'</span><span class="content">prenom</span><span class="delimiter">'</span></span>);
+<span class="comment">// &gt;&gt; 'Grégory'</span>
+
+view.serializeData(person)
+<span class="comment">// {</span>
+<span class="comment">//     prenom: 'Grégory'</span>
+<span class="comment">//     nom: 'PELLETEY'</span>
+<span class="comment">// }</span>
+</pre></div>
+</div>
+    </div>
+  </li>
+  <li>
+    <p>Marionette Render te permet d’ajouter des datas à la vue avec le méthode <code>templateHelpers</code>. Comment ça marche :</p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre>MyView.prototype.<span class="function">templateHelpers</span> : <span class="keyword">function</span>(){
+    <span class="keyword">return</span> : <span class="local-variable">this</span>.model.get(<span class="string"><span class="delimiter">'</span><span class="content">prenom</span><span class="delimiter">'</span></span>) + 
+             <span class="local-variable">this</span>.model.get(<span class="string"><span class="delimiter">'</span><span class="content">nom</span><span class="delimiter">'</span></span>)
+}
+<span class="comment">// {</span>
+<span class="comment">//    prenom : 'Grégory'</span>
+<span class="comment">//    nom : 'PELLETEY'</span>
+<span class="comment">// }  </span>
+</pre></div>
+</div>
+    </div>
+  </li>
+  <li>
+    <p>Compile le template si besoin</p>
+  </li>
+  <li>
+    <p>Render le template</p>
+  </li>
+  <li>
+    <p>Place le HTML dans l’élèment de la Vue.</p>
+  </li>
+  <li>
+    <p>Retourne une instance de la Vue.</p>
+  </li>
+</ol>
+
+<h2 id="marionette-events">Marionette Events</h2>
+
+<p>Une pattern courante dans Backbone est un Vue qui veut écouter les évènements qui lui sont attachés.
+A chaque fois que je <code>render</code> la Vue <code>MyView</code>, un appel à la méthode <code>onRender</code> est fait.</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> MyView = Backbone.View.extend({
+    <span class="function">initialize</span>: <span class="keyword">function</span>() {
+        <span class="local-variable">this</span>.on(<span class="string"><span class="delimiter">'</span><span class="content">render</span><span class="delimiter">'</span></span>, <span class="local-variable">this</span>.onRender, <span class="local-variable">this</span>); 
+    },
+    <span class="function">onRender</span>: <span class="keyword">function</span>() {
+        console.log(<span class="string"><span class="delimiter">'</span><span class="content">rendered!!</span><span class="delimiter">'</span></span>);
+    }
+});
+
+<span class="comment">// j'appele la méthode render de la vue myView, le callback est déclenché</span>
+myView.trigger(<span class="string"><span class="delimiter">'</span><span class="content">render</span><span class="delimiter">'</span></span>); 
+</pre></div>
+</div>
+</div>
+
+<p>Avec Marionette, tu n’as plus à enregistrer l’évènement :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> MyView = Backbone.View.extend({
+    <span class="function">onRender</span>: <span class="keyword">function</span>() {
+        console.log(<span class="string"><span class="delimiter">'</span><span class="content">rendered!!</span><span class="delimiter">'</span></span>);
+    }
+});
+
+<span class="comment">// j'appele la méthode render de la vue myView</span>
+<span class="comment">// et aussi le callback qui y est attaché</span>
+myView.triggerMethod(<span class="string"><span class="delimiter">'</span><span class="content">render</span><span class="delimiter">'</span></span>); 
+</pre></div>
+</div>
+</div>
+
+<h2 id="marionette-region">Marionette Region</h2>
+
+<p>Une Region est un conteneur persistent pour un ensemble de child views. Ca te permet d’organiser ton code.</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> RootView = Mn.LayoutView.extend({
+    <span class="key">el</span>: <span class="string"><span class="delimiter">'</span><span class="content">body</span><span class="delimiter">'</span></span>,
+
+    <span class="key">regions</span>: {
+        <span class="key">sidebar</span> : <span class="string"><span class="delimiter">'</span><span class="content">.sidebar</span><span class="delimiter">'</span></span>,
+        <span class="key">main</span> : <span class="string"><span class="delimiter">'</span><span class="content">main</span><span class="delimiter">'</span></span>,
+        <span class="key">footer</span> : <span class="string"><span class="delimiter">'</span><span class="content">footer</span><span class="delimiter">'</span></span>
+    }
+});
+
+<span class="comment">// afficher une vie dans une partie de la Region</span>
+rootView.getRegion(<span class="string"><span class="delimiter">'</span><span class="content">main</span><span class="delimiter">'</span></span>).show(<span class="keyword">new</span> MainView()); 
+</pre></div>
+</div>
+</div>
+
+<p>Cas des Vues imbriquées</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre>rootView.getRegion(<span class="string"><span class="delimiter">'</span><span class="content">main</span><span class="delimiter">'</span></span>).show(<span class="keyword">new</span> MainView());
+
+<span class="keyword">var</span> MainView = Mn.LayoutView.extend({
+    <span class="key">template</span>: mainViewTemplate,
+
+    <span class="key">regions</span>: {
+        <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">.title</span><span class="delimiter">'</span></span>
+    },
+
+    <span class="comment">// methode éxécutée avant que la Vue Main soit affichée</span>
+    <span class="function">onBeforeShow</span>: <span class="keyword">function</span>() {
+        <span class="local-variable">this</span>.getRegion(<span class="string"><span class="delimiter">'</span><span class="content">title</span><span class="delimiter">'</span></span>).show(<span class="keyword">new</span> TitleView());
+    }
+});
+</pre></div>
+</div>
+</div>
+
+<h2 id="marionette-collectionview">Marionette CollectionView</h2>
+
+<p>CollectionView fourni un système de liaison de donnée dans un sens (1-way data binding) entre la collection et les vues.</p>
+
+<p>En Backbone, les collections permettent de faire plusieurs choses :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> users = <span class="keyword">new</span> UsersCollection(); <span class="comment">// créer une collection</span>
+
+users.length; <span class="comment">// connaître la taille d'une collection</span>
+
+<span class="comment">// extraire un model d'une collection</span>
+<span class="keyword">var</span> james = users.findWhere({ 
+    <span class="key">firstname</span>: <span class="string"><span class="delimiter">'</span><span class="content">james</span><span class="delimiter">'</span></span>
+});
+</pre></div>
+</div>
+</div>
+
+<p>Avec Marionette</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> UsersList = Mn.CollectionView.extend({
+    <span class="key">collection</span>: users,
+    <span class="key">childView</span>: UserView <span class="comment">// le type de vue que tu veux instancier pour chaque model de la vue !!</span>
+});
+
+<span class="comment">// j'affiche dans une Region ma Collection</span>
+myRegion.show(<span class="keyword">new</span> UsersList()); 
+
+<span class="comment">// puisque c'est 1-way-binding</span>
+<span class="comment">// la vue va se mettre à jour automatiquement dans le navigateur</span>
+users.remove(james); 
+</pre></div>
+</div>
+</div>
+
+<h2 id="rsum-sur-les-views">Résumé sur les Views</h2>
+
+<p>Au niveau des Views dans Backbone+Marionette, il y a des bonnes choses et aussi des moins bonnes.</p>
+
+<p>Quelques bonnes choses sont :</p>
+
+<ul>
+  <li>Tu ne te préoccupe pas du cablage des données;</li>
+  <li>Tu ne te préoccupe pas de quand est-ce que tu dois afficher ta View.</li>
+</ul>
+
+<p>D’autres choses sont moins top :</p>
+
+<ul>
+  <li>Maintenant il y 4 classes de View avec Marionette (Views, CollectionViews, LayoutViews etc..)</li>
+</ul>
+
+<h2 id="architecture">Architecture</h2>
+
+<p>Marionette.Object est une classe de base. Par exemple si tu veux créer un objet qui n’est pas une View ni une Collection ni quoi que ce soit de prédéfini dans Backbone, tu peux l’utiliser car il s’intégrera mieux dans le framework (plusieurs objet Marionette proviennent de Marionette.Object)</p>
+
+<p>Backbone.Radio propose un système d’évènement plus robuste.</p>
+
+<h2 id="marionette-routers">Marionette Routers</h2>
+
+<h3 id="problme-avec-le-router">Problème avec le Router</h3>
+
+<p>La philosophie de Backbone est que c’est le routage qui contrôle le flow de l’application. Une URI représente une action utilisateur.
+Un click sur un bouton ou un lien doit avec son équivalence dans l’URL.
+Ainsi cet exemple pose un “problème” car on est obligé de déclencher l’évènement au moment de la navigation :</p>
+
+<div><div class="CodeRay">
+  <div class="code"><pre><span class="keyword">var</span> router = <span class="keyword">new</span> Backbone.Router({
+    <span class="key">routes</span> : {
+        <span class="key"><span class="delimiter">'</span><span class="content">book/:id</span><span class="delimiter">'</span></span>: <span class="keyword">function</span>() {
+            <span class="comment">// faire des trucs</span>
+        },
+        <span class="key"><span class="delimiter">'</span><span class="content">book/:bookId/chapter/:chapterId</span><span class="delimiter">'</span></span>: <span class="keyword">function</span>() {
+            <span class="comment">// faire d'autres trucs</span>
+        }
+    }
+});
+
+router.navigate(<span class="string"><span class="delimiter">'</span><span class="content">book/3</span><span class="delimiter">'</span></span>); <span class="comment">// par défaut le callback spécifié dans le Router n'est pas exécuté</span>
+router.navigate(<span class="string"><span class="delimiter">'</span><span class="content">book/3</span><span class="delimiter">'</span></span>, {<span class="key">trigger</span>: <span class="predefined-constant">true</span>}); <span class="comment">// déclenche le callback</span>
+</pre></div>
+</div>
+</div>
+
+<h3 id="state-router">State Router</h3>
+
+<p>Toutes les choses suivantes sont faisaible en Backbone mais ne sont pas parfaites.</p>
+
+<ul>
+  <li>authentification / autorisation</li>
+  <li>before / after callbacks</li>
+  <li>redirections</li>
+  <li>annulation</li>
+  <li>routers imbriquées</li>
+  <li>page 404</li>
+</ul>
+
+<p>Quelques solutions proposées par Marionette :</p>
+
+<ul>
+  <li>un objet peut être associé à une Route</li>
+  <li>un objet possède deux rôle principales :
+    1.  Récupérer les données
+    2.  Montrer les Vues</li>
+  <li>faciliter l’ajout de nouvelles actions à l’objet</li>
+  <li>une action est exécutée à chaque changement d’URI</li>
+</ul>
+
+<p>Cette ensemble est nommé le State Router.</p>
+
+<h3 id="base-router">Base Router</h3>
+
+<p>Que faire si le State Router ne te convient pas ?</p>
+
+<p>Marionette propose un Base Router. De base, Backbone fait des choix sur la manière de gérer les URIs. Par exemple, pour une Route donnée, une seule méthode va être appelée. Backbone Router analyse aussi les paramètres de la requête HTTP.</p>
+
+<p>Le Base Router de Marionette s’affranchi des ces choix là.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Pourquoi s’intéresser à Marionette ?
+Marionette est en actif développement et possède une vision pour l’avenir. L’équipe principale est assez conséquente ainsi que la communauté. Marionette te facilite le développement Backbone ajoutant des fonctionnalités utiles pour structurer le code, surtout au niveau des Views.</p>
+
+<p class="disclaimer">
+    Article écrit à partir de la vidéo <a href="https://www.youtube.com/watch?v=EvQnntaqVdE">Marionette - The Backbone Framework</a>.<br />
+    Une application Backbone + Marionette est disponible sur mon <a href="https://ptitgraig.github.com/first-steps-backbone-Marionette">GitHub</a> pour référence, qui utilise les principes fondamentaux présentés dans cet article.
+</p>
 ]]>
 		</content>
 	</entry>
@@ -1818,7 +2144,7 @@ Mais avant toutes ces choses, puisque nos contemporains sont méfiants à l’é
 					<p></p>
 				
 			]]>
-			<![CDATA[<p>Le mot Trinité, utilisé pour la première fois par Tertullien au IIème siècle, n’est pas employé dans la Bible. Tout d’abord présenté par Théophile d’Antioche sous le grec Triade (1), son enseignement est pourtant bien présent, en filigrane, tout au long des Ecritures. La 
+			<![CDATA[<p>Le mot Trinité, utilisé pour la première fois par Tertullien au IIème siècle, n’est pas employé dans la Bible. Tout d’abord présenté par Théophile d’Antioche sous le grec Triade, son enseignement est pourtant bien présent, en filigrane, tout au long des Ecritures. La 
 doctrine de la Trinité peut se définir en 3 points fondamentaux inséparables.
 <!-- more -->
 Il n’y a qu’un seul Dieu. Le Père est Dieu, le Fils est Dieu et le Saint-Esprit est Dieu; en Dieu il y a 3 Personnes distinctes et de même nature. La difficulté vient du fait qu’il faille articuler ces 3 vérités ensemble sans les simplifier, sous peine de concevoir une hérésie. Avant tout travail, il est important de rappeler que nous resterons modestes quant à la compréhension de cette réalité. En effet, qui peut comprendre pleinement la nature d’un Dieu transcendant qui se tient hors de l’espace et du temps ?
@@ -1863,12 +2189,6 @@ L’Ecriture, nous révèle, sans le dire de manière explicite que Dieu est uni
 			]]>
 			<![CDATA[<h2 id="introduction">Introduction</h2>
 
-<div><div class="CodeRay">
-  <div class="code"><pre>$ git clone git@github.com:imathis/octopress.git # fork octopress
-</pre></div>
-</div>
-</div>
-
 <p>Octopress est un moteur de blog statique. Qui dit statique, dit plusieurs avantages :</p>
 
 <ol>
@@ -1878,99 +2198,150 @@ L’Ecriture, nous révèle, sans le dire de manière explicite que Dieu est uni
   <li>Du coup c’est super rapide !!</li>
 </ol>
 
-<p>Si vous êtes débutant, cette page est pour vous. Dans 15 étapes, vous aurez votre blog statique prêt à l’emploi.</p>
+<p>Tu ne connais pas Ruby, XCode mais tu aimerais bien avoir un blog sympa et rapide. 
+Tu as trouvé Octopress après des recherches sur le net et tu t’es dit que tu voulais essayer. Cependant voilà, tu comprends pas bien l’anglais et quand tu suis les étapes sur le site officiel tu remarques qu’il manque plein de trucs sur ton Mac. Cette article est pour toi.
+Dans 15 étapes, tu auras ton blog statique prêt à l’emploi pour pas un rond.</p>
 
-<h2 id="installation-doctopress-sous-mac-osx-lion">Installation d’Octopress sous Mac OSX Lion</h2>
+<h2 id="installation-des-outils">Installation des outils</h2>
 
 <ol>
   <li>
-    <p>Ouvrir le terminal, puis saisir Terminal : Ctrl+espace, puis Terminal dans l’invite de recherche.</p>
+    <p>Ouvrir le terminal
+Ctrl+espace, puis “Terminal” dans l’invite de recherche.</p>
   </li>
   <li>
-    <p>Installer Xcode. Dans l’appStore, chercher xcode. Cliquer sur le bouton “gratuit” (oui c’est gratuit :).</p>
+    <p>Installer Xcode.
+Dans l’appStore, chercher xcode. Cliquer sur le bouton “gratuit” (oui c’est gratuit :).</p>
   </li>
   <li>
-    <p>Une fois installé, lancer Xcode</p>
+    <p>Installer l’outil ligne de commande Xcode
+Dans le menu de Xcode, <code>Xcode &gt; Préférences &gt; Downloads</code>, puis cliquer sur le bouton <code>install</code> en face de la ligne <code>Command Line Tool</code></p>
   </li>
   <li>
-    <p>Dans le menu, Xcode &gt; Préférences &gt; Downloads, puis cliquer sur le bouton “install” en face de la ligne “Command Line Tool”</p>
-  </li>
-  <li>
-    <p>Installer RVM. Dans le Terminal, lancer la commande suivante :</p>
-  </li>
-</ol>
+    <p>Installer RVM.
+Dans le Terminal, lancer la commande suivante :</p>
 
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>curl -L https://get.rvm.io | bash -s stable --ruby
 </pre></div>
 </div>
-</div>
+    </div>
 
-<ol>
-  <li>
-    <p>Suivre les instructions proposées</p>
+    <p>Puis suivre les instructions proposées</p>
   </li>
   <li>
-    <p>Installer Ruby 1.9.3</p>
-  </li>
-</ol>
+    <p>Installer Ruby 1.9.3
+Dans le terminal, lancer les commandes suivantes :</p>
 
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>rvm install 1.9.3
 rvm use 1.9.3
 rvm rubygems latest
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+  <li>
+    <p>Vérifier la version de Ruby</p>
 
-<ol>
-  <li>Dans le terminal, verifier que 1.9.3 est bien la dernière version, saisissez</li>
-</ol>
-
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>ruby --version
 </pre></div>
 </div>
-</div>
+    </div>
 
-<ol>
-  <li>Installer Octopress, dans le Terminal, saisissez les lignes suivantes dans le Terminal:</li>
+    <p>Le résultat doit contenir <code>ruby 1.9.3</code></p>
+  </li>
 </ol>
 
-<div><div class="CodeRay">
+<h2 id="installation-doctopress">Installation d’Octopress</h2>
+
+<ol>
+  <li>
+    <p>Se placer dans ton dossier de travail.</p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre>cd /chemin/vers/votre/dossier/de/travail
+</pre></div>
+</div>
+    </div>
+
+    <p>Personnellement je l’ai placé avec tous mes autres projets dans le dossier <code>/Applications/MAMP/htdocs</code></p>
+  </li>
+  <li>
+    <p>Récupérer Octopress</p>
+
+    <div><div class="CodeRay">
   <div class="code"><pre>git clone git://github.com/imathis/octopress.git octopress
 cd octopress    # Vous utilisez RVM, On vous demandera de faire confiance au fichier .rvmrc (dites oui en tappant y).
 ruby --version  # Ruby 1.9.3 devrait s'afficher
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+  <li>
+    <p>Installer les dépendances</p>
 
-<ol>
-  <li>Installer les dépendances: saisir les commandes suivantes dans le Terminal</li>
-</ol>
+    <p>Saisir les commandes suivantes dans le Terminal</p>
 
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>gem install bundler
-rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
+rbenv rehash    # Si tu utilies rbenv, rehash afin de pouvoir exécuter la commande bundle
 bundle install
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+  <li>
+    <p>Installer le thème d’Octopress par défaut</p>
 
-<ol>
-  <li>Installer le thème d’Octopress par défaut</li>
-</ol>
-
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>rake install
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+</ol>
+
+<h2 id="deployer-octopress-sur-internet-gratuitement">Deployer Octopress sur Internet gratuitement</h2>
 
 <ol>
-  <li>Installer Octopress avec les pages utilisateurs GitHub.<br />
-Se rendre sur <a href="http://www.github.com/">le site de GitHub</a> et créer un compte gratuitement. </li>
+  <li>
+    <p>Créer un compte GitHub
+Se rendre sur <a href="http://www.github.com/">le site de GitHub</a> et créer un compte gratuitement.</p>
+  </li>
+  <li>
+    <p>Créer un nouveau repository sur GitHub.
+Sur GitHub, se rendre sur l’onglet <code>Repositories</code> et cliquer sur le bouton vert <code>new</code>.
+Le nom que tu dois saisir doit être de la forme : <code>nom_du_blog.github.io</code>.</p>
+  </li>
+  <li>
+    <p>Dire à Octopress de que tu veux mettre ton blog sur les pages GitHub</p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre>rake setup_github_pages
+</pre></div>
+</div>
+    </div>
+
+    <p>On te demandera de saisir un truc. Copie-colle <code>git@github.com:ton_pseudo_github/nom_du_blog.github.io.git</code>.</p>
+  </li>
+  <li>
+    <p>Génère ton blog et publie-le ! Enfin.</p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre>rake generate
+rake deploy
+</pre></div>
+</div>
+    </div>
+  </li>
 </ol>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Ca y est ! Tu as ton blog maintenant disponible sur Internet et ça t’a pas coûté un kopeck. La vie est belle n’est-ce pas ?
+Tu peux aller maintenant sur <code>http://nom_du_blog.github.io</code> et admirer ton beau travail.</p>
 
 ]]>
 		</content>

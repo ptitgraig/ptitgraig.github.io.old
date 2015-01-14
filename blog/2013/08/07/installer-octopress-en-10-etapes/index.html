@@ -49,12 +49,6 @@
 
 <div class="entry-content"><h2 id="introduction">Introduction</h2>
 
-<div><div class="CodeRay">
-  <div class="code"><pre>$ git clone git@github.com:imathis/octopress.git # fork octopress
-</pre></div>
-</div>
-</div>
-
 <p>Octopress est un moteur de blog statique. Qui dit statique, dit plusieurs avantages :</p>
 
 <ol>
@@ -64,99 +58,150 @@
   <li>Du coup c’est super rapide !!</li>
 </ol>
 
-<p>Si vous êtes débutant, cette page est pour vous. Dans 15 étapes, vous aurez votre blog statique prêt à l’emploi.</p>
+<p>Tu ne connais pas Ruby, XCode mais tu aimerais bien avoir un blog sympa et rapide. 
+Tu as trouvé Octopress après des recherches sur le net et tu t’es dit que tu voulais essayer. Cependant voilà, tu comprends pas bien l’anglais et quand tu suis les étapes sur le site officiel tu remarques qu’il manque plein de trucs sur ton Mac. Cette article est pour toi.
+Dans 15 étapes, tu auras ton blog statique prêt à l’emploi pour pas un rond.</p>
 
-<h2 id="installation-doctopress-sous-mac-osx-lion">Installation d’Octopress sous Mac OSX Lion</h2>
+<h2 id="installation-des-outils">Installation des outils</h2>
 
 <ol>
   <li>
-    <p>Ouvrir le terminal, puis saisir Terminal : Ctrl+espace, puis Terminal dans l’invite de recherche.</p>
+    <p>Ouvrir le terminal
+Ctrl+espace, puis “Terminal” dans l’invite de recherche.</p>
   </li>
   <li>
-    <p>Installer Xcode. Dans l’appStore, chercher xcode. Cliquer sur le bouton “gratuit” (oui c’est gratuit :).</p>
+    <p>Installer Xcode.
+Dans l’appStore, chercher xcode. Cliquer sur le bouton “gratuit” (oui c’est gratuit :).</p>
   </li>
   <li>
-    <p>Une fois installé, lancer Xcode</p>
+    <p>Installer l’outil ligne de commande Xcode
+Dans le menu de Xcode, <code>Xcode &gt; Préférences &gt; Downloads</code>, puis cliquer sur le bouton <code>install</code> en face de la ligne <code>Command Line Tool</code></p>
   </li>
   <li>
-    <p>Dans le menu, Xcode &gt; Préférences &gt; Downloads, puis cliquer sur le bouton “install” en face de la ligne “Command Line Tool”</p>
-  </li>
-  <li>
-    <p>Installer RVM. Dans le Terminal, lancer la commande suivante :</p>
-  </li>
-</ol>
+    <p>Installer RVM.
+Dans le Terminal, lancer la commande suivante :</p>
 
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>curl -L https://get.rvm.io | bash -s stable --ruby
 </pre></div>
 </div>
-</div>
+    </div>
 
-<ol>
-  <li>
-    <p>Suivre les instructions proposées</p>
+    <p>Puis suivre les instructions proposées</p>
   </li>
   <li>
-    <p>Installer Ruby 1.9.3</p>
-  </li>
-</ol>
+    <p>Installer Ruby 1.9.3
+Dans le terminal, lancer les commandes suivantes :</p>
 
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>rvm install 1.9.3
 rvm use 1.9.3
 rvm rubygems latest
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+  <li>
+    <p>Vérifier la version de Ruby</p>
 
-<ol>
-  <li>Dans le terminal, verifier que 1.9.3 est bien la dernière version, saisissez</li>
-</ol>
-
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>ruby --version
 </pre></div>
 </div>
-</div>
+    </div>
 
-<ol>
-  <li>Installer Octopress, dans le Terminal, saisissez les lignes suivantes dans le Terminal:</li>
+    <p>Le résultat doit contenir <code>ruby 1.9.3</code></p>
+  </li>
 </ol>
 
-<div><div class="CodeRay">
+<h2 id="installation-doctopress">Installation d’Octopress</h2>
+
+<ol>
+  <li>
+    <p>Se placer dans ton dossier de travail.</p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre>cd /chemin/vers/votre/dossier/de/travail
+</pre></div>
+</div>
+    </div>
+
+    <p>Personnellement je l’ai placé avec tous mes autres projets dans le dossier <code>/Applications/MAMP/htdocs</code></p>
+  </li>
+  <li>
+    <p>Récupérer Octopress</p>
+
+    <div><div class="CodeRay">
   <div class="code"><pre>git clone git://github.com/imathis/octopress.git octopress
 cd octopress    # Vous utilisez RVM, On vous demandera de faire confiance au fichier .rvmrc (dites oui en tappant y).
 ruby --version  # Ruby 1.9.3 devrait s'afficher
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+  <li>
+    <p>Installer les dépendances</p>
 
-<ol>
-  <li>Installer les dépendances: saisir les commandes suivantes dans le Terminal</li>
-</ol>
+    <p>Saisir les commandes suivantes dans le Terminal</p>
 
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>gem install bundler
-rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
+rbenv rehash    # Si tu utilies rbenv, rehash afin de pouvoir exécuter la commande bundle
 bundle install
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+  <li>
+    <p>Installer le thème d’Octopress par défaut</p>
 
-<ol>
-  <li>Installer le thème d’Octopress par défaut</li>
-</ol>
-
-<div><div class="CodeRay">
+    <div><div class="CodeRay">
   <div class="code"><pre>rake install
 </pre></div>
 </div>
-</div>
+    </div>
+  </li>
+</ol>
+
+<h2 id="deployer-octopress-sur-internet-gratuitement">Deployer Octopress sur Internet gratuitement</h2>
 
 <ol>
-  <li>Installer Octopress avec les pages utilisateurs GitHub.<br />
-Se rendre sur <a href="http://www.github.com/">le site de GitHub</a> et créer un compte gratuitement. </li>
+  <li>
+    <p>Créer un compte GitHub
+Se rendre sur <a href="http://www.github.com/">le site de GitHub</a> et créer un compte gratuitement.</p>
+  </li>
+  <li>
+    <p>Créer un nouveau repository sur GitHub.
+Sur GitHub, se rendre sur l’onglet <code>Repositories</code> et cliquer sur le bouton vert <code>new</code>.
+Le nom que tu dois saisir doit être de la forme : <code>nom_du_blog.github.io</code>.</p>
+  </li>
+  <li>
+    <p>Dire à Octopress de que tu veux mettre ton blog sur les pages GitHub</p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre>rake setup_github_pages
+</pre></div>
+</div>
+    </div>
+
+    <p>On te demandera de saisir un truc. Copie-colle <code>git@github.com:ton_pseudo_github/nom_du_blog.github.io.git</code>.</p>
+  </li>
+  <li>
+    <p>Génère ton blog et publie-le ! Enfin.</p>
+
+    <div><div class="CodeRay">
+  <div class="code"><pre>rake generate
+rake deploy
+</pre></div>
+</div>
+    </div>
+  </li>
 </ol>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Ca y est ! Tu as ton blog maintenant disponible sur Internet et ça t’a pas coûté un kopeck. La vie est belle n’est-ce pas ?
+Tu peux aller maintenant sur <code>http://nom_du_blog.github.io</code> et admirer ton beau travail.</p>
 
 </div>
 
