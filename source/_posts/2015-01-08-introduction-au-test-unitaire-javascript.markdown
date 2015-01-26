@@ -18,16 +18,16 @@ Traduction de l'article du Smashing Magazine : Introduction To JavaScript Unit T
 
 Vous savez probablement que le test est une bonne chose, mais le premier obstacle à surmonter en essayant d'écrire des tests unitaires pour du code client est le manque de toutes les unités; le code JavaScript est écrit pour chaque page d'un site Web ou chaque module d'une application et est étroitement mélangés avec la logique back-end et le HTML correspondant. Dans le pire des cas, le code est complètement mélangé avec le langage HTML, comme les gestionnaires d'événements directement dans le markup.
 
-Ce est probablement le cas lorsqu'on utilise aucune bibliothèque JavaScript, qui permettrait une abstraction du DOM; l'écriture de gestionnaires d'événements directement dans le markup est beaucoup plus facile que d'utiliser les API DOM pour lier ces événements.
+C'est probablement le cas lorsqu'on utilise aucune bibliothèque JavaScript, qui permettrait une abstraction du DOM; l'écriture de gestionnaires d'événements directement dans le markup est beaucoup plus facile d'utilisation que les API DOM pour lier ces événements.
 De plus en plus de développeurs choisissent une bibliothèque comme jQuery pour gérer l'abstraction du DOM. Ceci leur permet de déplacer la gestion des ces événements dans un script distinct, soit sur ​​la même page ou dans un fichier JavaScript à part. Toutefois, mettre le code dans des fichiers séparés ne signifie pas qu'il est prêt à être testé unitairement.
 
-Qu'est ce qu'une unité de toute façon? Dans le meilleur des cas, c'est une fonction que vous pouvez gérer de différentes façon - une fonction qui vous donne toujours le même résultat pour une entrée donnée. C'est ce qui rend les tests unitaires assez facile, mais la plupart du temps il faut gérer les effets secondaires, entre autre : la manipulations du DOM. Il est utile de trouver quelles sont ces unités qui permettront la structure de notre code et de construire les tests unitaire en conséquence.
+Qu'est ce qu'une unité de toute façon? Dans le meilleur des cas, c'est une fonction que vous pouvez gérer de différentes façons - une fonction qui vous donne toujours le même résultat pour une entrée donnée. C'est ce qui rend les tests unitaires assez facile, mais la plupart du temps il faut gérer les effets secondaires, entre autre : la manipulations du DOM. Il est utile de trouver quelles sont ces unités qui permettront la structure de notre code et de construire les tests unitaire en conséquence.
 
 ## Construire des tests unitaires
 
 Cela étant dit, commencer avec les tests unitaires est bien plus facile quand on commence de rien. Mais cet article ne parle pas de ce cas là. Cet article est là pour vous aider sur le problème le plus difficile : partir sur du code existant, en tester les parties importantes et éventuellement en corriger les bugs.
 
-Le processus d'extraction de code et de son changement de forme, sans en modifier son comportement, est appelé refactorisation. C'est une excellente méthode pour améliorer la manière dont le code est conçu un programme. Et puisque la moindre modification peut potentiellement changer le comportement du programme, il est plus sûr de le faire quand les tests unitaires sont en place.
+Le processus d'extraction de code et de son changement de forme, sans en modifier son comportement, est appelé refactorisation. C'est un excellente méthode pour améliorer la manière dont le code d'un programme est conçu. Et puisque la moindre modification peut potentiellement changer le comportement du programme, il est plus sûr de le faire quand les tests unitaires sont en place.
 
 Cela veut dire que pour ajouter des tests unitaire, vous devez prendre le risque de casser des choses : c'est le problème de l'oeuf et de la poule (qui est venu le premier ?). Donc, avant que vous ayez une bonne couverture de test unitaire, vous devez continuer à tester manuellement pour minimiser le risque de régression.
 
@@ -271,7 +271,7 @@ De 6 tests, 0 ont échoué, 6 ont réussi.
 ~~~
 {:lang="sh"}
 
-Pour voir ce qu'est une assertion [^1] erronée, nous pouvons changer quelque chose afin que le test échoue :
+Pour voir ce qu'est une assertion erronée, nous pouvons changer quelque chose afin que le test échoue :
 
 ~~~
 Attendu 2 jours, mais obtenu 2 jour.
@@ -279,7 +279,7 @@ De 6 tests, 1 ont échoué, 5 ont réussi.
 ~~~
 {:lang="sh"}
 
-Bien que cette approche adaptée est intéressant en POC [^2] (on peut vraiment écrire un exécuteur de test en quelque lignes de code), il est bien plus pratique de d'utiliser un framework de test existant, qui fourni un meilleur affichage des résultats et plus d'infrastructure pour écrire et organiser les tests.
+Bien que cette approche adaptée est intéressant en POC (on peut vraiment écrire un exécuteur de test en quelque lignes de code), il est bien plus pratique de d'utiliser un framework de test existant, qui fourni un meilleur affichage des résultats et plus d'infrastructure pour écrire et organiser les tests.
 
 ## Qunit : un outil de test JavaScript
 
@@ -624,6 +624,3 @@ QUnit a beaucoup à offrir : test de code asynchrone tel que les ```timeouts```,
 <p class="disclaimer">
 Cet article est traduit de l'anglais à partir d'un article paru sur Smashing Magazine. J'ai donc tâché de rester fidèle à l'opinion de l'auteur. Par moments, les formulations ont du être tournée autrement afin de faciliter la lecture et la compréhension. Pour toute amélioration ou suggestion, n'hésitez pas à me contacter.<br/>
 </p>
-
-[^1]: Un assertion est un énoncé considéré comme vrai, ou une affirmation.
-[^2]: Proof-Of-Concept est un moyen d'éprouver une solution. En génie logiciel, généralement, on crée un petit programme pour éprouver qu'une idée est viable.
